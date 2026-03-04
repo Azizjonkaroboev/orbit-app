@@ -5,638 +5,324 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Orbit</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root{
+  --bg:#f0f4ff;
+  --bg2:#e8eeff;
+  --white:#ffffff;
+  --blue:#2563eb;
+  --blue2:#1d4ed8;
+  --blue-light:#eff6ff;
+  --blue-mid:#dbeafe;
+  --accent:#60a5fa;
+  --text:#0f172a;
+  --text2:#475569;
+  --text3:#94a3b8;
+  --border:#e2e8f0;
+  --border2:#bfdbfe;
+  --red:#ef4444;
+  --green:#10b981;
+  --shadow:0 1px 3px rgba(37,99,235,.08),0 4px 16px rgba(37,99,235,.06);
+  --shadow-blue:0 4px 20px rgba(37,99,235,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px}
+::-webkit-scrollbar{width:0}
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh}
+#content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.page{display:none;padding:16px 16px 24px}
+.page.active{display:block}
 
-  :root {
-    --bg: #000000;
-    --gold: #ffd700;
-    --gold2: #ffb300;
-    --dark: #111111;
-    --card: #141414;
-    --border: #2a2a2a;
-    --text: #ffffff;
-    --muted: #888888;
-    --nav-h: 70px;
-  }
+/* ── NAV ── */
+#nav{
+  display:flex;align-items:center;justify-content:space-around;
+  background:var(--white);
+  border-top:1px solid var(--border);
+  padding:8px 4px max(10px,env(safe-area-inset-bottom));
+  flex-shrink:0;
+  box-shadow:0 -1px 0 var(--border);
+}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 10px;border-radius:14px;flex:1;transition:.15s;-webkit-tap-highlight-color:transparent}
+.ni:active{background:var(--blue-mid)}
+.ni svg{width:22px;height:22px;stroke:var(--text3);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:.15s}
+.ni span{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.2px;transition:.15s}
+.ni.active svg{stroke:var(--blue)}
+.ni.active span{color:var(--blue)}
+.nc{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1}
+.nc-btn{width:52px;height:52px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-blue);transition:.15s}
+.nc-btn svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nc:active .nc-btn{transform:scale(.9);box-shadow:0 2px 8px rgba(37,99,235,.2)}
+.nc span{font-size:10px;color:var(--blue);font-weight:700}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 16px;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.tl{display:flex;align-items:center;gap:10px}
+.tav{width:38px;height:38px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tav svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tname{font-weight:700;font-size:14px;color:var(--text)}
+.tbal{font-size:11px;color:var(--text3);font-weight:500;margin-top:1px}
+.lbtn{background:var(--blue-light);border:1px solid var(--border2);color:var(--blue);padding:6px 13px;border-radius:20px;font-family:'Inter';font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
+.lbtn:active{background:var(--blue);color:#fff}
 
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 0; }
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.clbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;font-weight:700}
 
-  /* PAGES */
-  .page { display: none; flex-direction: column; height: calc(100vh - var(--nav-h)); overflow-y: auto; padding: 16px 16px calc(var(--nav-h) + 16px); }
-  .page.active { display: flex; }
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--blue) 0%,#3b82f6 50%,#60a5fa 100%);border-radius:24px;padding:24px 20px;margin-bottom:16px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:rgba(255,255,255,.08);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-30px;left:-20px;width:120px;height:120px;background:rgba(255,255,255,.05);border-radius:50%}
+.hero-label{font-size:10px;color:rgba(255,255,255,.7);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.hero-title{font-family:'Space Grotesk';font-size:32px;color:#fff;font-weight:700;letter-spacing:-0.5px;line-height:1}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.7);margin-top:6px;font-weight:500}
+.hero-bal{display:flex;gap:16px;margin-top:16px}
+.hero-bal-item{background:rgba(255,255,255,.15);border-radius:12px;padding:10px 14px;backdrop-filter:blur(4px)}
+.hero-bal-val{font-family:'Space Grotesk';font-size:22px;color:#fff;font-weight:700;line-height:1}
+.hero-bal-lbl{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;margin-top:2px}
 
-  /* TOP BAR */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-    flex-shrink: 0;
-  }
-  .topbar-user { display: flex; align-items: center; gap: 8px; }
-  .topbar-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-    background: var(--dark);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-  .topbar-name { font-weight: 700; font-size: 15px; color: var(--gold); letter-spacing: 0.5px; }
-  .lang-btn {
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .lang-btn:active { background: var(--gold); color: #000; }
+/* ── BUTTONS ── */
+.btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:14px;font-family:'Inter';font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:var(--shadow-blue);transition:.15s}
+.btn:active{transform:scale(.97);background:var(--blue2)}
+.btn-ghost{background:var(--blue-light);color:var(--blue);box-shadow:none;border:1.5px solid var(--border2)}
+.btn-ghost:active{background:var(--blue-mid)}
+.btn-off{background:var(--bg);color:var(--text3);box-shadow:none;border:1px solid var(--border);cursor:not-allowed;pointer-events:none}
+.btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:11px}
+.brow{display:flex;gap:10px}
+.bhalf{flex:1}
 
-  /* WALLET BADGE */
-  .wallet-badge {
-    background: linear-gradient(135deg, #1a1a00, #2a2200);
-    border: 1px solid var(--gold);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-    flex-shrink: 0;
-  }
+/* ── WALLET ── */
+.wbadge{background:linear-gradient(135deg,var(--blue-light),var(--blue-mid));border:1.5px solid var(--border2);border-radius:16px;padding:14px 16px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.15s}
+.wbadge:active{background:var(--blue-mid);border-color:var(--blue)}
+.wbadge-ico{width:36px;height:36px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wbadge-ico svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wbadge-t{font-size:10px;color:var(--blue);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.wbadge-v{font-size:13px;color:var(--text);font-weight:700;margin-top:2px}
 
-  /* BALANCE CARD */
-  .balance-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 14px;
-    flex-shrink: 0;
-  }
-  .balance-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
-  .balance-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
-  .balance-amount {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 42px;
-    color: var(--gold);
-    line-height: 1;
-    text-shadow: 0 0 20px rgba(255,215,0,0.3);
-  }
-  .balance-currency { font-size: 18px; color: var(--gold2); font-weight: 700; }
-  .balance-bit { font-size: 22px; color: var(--gold); font-family: 'Bebas Neue'; }
-  .balance-bit-label { font-size: 14px; color: var(--muted); }
+/* ── INFO ROWS ── */
+.irow{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text2);padding:8px 0;border-bottom:1px solid var(--bg2);font-weight:500}
+.irow:last-of-type{border-bottom:none;margin-bottom:8px}
+.ival{color:var(--blue);font-weight:700}
 
-  /* CARDS */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
-    flex-shrink: 0;
-  }
-  .card-title {
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
-  }
+/* ── AD ITEMS ── */
+.aditem{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.adnum{width:40px;height:40px;border-radius:12px;background:var(--blue-mid);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--blue);flex-shrink:0;font-family:'Space Grotesk'}
+.adinfo{flex:1}
+.adname{font-weight:700;font-size:14px;color:var(--text)}
+.adrew{font-size:12px;color:var(--blue);font-weight:600;margin-top:2px}
+.adoff{font-size:11px;color:var(--red);font-weight:700;margin-top:2px}
+.adlim{font-size:11px;color:var(--text3);font-weight:500;margin-top:1px}
 
-  /* BUTTONS */
-  .btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--gold);
-    color: #000;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: transform 0.1s, background 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .btn:active { transform: scale(0.97); background: var(--gold2); }
-  .btn-dark {
-    background: var(--dark);
-    color: var(--gold);
-    border: 1px solid var(--gold);
-  }
-  .btn-dark:active { background: var(--gold); color: #000; }
-  .btn-half {
-    width: calc(50% - 6px);
-    font-size: 16px;
-  }
-  .btn-row { display: flex; gap: 12px; }
-  .btn-sm {
-    padding: 10px 16px;
-    font-size: 15px;
-    width: auto;
-    border-radius: 10px;
-  }
+/* ── CHECKIN ── */
+.cibox{background:linear-gradient(135deg,var(--blue),#3b82f6);border-radius:20px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
+.cibox::after{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.08);border-radius:50%}
+.cibox .clbl{color:rgba(255,255,255,.7);margin-bottom:14px}
+.cistats{display:flex;justify-content:space-around;margin-bottom:18px}
+.cistat{text-align:center}
+.civ{font-family:'Space Grotesk';font-size:32px;color:#fff;font-weight:700;line-height:1}
+.cil{font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-top:3px;font-weight:600}
+.ci-btn{background:#fff;color:var(--blue);font-weight:700;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:15px;cursor:pointer;transition:.15s}
+.ci-btn:active{transform:scale(.97);background:var(--blue-mid)}
+.ci-btn:disabled{background:rgba(255,255,255,.3);color:rgba(255,255,255,.5);cursor:not-allowed}
 
-  /* CHECKIN */
-  .checkin-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-  }
-  .checkin-stat { text-align: center; }
-  .checkin-stat-val { font-family: 'Bebas Neue'; font-size: 28px; color: var(--gold); }
-  .checkin-stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+/* ── PROMO ── */
+.pinp{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:13px 14px;color:var(--text);font-family:'Inter';font-size:14px;font-weight:600;margin-top:10px;transition:.15s}
+.pinp::placeholder{color:var(--text3);font-weight:400}
+.pinp:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 
-  /* EXCHANGE */
-  .exchange-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: var(--muted);
-  }
-  .exchange-rate { color: var(--gold); font-weight: 700; }
+/* ── PVP ── */
+.pvp-hero{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:18px;margin-bottom:12px;display:flex;flex-direction:column;align-items:center;box-shadow:var(--shadow)}
+.pvp-bank{font-family:'Space Grotesk';font-size:15px;color:var(--text3);font-weight:600;margin-bottom:14px;letter-spacing:.3px}
+.pvp-bank span{color:var(--blue);font-size:26px;font-weight:700}
+.pvp-status{margin-top:12px;font-size:13px;color:var(--text3);font-weight:600;text-align:center}
+.pvp-status b{color:var(--blue)}
+.pvpadd{display:flex;gap:8px;margin-top:14px;width:100%}
+.pvpinp{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:13px;color:var(--text);font-family:'Inter';font-size:14px;font-weight:600;transition:.15s}
+.pvpinp:focus{outline:none;border-color:var(--blue);background:#fff}
+.pvpinp::placeholder{color:var(--text3);font-weight:400}
 
-  /* AD TASKS */
-  .task-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--dark);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .task-info { flex: 1; }
-  .task-name { font-weight: 700; font-size: 15px; color: var(--text); }
-  .task-reward { font-size: 12px; color: var(--gold); margin-top: 3px; }
-  .task-play {
-    width: 44px; height: 44px;
-    background: var(--gold);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-    transition: transform 0.1s;
-  }
-  .task-play:active { transform: scale(0.93); }
-  .task-num {
-    width: 26px; height: 26px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    color: var(--muted);
-    margin-right: 10px;
-    flex-shrink: 0;
-  }
+/* ── FRIENDS ── */
+.rhero{background:linear-gradient(135deg,var(--blue),#3b82f6);border-radius:20px;padding:20px;margin-bottom:12px;text-align:center;position:relative;overflow:hidden}
+.rhero::after{content:'';position:absolute;bottom:-30px;right:-30px;width:100px;height:100px;background:rgba(255,255,255,.08);border-radius:50%}
+.rttl{font-family:'Space Grotesk';font-size:22px;color:#fff;font-weight:700;margin-bottom:4px}
+.rsub{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:16px;font-weight:500}
+.rstats{display:flex;justify-content:space-around;margin-bottom:16px}
+.rstat{text-align:center}
+.rval{font-family:'Space Grotesk';font-size:28px;color:#fff;font-weight:700;line-height:1}
+.rlbl{font-size:10px;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:1px;margin-top:3px;font-weight:600}
+.ref-btn{background:#fff;color:var(--blue);font-weight:700;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:14px;cursor:pointer;transition:.15s}
+.ref-btn:active{background:var(--blue-mid)}
 
-  /* PVP */
-  .pvp-wheel-container {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .pvp-total { font-family: 'Bebas Neue'; font-size: 28px; color: var(--gold); margin-bottom: 16px; }
-  #pvpWheel { border-radius: 50%; }
-  .pvp-timer { margin-top: 10px; font-family: 'Bebas Neue'; font-size: 18px; color: var(--muted); }
-  .pvp-add-row { display: flex; gap: 10px; margin-top: 12px; align-items: center; }
-  .pvp-input {
-    flex: 1;
-    background: var(--dark);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    color: var(--gold);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .pvp-input::placeholder { color: var(--muted); }
-  .pvp-input:focus { outline: none; border-color: var(--gold); }
+/* ── PROFILE ── */
+.prof-head{text-align:center;margin-bottom:18px;padding:20px;background:var(--white);border-radius:20px;box-shadow:var(--shadow)}
+.prav{width:72px;height:72px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.prav svg{width:36px;height:36px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.prname{font-family:'Space Grotesk';font-size:22px;color:var(--text);font-weight:700}
+.prrow{display:flex;justify-content:space-between;align-items:center;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.prlbl{font-size:13px;color:var(--text2);font-weight:600;display:flex;align-items:center;gap:8px}
+.prval{font-weight:700;font-size:14px;color:var(--text)}
 
-  /* FRIENDS */
-  .ref-box {
-    background: linear-gradient(135deg, #1a1a00, #2a2200);
-    border: 1px solid var(--gold);
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 14px;
-    text-align: center;
-  }
-  .ref-title { font-family: 'Bebas Neue'; font-size: 28px; color: var(--gold); margin-bottom: 4px; }
-  .ref-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
-  .ref-stats { display: flex; justify-content: space-around; margin-bottom: 14px; }
-  .ref-stat { text-align: center; }
-  .ref-stat-val { font-family: 'Bebas Neue'; font-size: 24px; color: var(--gold); }
-  .ref-stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+/* ── MODAL OVERLAY ── */
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:flex-end;justify-content:center}
+#modal.open{display:flex}
+.modal-box{background:#fff;border-radius:24px 24px 0 0;width:100%;max-height:85vh;overflow-y:auto;padding:24px 20px 40px;animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:4px;margin:0 auto 20px}
+.modal-title{font-family:'Space Grotesk';font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:var(--bg);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--text3)}
 
-  /* PROFILE */
-  .profile-avatar {
-    width: 70px; height: 70px;
-    border-radius: 50%;
-    border: 3px solid var(--gold);
-    background: var(--dark);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-    margin: 10px auto 14px;
-  }
-  .profile-name { text-align: center; font-family: 'Bebas Neue'; font-size: 26px; color: var(--gold); margin-bottom: 4px; }
-  .profile-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--dark);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .profile-row-label { font-size: 13px; color: var(--muted); }
-  .profile-row-val { font-weight: 700; color: var(--text); }
+/* ── EXCHANGE MODAL ── */
+.exch-input-wrap{position:relative;margin-bottom:12px}
+.exch-inp{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:16px 60px 16px 16px;color:var(--text);font-family:'Space Grotesk';font-size:22px;font-weight:700;transition:.15s}
+.exch-inp:focus{outline:none;border-color:var(--blue);background:#fff}
+.exch-cur{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--text3);font-size:14px}
+.exch-arrow{text-align:center;font-size:24px;margin:10px 0;color:var(--blue)}
+.exch-result{background:var(--blue-light);border:1.5px solid var(--border2);border-radius:14px;padding:16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.exch-result-lbl{font-size:12px;color:var(--text3);font-weight:600}
+.exch-result-val{font-family:'Space Grotesk';font-size:26px;font-weight:700;color:var(--blue)}
 
-  /* TASKS PAGE */
-  .checkin-big {
-    background: linear-gradient(135deg, #1a1400, #2a2000);
-    border: 1px solid var(--gold);
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 12px;
-  }
-  .promo-row { display: flex; gap: 8px; margin-top: 10px; }
-  .promo-input {
-    flex: 1;
-    background: var(--dark);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    color: var(--text);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 15px;
-  }
-  .promo-input::placeholder { color: var(--muted); }
-  .promo-input:focus { outline: none; border-color: var(--gold); }
-  .task-subscribe {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--dark);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .task-num-box {
-    width: 28px; height: 28px;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; color: var(--muted);
-    flex-shrink: 0;
-  }
-  .task-text { flex: 1; }
-  .task-text-name { font-weight: 700; font-size: 14px; }
-  .task-text-reward { font-size: 12px; color: var(--gold); margin-top: 2px; }
-  .task-btn-row { display: flex; gap: 6px; }
-  .task-open-btn {
-    background: var(--gold);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-family: 'Bebas Neue'; font-size: 15px;
-    cursor: pointer;
-  }
-  .task-claim-btn {
-    background: var(--dark);
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-family: 'Bebas Neue'; font-size: 15px;
-    cursor: pointer;
-  }
-  .task-claim-btn:active, .task-open-btn:active { opacity: 0.8; transform: scale(0.97); }
+/* ── DEPOSIT MODAL ── */
+.dep-addr{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:14px;word-break:break-all;font-family:monospace;font-size:12px;color:var(--text);margin-bottom:12px;line-height:1.6}
+.dep-note{background:var(--blue-light);border-radius:12px;padding:12px 14px;font-size:12px;color:var(--blue);font-weight:600;margin-bottom:16px;line-height:1.6}
 
-  /* NOTIFICATION */
-  .notif {
-    position: fixed;
-    top: 20px; left: 50%;
-    transform: translateX(-50%) translateY(-80px);
-    background: var(--gold);
-    color: #000;
-    padding: 12px 22px;
-    border-radius: 12px;
-    font-family: 'Bebas Neue'; font-size: 18px;
-    z-index: 9999;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    white-space: nowrap;
-  }
-  .notif.show { transform: translateX(-50%) translateY(0); }
+/* ── NOTIF ── */
+#notif{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--blue);color:#fff;padding:11px 22px;border-radius:100px;font-family:'Inter';font-size:14px;font-weight:700;z-index:200;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;box-shadow:var(--shadow-blue)}
+#notif.show{transform:translateX(-50%) translateY(0)}
 
-  /* BOTTOM NAV */
-  .nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: var(--nav-h);
-    background: var(--dark);
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    z-index: 100;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 12px;
-    transition: background 0.15s;
-    flex: 1;
-  }
-  .nav-item:active { background: rgba(255,215,0,0.08); }
-  .nav-icon { font-size: 22px; }
-  .nav-label { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
-  .nav-item.active .nav-label { color: var(--gold); }
-  .nav-item.active .nav-icon { filter: drop-shadow(0 0 6px rgba(255,215,0,0.6)); }
-  .nav-center {
-    width: 50px; height: 50px;
-    background: var(--gold);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-    flex-shrink: 0;
-    box-shadow: 0 4px 20px rgba(255,215,0,0.35);
-  }
-  .nav-center-label { font-size: 10px; color: var(--gold); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 4px; }
-
-  /* SECTION TITLE */
-  .section-title {
-    font-family: 'Bebas Neue'; font-size: 22px; color: var(--text);
-    margin-bottom: 12px; letter-spacing: 1px;
-  }
-
-  .divider { height: 1px; background: var(--border); margin: 14px 0; }
-
-  /* ANIMATIONS */
-  @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.6 } }
-  .pulse { animation: pulse 2s infinite; }
+.tag{display:inline-block;background:var(--blue-mid);color:var(--blue);font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.3px}
+.muted{color:var(--text3);font-size:13px;font-weight:500}
 </style>
 </head>
 <body>
+<div id="notif"></div>
 
-<div class="notif" id="notif"></div>
+<!-- MODAL -->
+<div id="modal" onclick="closeModal(event)">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-handle"></div>
+    <div id="modal-content"></div>
+  </div>
+</div>
 
-<!-- ══════════════ PAGE: ГЛАВНАЯ ══════════════ -->
+<div id="app">
+<div id="content">
+
+<!-- ═══ ГЛАВНАЯ ═══ -->
 <div class="page active" id="page-main">
-  <div class="topbar">
-    <div class="topbar-user">
-      <div class="topbar-avatar">👤</div>
-      <div class="topbar-name" id="username-main">@username</div>
-    </div>
-    <button class="lang-btn" onclick="toggleLang()">RU/EN</button>
+<div class="topbar">
+  <div class="tl">
+    <div class="tav"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div><div class="tname" id="u0">...</div><div class="tbal" id="b0">0.000 TON · 0 BIT</div></div>
   </div>
-
-  <div class="wallet-badge">💎 TON — кошелёк</div>
-
-  <div class="balance-card">
-    <div class="balance-label">Баланс</div>
-    <div class="balance-row">
-      <div class="balance-amount" id="ton-balance">0.00</div>
-      <div class="balance-currency">TON</div>
-    </div>
-    <div class="balance-row">
-      <div class="balance-bit" id="bit-balance">0</div>
-      <div class="balance-bit-label">BIT</div>
-    </div>
-  </div>
-
-  <!-- РЕКЛАМА -->
-  <div class="card">
-    <div class="card-title">🎬 Реклама</div>
-    <button class="btn" onclick="watchAd()">▶ СМОТРЕТЬ РЕКЛАМУ <span style="font-size:14px;opacity:0.7">+10 BIT</span></button>
-  </div>
-
-  <!-- ОБМЕН -->
-  <div class="card">
-    <div class="card-title">🔄 Обмен BIT → TON</div>
-    <div class="exchange-row">
-      <span>Курс:</span>
-      <span class="exchange-rate">10 000 BIT = 1 TON</span>
-    </div>
-    <div class="exchange-row">
-      <span>Минимум:</span>
-      <span class="exchange-rate">500 BIT</span>
-    </div>
-    <button class="btn" onclick="exchangeBit()" style="margin-bottom:10px">💱 ОБМЕН</button>
-  </div>
-
-  <!-- ДЕПОЗИТ / ВЫВОД -->
-  <div class="card">
-    <div class="card-title">💰 Кошелёк</div>
-    <div class="btn-row">
-      <button class="btn btn-dark btn-half" onclick="deposit()">↓ ДЕПОЗИТ</button>
-      <button class="btn btn-half" onclick="withdraw()">↑ ВЫВОД</button>
-    </div>
+  <button class="lbtn" onclick="toggleLang()" id="lbtn0">RU</button>
+</div>
+<div class="hero">
+  <div class="hero-label" id="h-platform">TON ПЛАТФОРМА</div>
+  <div class="hero-title">ORBIT</div>
+  <div class="hero-sub" id="h-sub">Зарабатывай TON каждый день</div>
+  <div class="hero-bal">
+    <div class="hero-bal-item"><div class="hero-bal-val" id="mt">0.000</div><div class="hero-bal-lbl">TON</div></div>
+    <div class="hero-bal-item"><div class="hero-bal-val" id="mb">0</div><div class="hero-bal-lbl">BIT</div></div>
   </div>
 </div>
+<div class="card">
+  <div class="clbl" id="h-ads">РЕКЛАМА</div>
+  <div class="aditem">
+    <div class="adnum">1</div>
+    <div class="adinfo">
+      <div class="adname" id="ad1n">Реклама #1</div>
+      <div class="adrew">+30 BIT</div>
+      <div class="adoff" id="ad1s">Недоступно</div>
+      <div class="adlim" id="ad1l">0 / 50</div>
+    </div>
+    <button class="btn btn-off btn-sm" style="width:64px;padding:10px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+  </div>
+  <div class="aditem">
+    <div class="adnum">2</div>
+    <div class="adinfo">
+      <div class="adname" id="ad2n">Реклама #2</div>
+      <div class="adrew">+10 BIT</div>
+      <div class="adoff" id="ad2s">Недоступно</div>
+      <div class="adlim" id="ad2l">0 / 50</div>
+    </div>
+    <button class="btn btn-off btn-sm" style="width:64px;padding:10px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+  </div>
+</div>
+</div>
 
-<!-- ══════════════ PAGE: ЗАДАНИЕ ══════════════ -->
+<!-- ═══ ЗАДАНИЕ ═══ -->
 <div class="page" id="page-task">
-  <div class="topbar">
-    <div class="topbar-user">
-      <div class="topbar-avatar">👤</div>
-      <div class="topbar-name" id="username-task">@username</div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <div style="font-size:12px;color:var(--muted)">БАЛАНС:</div>
-      <div style="font-size:13px;color:var(--gold);font-weight:700" id="task-balance-display">0.00 TON</div>
-    </div>
+<div class="topbar">
+  <div class="tl">
+    <div class="tav"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div><div class="tname" id="u1">...</div><div class="tbal" id="b1">0.000 TON · 0 BIT</div></div>
   </div>
-
-  <!-- ЧЕКИН -->
-  <div class="checkin-big">
-    <div class="card-title">📅 Ежедневный чек-ин</div>
-    <div class="checkin-info">
-      <div class="checkin-stat">
-        <div class="checkin-stat-val" id="checkin-streak">1</div>
-        <div class="checkin-stat-label">Серия</div>
-      </div>
-      <div class="checkin-stat">
-        <div class="checkin-stat-val" id="checkin-multi">X1</div>
-        <div class="checkin-stat-label">Множитель</div>
-      </div>
-      <div class="checkin-stat">
-        <div class="checkin-stat-val">10</div>
-        <div class="checkin-stat-label">BIT за раз</div>
-      </div>
-    </div>
-    <button class="btn" id="checkin-btn" onclick="doCheckin()">✅ ЗАБРАТЬ</button>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
+</div>
+<div class="cibox">
+  <div class="clbl" id="h-ci">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
+  <div class="cistats">
+    <div class="cistat"><div class="civ" id="cis">1</div><div class="cil" id="h-streak">Серия</div></div>
+    <div class="cistat"><div class="civ" id="cim">×1.0</div><div class="cil" id="h-multi">Множитель</div></div>
+    <div class="cistat"><div class="civ" id="cir">10</div><div class="cil">BIT</div></div>
   </div>
-
-  <!-- ПРОМО-КОД -->
-  <div class="card">
-    <div class="card-title">🎁 Промо-код</div>
-    <div class="promo-row">
-      <input type="text" class="promo-input" id="promo-input" placeholder="Введите промо-код">
-      <button class="btn btn-sm" style="width:auto;padding:12px 16px;font-size:16px" onclick="activatePromo()">АКТИВИРОВАТЬ</button>
-    </div>
-  </div>
-
-  <!-- ЗАДАНИЯ -->
-  <div class="section-title">📋 Задания</div>
-
-  <div class="task-subscribe">
-    <div class="task-num-box">1</div>
-    <div class="task-text">
-      <div class="task-text-name">Канал Orbit — подпишись</div>
-      <div class="task-text-reward">+50 BIT</div>
-    </div>
-    <div class="task-btn-row">
-      <button class="task-open-btn" onclick="openChannel()">ОТКРЫТЬ</button>
-      <button class="task-claim-btn" onclick="claimTask(1, 50)">ЗАБРАТЬ</button>
-    </div>
-  </div>
-
-  <div class="task-subscribe">
-    <div class="task-num-box">2</div>
-    <div class="task-text">
-      <div class="task-text-name">Пригласи 3 друзей</div>
-      <div class="task-text-reward">+100 BIT</div>
-    </div>
-    <div class="task-btn-row">
-      <button class="task-claim-btn" onclick="claimTask(2, 100)">ЗАБРАТЬ</button>
-    </div>
-  </div>
+  <button class="ci-btn" id="cibtn" onclick="doCheckin()">Забрать</button>
+</div>
+<div class="card">
+  <div class="clbl" id="h-promo">ПРОМО-КОД</div>
+  <input type="text" class="pinp" id="promoInp" placeholder="Введите промо-код">
+  <div style="margin-top:10px"><button class="btn" onclick="activatePromo()" id="btn-promo">Активировать</button></div>
+</div>
 </div>
 
-<!-- ══════════════ PAGE: PVP ══════════════ -->
+<!-- ═══ PVP ═══ -->
 <div class="page" id="page-pvp">
-  <div class="topbar">
-    <div class="topbar-user">
-      <div class="topbar-avatar">👤</div>
-      <div class="topbar-name">⚔️ PvP</div>
-    </div>
-    <div style="font-size:13px;color:var(--gold);font-weight:700" id="pvp-balance-display">0.00 TON</div>
+<div class="topbar">
+  <div class="tl">
+    <div class="tav"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div><div class="tname" id="u2">...</div><div class="tbal" id="b2">0.000 TON</div></div>
   </div>
-
-  <div class="pvp-wheel-container">
-    <div class="pvp-total">ВСЕГО: <span id="pvp-total">0.00</span> TON</div>
-    <canvas id="pvpWheel" width="220" height="220"></canvas>
-    <div class="pvp-timer">До розыгрыша: <span id="pvp-countdown">15</span> сек</div>
-    <div class="pvp-add-row">
-      <input type="number" class="pvp-input" id="pvp-input" placeholder="Сумма TON (мин 0.01)" step="0.01" min="0.01">
-      <button class="btn btn-sm" style="width:auto" onclick="addToPvp()">ДОБАВИТЬ</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">📊 Мои ставки</div>
-    <div id="pvp-bets-list" style="color:var(--muted);font-size:14px;text-align:center;padding:8px 0">Ставок пока нет</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">ℹ️ Правила</div>
-    <div style="font-size:13px;color:var(--muted);line-height:1.6">
-      • Делай ставку в TON<br>
-      • Каждые 15 секунд — розыгрыш<br>
-      • Чем больше ставка — тем больше шанс<br>
-      • Победитель получает весь банк<br>
-      • Комиссия 10%
-    </div>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
+</div>
+<div class="pvp-hero">
+  <div class="pvp-bank" id="h-bank">Банк: <span id="pvptot">0.000</span> TON</div>
+  <canvas id="pvpC" width="220" height="220" style="border-radius:50%"></canvas>
+  <div class="pvp-status" id="pvp-status-el">...</div>
+  <div class="pvpadd">
+    <input type="number" class="pvpinp" id="pvpinp" placeholder="Мин. 0.01 TON" step="0.01" min="0.01">
+    <button class="btn btn-sm" onclick="addPvp()" id="btn-pvp-add">Ставить</button>
   </div>
 </div>
+<div class="card">
+  <div class="clbl" id="h-players">УЧАСТНИКИ</div>
+  <div id="pvplist" class="muted" style="text-align:center;padding:10px 0" data-empty="1">Ставок пока нет</div>
+</div>
+</div>
 
-<!-- ══════════════ PAGE: ДРУЗЬЯ ══════════════ -->
+<!-- ═══ ДРУЗЬЯ ═══ -->
 <div class="page" id="page-friends">
-  <div class="topbar">
-    <div class="topbar-user">
-      <div class="topbar-avatar">👤</div>
-      <div class="topbar-name">👥 Друзья</div>
-    </div>
+<div class="topbar">
+  <div class="tl">
+    <div class="tav"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div><div class="tname" id="u3">...</div></div>
   </div>
-
-  <div class="ref-box">
-    <div class="ref-title">ПРИГЛАСИ И ЗАРАБОТАЙ</div>
-    <div class="ref-sub">10% с заработка каждого друга — навсегда!</div>
-    <div class="ref-stats">
-      <div class="ref-stat">
-        <div class="ref-stat-val" id="ref-count">0</div>
-        <div class="ref-stat-label">Приглашено</div>
-      </div>
-      <div class="ref-stat">
-        <div class="ref-stat-val" id="ref-earned">0.000</div>
-        <div class="ref-stat-label">TON с рефералов</div>
-      </div>
-    </div>
-    <button class="btn" onclick="copyRefLink()">🔗 СКОПИРОВАТЬ ССЫЛКУ</button>
-  </div>
-
-  <div class="card">
-    <div class="card-title">💡 Как работает</div>
-    <div style="font-size:14px;color:var(--muted);line-height:1.8">
-      1. Скопируй реферальную ссылку<br>
-      2. Отправь другу в Telegram<br>
-      3. Друг запускает бота по ссылке<br>
-      4. Ты получаешь <span style="color:var(--gold);font-weight:700">10%</span> с его заработка автоматически
-    </div>
-  </div>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
 </div>
-
-<!-- ══════════════ PAGE: ПРОФИЛЬ ══════════════ -->
-<div class="page" id="page-profile">
-  <div class="topbar">
-    <div class="topbar-user">
-      <div class="topbar-avatar">👤</div>
-      <div class="topbar-name" id="username-profile">@username</div>
-    </div>
-    <button class="lang-btn" onclick="toggleLang()">RU/EN</button>
+<div class="rhero">
+  <div class="rttl" id="h-ref-ttl">Пригласи и заработай</div>
+  <div class="rsub" id="h-ref-sub">5% с заработка каждого друга навсегда</div>
+  <div class="rstats">
+    <div class="rstat"><div class="rval" id="refc">0</div><div class="rlbl" id="h-inv">Приглашено</div></div>
+    <div class="rstat"><div class="rval" id="refe">0.000</div><div class="rlbl" id="h-reft">TON заработано</div></div>
   </div>
-
-  <div class="profile-avatar">👤</div>
-  <div class="profile-name" id="profile-username">@username</div>
-
-  <div class="divider"></div>
-
-  <div style="background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:16px;margin-bottom:12px">
-    <div class="balance-label">Баланс</div>
-    <div class="balance-row">
-      <div class="balance-amount" id="profile-ton">0.00</div>
-      <div class="balance-currency">TON</div>
-    </div>
-    <div class="balance-row">
-      <div class="balance-
+  <button class="ref-btn" onclick="copyRef()" id="btn-ref">Скопировать ссылку</button>
+</div>
+<div class="card">
+  <div class="clbl" id="h-how">Как работает</div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:28px;height:28px;background:var(--blue)
