@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Orbit</title>
+<title>Orbit v2</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -32,7 +32,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .page.active{display:block}
 
 /* NAV */
-#nav{display:flex;align-items:flex-end;justify-content:space-around;background:var(--white);border-top:2px solid var(--border);padding:6px 0 max(12px,env(safe-area-inset-bottom));flex-shrink:0;box-shadow:0 -4px 24px rgba(29,109,245,.07)}
+#nav{display:flex!important;align-items:flex-end;justify-content:space-around;background:var(--white);border-top:2px solid var(--border);padding:6px 0 max(12px,env(safe-area-inset-bottom));flex-shrink:0;box-shadow:0 -4px 24px rgba(29,109,245,.07)}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;padding:4px 2px;transition:.15s}
 .ni-ico{width:32px;height:32px;border-radius:11px;display:flex;align-items:center;justify-content:center;transition:.15s;background:transparent}
 .ni-ico svg{width:22px;height:22px;stroke:var(--text3);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:.15s}
@@ -250,7 +250,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
     <div class="adico ad1bg">📺</div>
     <div class="adinfo">
       <div class="adname" id="an1">Реклама #1</div>
-      <div class="adrew">+30 BIT</div>
+      <div class="adrew" id="ar1">+30 BIT × множитель</div>
       <div class="adoff" id="as1">Недоступно</div>
       <div class="adlim" id="al1">0 / 50</div>
     </div>
@@ -260,7 +260,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
     <div class="adico ad2bg">📱</div>
     <div class="adinfo">
       <div class="adname" id="an2">Реклама #2</div>
-      <div class="adrew">+10 BIT</div>
+      <div class="adrew" id="ar2">+10 BIT × множитель</div>
       <div class="adoff" id="as2">Недоступно</div>
       <div class="adlim" id="al2">0 / 50</div>
     </div>
@@ -283,5 +283,4 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   <div class="clbl" id="l-ci">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
   <div class="cistats">
     <div class="cistat"><div class="civ" id="cis">1</div><div class="cil" id="l-str">Серия</div></div>
-    <div class="cistat"><div class="civ" id="cim">×1.0</div><div class="cil" id="l-mul">Множитель</div></div>
-    <div class="cistat"><div cla
+    <div class="cistat"><div class="civ" id="cim">×1.0</div><div class="cil" id="l-mul"
