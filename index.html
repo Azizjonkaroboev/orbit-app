@@ -9,31 +9,24 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #000;
-      color: white;
+      background: #f0f2f5;
       margin: 0;
       padding: 0;
       height: 100vh;
       overflow-y: auto;
-    }
-    .header {
-      background: #000;
-      padding: 15px;
-      text-align: center;
-      border-bottom: 1px solid #ffd700;
+      color: #000;
     }
     .user-info {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 15px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      margin: 10px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
     }
-    .user-avatar {
-      background: #ffd700;
-      color: #000;
+    .avatar {
+      background: #007bff;
+      color: white;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -42,33 +35,37 @@
       justify-content: center;
       font-weight: bold;
     }
-    .balance-container {
-      text-align: center;
+    .balance-box {
+      background: linear-gradient(135deg, #007bff, #00bfff);
+      color: white;
       padding: 20px;
+      margin: 15px;
+      border-radius: 20px;
+      text-align: center;
     }
     .balance {
       font-size: 40px;
-      color: #ffd700;
       margin: 10px 0;
     }
-    .bit-balance {
+    .bit {
       font-size: 20px;
-      color: #ffd700;
     }
     .section {
-      background: #1a1a1a;
-      border-radius: 12px;
+      background: #fff;
+      border-radius: 15px;
       padding: 15px;
       margin: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .section-title {
+    .title {
       font-size: 18px;
-      color: #ffd700;
+      font-weight: bold;
       margin-bottom: 10px;
+      color: #007bff;
     }
     .btn {
-      background: #ffd700;
-      color: #000;
+      background: #007bff;
+      color: white;
       border: none;
       padding: 15px;
       font-size: 18px;
@@ -82,41 +79,51 @@
       display: inline-block;
       margin: 5px 1%;
     }
-    .countdown-circle {
+    .promo-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .pvp-circle {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: #ffd700;
-      color: #000;
+      background: #007bff;
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 20px auto;
       font-size: 36px;
       font-weight: bold;
+      border: 8px solid #e0f0ff;
     }
     .nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: #000;
+      background: #fff;
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      border-top: 1px solid #ffd700;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     }
     .nav-btn {
       background: none;
       border: none;
-      color: white;
+      color: #666;
       font-size: 12px;
       cursor: pointer;
       flex: 1;
       text-align: center;
     }
     .nav-btn.active {
-      color: #ffd700;
+      color: #007bff;
       font-weight: bold;
     }
     .tab {
@@ -126,60 +133,53 @@
     .tab.active {
       display: block;
     }
-    .hidden { display: none; }
-    .visible { display: block; }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="user-info">
-      <div class="user-avatar" id="user-avatar">?</div>
-      <span id="user-name">@username</span>
-      <select id="lang-switch">
-        <option value="ru">RU</option>
-        <option value="en">EN</option>
-      </select>
-    </div>
+  <div class="user-info">
+    <div class="avatar" id="avatar">@</div>
+    <span id="username">@username</span>
+    <select id="lang">
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
   </div>
 
   <!-- Главная -->
   <div id="main" class="tab active">
-    <div class="balance-container">
-      <div class="balance">0.00 TON</div>
-      <div class="bit-balance">BIT: 0</div>
+    <div class="balance-box">
+      <div class="balance">0.000 TON</div>
+      <div class="bit">10 BIT</div>
     </div>
 
     <div class="section">
-      <div class="section-title">РЕКЛАМА</div>
-      <button class="btn" onclick="alert('Реклама недоступна')">Смотреть рекламу</button>
+      <div class="title">РЕКЛАМА</div>
+      <div>Реклама #1 +30 BIT</div>
+      <button class="btn" onclick="alert('Недоступно')">Просмотр</button>
+      <div>Реклама #2 +10 BIT</div>
+      <button class="btn" onclick="alert('Недоступно')">Просмотр</button>
     </div>
 
     <div class="section">
-      <div class="section-title">ЧЕК-ИН</div>
-      <div>Серия: <span id="streak">0</span> | Множитель: <span id="multiplier">x1.0</span></div>
-      <button class="btn" onclick="checkIn()">Забрать</button>
+      <div class="title">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
+      <div>Серия: 1 | Множитель: x1.0 | 10 BIT</div>
+      <button class="btn" onclick="alert('Уже забрано')">Забрать</button>
     </div>
 
     <div class="section">
-      <div class="section-title">ОБМЕН BIT → TON</div>
-      <div>Курс: 10 000 BIT = 1 TON</div>
-      <div>Мин: 500 BIT</div>
-      <button class="btn" onclick="exchange()">Обменять</button>
-    </div>
-
-    <div class="section">
-      <button class="btn btn-half" onclick="deposit()">Депозит ↓</button>
-      <button class="btn btn-half" onclick="withdraw()">Вывод ↑</button>
+      <div class="title">ПРОМО-КОД</div>
+      <input type="text" class="promo-input" placeholder="Введите промо-код">
+      <button class="btn" onclick="alert('Активировано')">Активировать</button>
     </div>
   </div>
 
   <!-- PvP -->
   <div id="pvp" class="tab">
     <div class="section">
-      <div class="section-title">PvP</div>
-      <div class="countdown-circle" id="pvp-timer">15</div>
-      <div>Мин. ставка: 0.01 TON</div>
-      <input type="number" id="pvp-amount" placeholder="Сумма ставки" min="0.01" step="0.01">
+      <div class="title">PvP</div>
+      <div class="pvp-circle" id="timer">15</div>
+      <div>Ожидание игроков...</div>
+      <input type="number" placeholder="Мин. 0.01 TON" step="0.01" min="0.01">
       <button class="btn" onclick="startPvP()">Ставить</button>
     </div>
   </div>
@@ -187,7 +187,7 @@
   <!-- Задание -->
   <div id="zadanie" class="tab">
     <div class="section">
-      <div class="section-title">Задания</div>
+      <div class="title">Задания</div>
       <p>Пока нет заданий</p>
     </div>
   </div>
@@ -195,18 +195,19 @@
   <!-- Друзья -->
   <div id="druzja" class="tab">
     <div class="section">
-      <div class="section-title">Друзья</div>
-      <p>Приглашено: <span id="referrals">0</span></p>
-      <p>Заработано: <span id="ref-earned">0.000</span> TON</p>
-      <button class="btn" onclick="copyRefLink()">Скопировать ссылку</button>
+      <div class="title">Пригласи и заработай</div>
+      <div>5% с заработка друзей навсегда</div>
+      <div>0 приглашено</div>
+      <div>0.000 TON заработано</div>
+      <button class="btn" onclick="copyLink()">Скопировать ссылку</button>
     </div>
   </div>
 
   <!-- Профиль -->
   <div id="profile" class="tab">
     <div class="section">
-      <div class="section-title">Профиль</div>
-      <p id="profile-name">@username</p>
+      <div class="title">Профиль</div>
+      <p id="profile-username">@username</p>
       <button class="btn" onclick="connectWallet()">Подключить кошелёк</button>
     </div>
   </div>
@@ -225,30 +226,19 @@
     tg.expand();
 
     const tonConnectUI = new TONCONNECT_UI.TonConnectUI({
-      manifestUrl: 'https://ton.org/tonconnect-manifest.json' // можно заменить на свой
+      manifestUrl: 'https://ton.org/tonconnect-manifest.json'
     });
 
-    let lang = 'ru';
     let ton = 0;
-    let bit = 0;
-    let streak = 0;
-    let multiplier = 1.0;
-    let lastCheckIn = 0;
-    let referrals = 0;
-    let refEarned = 0;
+    let bit = 10;
     let walletConnected = false;
 
     const user = tg.initDataUnsafe.user || {};
     const username = user.username ? '@' + user.username : '@username';
 
-    document.getElementById('user-name').innerText = username;
-    document.getElementById('user-avatar').innerText = username.charAt(1).toUpperCase();
-    document.getElementById('profile-name').innerText = username;
-
-    function updateBalance() {
-      document.querySelector('.balance').innerText = ton.toFixed(3) + ' TON';
-      document.querySelector('.bit-balance').innerText = 'BIT: ' + bit;
-    }
+    document.getElementById('username').innerText = username;
+    document.getElementById('avatar').innerText = username.charAt(1).toUpperCase();
+    document.getElementById('profile-username').innerText = username;
 
     function showTab(tabId) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -257,37 +247,18 @@
       event.target.classList.add('active');
     }
 
-    function checkIn() {
-      const now = Date.now();
-      if (now - lastCheckIn > 86400000) { // 24 часа
-        streak = Math.min(streak + 1, 5);
-        multiplier = 1.0 + (streak * 0.1);
-        lastCheckIn = now;
-        bit += 10 * multiplier;
-        alert('Чек-ин выполнен! + ' + (10 * multiplier) + ' BIT | Множитель x' + multiplier.toFixed(1));
-      } else {
-        alert('Сегодня уже получено');
-      }
-      updateBalance();
-    }
-
-    function exchange() {
-      if (bit >= 500) {
-        const tonAdd = bit / 10000;
-        ton += tonAdd;
-        bit = 0;
-        alert('Обмен выполнен! +' + tonAdd.toFixed(3) + ' TON');
-        updateBalance();
-      } else {
-        alert('Недостаточно BIT (мин 500)');
-      }
+    function connectWallet() {
+      tonConnectUI.openModal();
+      tonConnectUI.onStatusChange(wallet => {
+        if (wallet) {
+          walletConnected = true;
+          alert('Кошелёк подключён');
+        }
+      });
     }
 
     function deposit() {
-      if (!walletConnected) {
-        alert('Сначала подключите кошелёк');
-        return;
-      }
+      if (!walletConnected) return alert('Подключите кошелёк');
       const amount = prompt('Сумма депозита (мин 0.1 TON):');
       if (amount && parseFloat(amount) >= 0.1) {
         const nano = Math.floor(parseFloat(amount) * 1e9).toString();
@@ -299,32 +270,19 @@
           validUntil: Math.floor(Date.now() / 1000) + 300
         }).then(() => {
           ton += parseFloat(amount);
-          updateBalance();
           alert('Депозит выполнен! +' + amount + ' TON');
-        }).catch(e => alert('Ошибка: ' + (e.message || 'Отклонено')));
+        }).catch(e => alert('Ошибка: ' + e.message));
       }
     }
 
     function withdraw() {
       const amount = prompt('Сумма вывода (мин 0.5 TON):');
-      if (amount && parseFloat(amount) >= 0.5 && parseFloat(amount) <= ton) {
-        alert('Заявка на ' + amount + ' TON создана! Ожидайте (ручной вывод)');
-      } else {
-        alert('Неверная сумма');
+      if (amount && parseFloat(amount) >= 0.5) {
+        alert('Заявка на ' + amount + ' TON создана! Ожидайте (ручной)');
       }
     }
 
-    function connectWallet() {
-      tonConnectUI.openModal();
-      tonConnectUI.onStatusChange(wallet => {
-        if (wallet) {
-          walletConnected = true;
-          alert('Кошелёк подключён!');
-        }
-      });
-    }
-
-    function copyRefLink() {
+    function copyLink() {
       const link = `https://t.me/Orbit_tonbot?startapp=${user.id || 'ref'}`;
       navigator.clipboard.writeText(link);
       alert('Ссылка скопирована!');
@@ -344,13 +302,10 @@
       }, 1000);
     }
 
-    document.getElementById('lang-switch').addEventListener('change', e => {
-      lang = e.target.value;
-      document.documentElement.lang = lang;
-      // Можно добавить переводы для всех текстов через data-lang, но пока базово
+    document.getElementById('lang').addEventListener('change', e => {
+      // Перевод можно добавить позже через data-lang
+      alert('Язык изменён на ' + e.target.value);
     });
-
-    updateBalance();
   </script>
 </body>
-        </html>
+</html>
