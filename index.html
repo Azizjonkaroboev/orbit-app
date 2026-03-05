@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Orbit</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<script src="https://unpkg.com/@tonconnect/ui@2.0.6/dist/tonconnect-ui.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -96,7 +96,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 .wcard-ico{width:42px;height:42px;background:linear-gradient(135deg,#1d6df5,#60a5fa);border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .wcard-ico svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .wcard-l{font-size:10px;color:#4a4a5a;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
-.wcard-v{font-size:13px;color:#e6edf3;font-weight:700;margin-top:2px}
+.wcard-v{font-size:13px;color:#e6edf3;font-weight:700;margin-top:2px;word-break:break-all}
 .wst{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:12px}
 .wst.on{background:rgba(16,185,129,.15);color:#10b981}
 .wst.off{background:rgba(248,81,73,.15);color:#f85149}
@@ -121,18 +121,44 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 .mbox{background:#1a1a1e;border-radius:22px 22px 0 0;width:100%;padding:20px 20px max(28px,env(safe-area-inset-bottom));animation:mup .22s ease;max-height:90vh;overflow-y:auto;border-top:1px solid #2a2a2e}
 @keyframes mup{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .mhandle{width:36px;height:4px;background:#2a2a2e;border-radius:99px;margin:0 auto 18px}
-.minp{width:100%;background:#222228;border:1px solid #2a2a2e;border-radius:12px;padding:14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800;margin-bottom:10px}
+.minp{width:100%;background:#222228;border:1px solid #2a2a2e;border-radius:12px;padding:14px;color:#e6edf3;font-family:'Inter';font-size:14px;font-weight:600;margin-bottom:10px}
 .minp:focus{outline:none;border-color:#1d6df5}
-.minp::placeholder{color:#484f58;font-size:14px;font-family:'Inter';font-weight:400}
+.minp::placeholder{color:#484f58}
 .mnote{background:#0d1b3e;border:1px solid #1d3a7a;border-radius:11px;padding:11px 13px;font-size:13px;color:#60a5fa;font-weight:600;margin-bottom:14px;line-height:1.6}
 #notif{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:#e6edf3;color:#111214;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:700;z-index:2000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.4)}
 #notif.show{transform:translateX(-50%) translateY(0)}
 .lang-en .ru-txt{display:none}
 .lang-ru .en-txt{display:none}
+#tc-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:flex-end}
+#tc-modal.open{display:flex}
+.tc-box{background:#1a1a1e;border-radius:22px 22px 0 0;width:100%;padding:20px 20px max(28px,env(safe-area-inset-bottom));border-top:1px solid #2a2a2e;animation:mup .22s ease}
+.wlt-btn{display:flex;align-items:center;gap:12px;background:#222228;border:1px solid #2a2a2e;border-radius:14px;padding:14px;margin-bottom:8px;cursor:pointer;width:100%}
+.wlt-ico{width:40px;height:40px;border-radius:12px;flex-shrink:0}
+.wlt-name{font-weight:700;font-size:15px;color:#e6edf3}
+.wlt-sub{font-size:12px;color:#4a4a5a;margin-top:2px}
 </style>
 </head>
 <body>
 <div id="notif"></div>
+<div id="tc-modal">
+  <div class="tc-box">
+    <div style="width:36px;height:4px;background:#2a2a2e;border-radius:99px;margin:0 auto 18px"></div>
+    <div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:16px">💎 <span class="ru-txt">Выбери кошелёк</span><span class="en-txt">Choose wallet</span></div>
+    <button class="wlt-btn" onclick="openWallet('tonkeeper')">
+      <img class="wlt-ico" src="https://tonkeeper.com/assets/tonconnect-icon.png" onerror="this.style.background='#0088cc';this.src=''">
+      <div><div class="wlt-name">Tonkeeper</div><div class="wlt-sub">tonkeeper.com</div></div>
+    </button>
+    <button class="wlt-btn" onclick="openWallet('mytonwallet')">
+      <img class="wlt-ico" src="https://mytonwallet.io/icon-256.png" onerror="this.style.background='#2196f3';this.src=''">
+      <div><div class="wlt-name">MyTonWallet</div><div class="wlt-sub">mytonwallet.io</div></div>
+    </button>
+    <button class="wlt-btn" onclick="openWallet('tonhub')">
+      <img class="wlt-ico" src="https://tonhub.com/img/icon.png" onerror="this.style.background='#6366f1';this.src=''">
+      <div><div class="wlt-name">Tonhub</div><div class="wlt-sub">tonhub.com</div></div>
+    </button>
+    <button style="width:100%;padding:13px;background:transparent;border:1px solid #2a2a2e;border-radius:13px;color:#8b949e;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px" onclick="closeTcModal()"><span class="ru-txt">Отмена</span><span class="en-txt">Cancel</span></button>
+  </div>
+</div>
 <div id="modal" onclick="if(event.target===this)closeModal()">
   <div class="mbox"><div class="mhandle"></div><div id="mc"></div></div>
 </div>
@@ -308,6 +334,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div class="how-row"><div class="how-n">4</div><div class="how-t"><b style="color:#1d6df5"><span class="ru-txt">Ты получаешь 5% с его заработка</span><span class="en-txt">You get 5% of his earnings</span></b></div></div>
 </div>
 </div>
+
 <div class="page" id="page-profile">
 <div class="topbar">
   <div class="tl">
@@ -331,7 +358,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
     <div class="wcard-ico"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></div>
     <div><div class="wcard-l">TON <span class="ru-txt">КОШЕЛЁК</span><span class="en-txt">WALLET</span></div><div class="wcard-v" id="w-addr"><span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span></div></div>
   </div>
-  <div class="wst off" id="w-st"><div class="wdot"></div><span id="w-st-txt"><span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span></span></div>
+  <div class="wst off" id="w-st"><div class="wdot"></div><span id="w-st-txt"></span></div>
   <button class="btn" id="w-btn" onclick="connectWallet()">💎 <span class="ru-txt">Подключить кошелёк</span><span class="en-txt">Connect wallet</span></button>
 </div>
 <div class="card">
@@ -357,29 +384,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 <div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg><span class="ru-txt">Язык</span><span class="en-txt">Language</span></div><div class="prval" id="plang">Русский</div></div>
 <button onclick="openLeaderboard()" style="width:100%;padding:14px;background:#222228;border:1px solid #2a2a2e;border-radius:13px;color:#e6edf3;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;margin-bottom:20px">🏆 <span class="ru-txt">Лидерборд</span><span class="en-txt">Leaderboard</span></button>
 </div>
-
 </div>
 <div id="nav">
-  <div class="ni" id="nav-pvp" onclick="goTo('pvp')">
-    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M14.5 17.5l2 2a2.121 2.121 0 0 0 3-3l-2-2"/><path d="M3 21l4-4"/></svg></div>
-    <span class="ni-lbl">PvP</span>
-  </div>
-  <div class="ni" id="nav-task" onclick="goTo('task')">
-    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-    <span class="ni-lbl"><span class="ru-txt">Задание</span><span class="en-txt">Tasks</span></span>
-  </div>
-  <div class="nc" id="nav-main" onclick="goTo('main')">
-    <div class="nc-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-    <span class="nc-lbl"><span class="ru-txt">Главная</span><span class="en-txt">Home</span></span>
-  </div>
-  <div class="ni" id="nav-friends" onclick="goTo('friends')">
-    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-    <span class="ni-lbl"><span class="ru-txt">Друзья</span><span class="en-txt">Friends</span></span>
-  </div>
-  <div class="ni" id="nav-profile" onclick="goTo('profile')">
-    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-    <span class="ni-lbl"><span class="ru-txt">Профиль</span><span class="en-txt">Profile</span></span>
-  </div>
+  <div class="ni" id="nav-pvp" onclick="goTo('pvp')"><div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M14.5 17.5l2 2a2.121 2.121 0 0 0 3-3l-2-2"/><path d="M3 21l4-4"/></svg></div><span class="ni-lbl">PvP</span></div>
+  <div class="ni" id="nav-task" onclick="goTo('task')"><div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="ni-lbl"><span class="ru-txt">Задание</span><span class="en-txt">Tasks</span></span></div>
+  <div class="nc" id="nav-main" onclick="goTo('main')"><div class="nc-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nc-lbl"><span class="ru-txt">Главная</span><span class="en-txt">Home</span></span></div>
+  <div class="ni" id="nav-friends" onclick="goTo('friends')"><div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="ni-lbl"><span class="ru-txt">Друзья</span><span class="en-txt">Friends</span></span></div>
+  <div class="ni" id="nav-profile" onclick="goTo('profile')"><div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="ni-lbl"><span class="ru-txt">Профиль</span><span class="en-txt">Profile</span></span></div>
 </div>
 </div>
 <script>
@@ -389,34 +400,65 @@ const tgU=tg?.initDataUnsafe?.user;
 const UNAME=tgU?(tgU.username?'@'+tgU.username:tgU.first_name||'User'):'@username';
 const ULETTER=(tgU?.first_name||tgU?.username||'O')[0].toUpperCase();
 const OWNER='UQAG8cx9dXAWIfcoNUkdyki-Un9QzJxw3_xU8624H6OnZFMb';
-let S=JSON.parse(localStorage.getItem('orb14')||'{}');
+let S=JSON.parse(localStorage.getItem('orb16')||'{}');
 if(!S.ton)S.ton=0;if(!S.bit)S.bit=0;if(!S.streak)S.streak=0;
 if(!S.refCount)S.refCount=0;if(!S.refEarned)S.refEarned=0;
 if(!S.lang)S.lang='ru';if(!S.adV)S.adV={};
 if(!S.totalBit)S.totalBit=0;if(!S.totalTon)S.totalTon=0;
 if(!S.pvpRound)S.pvpRound=1;
-function save(){localStorage.setItem('orb14',JSON.stringify(S));}
+function save(){localStorage.setItem('orb16',JSON.stringify(S));}
 function g(id){return document.getElementById(id);}
 function st(id,v){const e=g(id);if(e)e.textContent=v;}
 function getMulti(){return Math.min(1+(S.streak-1)*0.1,1.5);}
 let lang=S.lang||'ru';
 
-let tonConnectUI=null;
-try{
-  tonConnectUI=new TONConnectUI({
-    manifestUrl:'https://azizjonkaroboev.github.io/orbit-app/tonconnect-manifest.json',
-    buttonRootId:null
-  });
-  tonConnectUI.onStatusChange(wallet=>{
-    if(wallet){S.wallet=wallet.account.address;save();updateUI();notify('✅ '+(lang==='ru'?'Кошелёк подключён!':'Wallet connected!'));}
-    else{S.wallet=null;save();updateUI();}
-  });
-}catch(e){console.log('TON:',e);}
+function closeTcModal(){g('tc-modal').classList.remove('open');}
 
-async function connectWallet(){
-  if(!tonConnectUI){notify('Loading...');return;}
-  if(S.wallet){await tonConnectUI.disconnect();S.wallet=null;save();updateUI();notify(lang==='ru'?'Кошелёк отключён':'Disconnected');return;}
-  try{await tonConnectUI.openModal();}catch(e){notify('Error');}
+function connectWallet(){
+  if(S.wallet){
+    openModal(`<div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:12px">💎 ${lang==='ru'?'Мой кошелёк':'My wallet'}</div>
+    <div style="background:#222228;border-radius:12px;padding:12px;margin-bottom:14px;font-size:12px;color:#60a5fa;word-break:break-all;line-height:1.6">${S.wallet}</div>
+    <button class="btn" style="margin-bottom:8px" onclick="closeModal()">${lang==='ru'?'Закрыть':'Close'}</button>
+    <button class="btn btn-ghost" onclick="disconnectWallet()">${lang==='ru'?'Отключить':'Disconnect'}</button>`);
+    return;
+  }
+  g('tc-modal').classList.add('open');
+}
+
+function openWallet(type){
+  closeTcModal();
+  const appUrl=encodeURIComponent('https://azizjonkaroboev.github.io/orbit-app/');
+  const ret=encodeURIComponent(window.location.href);
+  let url='';
+  if(type==='tonkeeper'){
+    url=`https://app.tonkeeper.com/ton-connect?v=2&id=orbit&r=${appUrl}&ret=${ret}`;
+  } else if(type==='mytonwallet'){
+    url=`https://mytonwallet.io/api/tonconnect?v=2&id=orbit&r=${appUrl}&ret=${ret}`;
+  } else {
+    url=`https://tonhub.com/api/tonconnect?v=2&id=orbit&r=${appUrl}&ret=${ret}`;
+  }
+  if(tg?.openLink)tg.openLink(url);
+  else window.open(url,'_blank');
+  // После возврата проверяем адрес
+  setTimeout(()=>{
+    openModal(`<div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:12px">💎 ${lang==='ru'?'Введи адрес кошелька':'Enter wallet address'}</div>
+    <div style="font-size:13px;color:#8b949e;margin-bottom:12px">${lang==='ru'?'Скопируй адрес из кошелька и вставь сюда:':'Copy address from wallet and paste here:'}</div>
+    <input type="text" class="minp" id="walletInp" placeholder="UQ...">
+    <div class="mnote">📌 ${lang==='ru'?'В Tonkeeper: Получить → Скопировать адрес':'In Tonkeeper: Receive → Copy address'}</div>
+    <button class="btn" onclick="saveWallet()">${lang==='ru'?'Сохранить':'Save'}</button>`);
+  },2000);
+}
+
+function saveWallet(){
+  const addr=g('walletInp')?.value?.trim();
+  if(!addr||addr.length<20){notify(lang==='ru'?'Введи адрес!':'Enter address!');return;}
+  S.wallet=addr;save();closeModal();updateUI();
+  notify('✅ '+(lang==='ru'?'Кошелёк подключён!':'Wallet connected!'));
+}
+
+function disconnectWallet(){
+  S.wallet=null;save();closeModal();updateUI();
+  notify(lang==='ru'?'Кошелёк отключён':'Disconnected');
 }
 
 function applyLang(){
@@ -424,6 +466,7 @@ function applyLang(){
   ['langBtn','langBtn1','langBtn2','langBtn3','langBtn4'].forEach(id=>{const el=g(id);if(el)el.textContent=lang==='ru'?'RU':'EN';});
   st('plang',lang==='ru'?'Русский':'English');
 }
+
 function updateUI(){
   const ton=S.ton.toFixed(3),bit=S.bit,streak=Math.max(S.streak,1);
   const multi=getMulti(),ms=multi.toFixed(1);
@@ -443,16 +486,19 @@ function updateUI(){
   const cbtn=g('cibtn');
   if(cbtn){if(S.lastCI===today){cbtn.innerHTML='<span class="ru-txt">Уже забрано ✓</span><span class="en-txt">Claimed ✓</span>';cbtn.disabled=true;}
   else{cbtn.innerHTML='<span class="ru-txt">Забрать бонус</span><span class="en-txt">Claim bonus</span>';cbtn.disabled=false;}}
+  const wAddrEl=g('w-addr'),wStEl=g('w-st'),wStTxt=g('w-st-txt'),wBtn=g('w-btn');
   if(S.wallet){
     st('h-wval',S.wallet.slice(0,6)+'...'+S.wallet.slice(-4));
-    const wa=g('w-addr');if(wa)wa.textContent=S.wallet.slice(0,8)+'...'+S.wallet.slice(-5);
-    const ws=g('w-st');if(ws)ws.className='wst on';
-    const wbtn=g('w-btn');if(wbtn)wbtn.innerHTML='🔓 <span class="ru-txt">Отключить</span><span class="en-txt">Disconnect</span>';
+    if(wAddrEl)wAddrEl.textContent=S.wallet.slice(0,10)+'...'+S.wallet.slice(-6);
+    if(wStEl)wStEl.className='wst on';
+    if(wStTxt)wStTxt.innerHTML='<span class="ru-txt">Подключён ✓</span><span class="en-txt">Connected ✓</span>';
+    if(wBtn)wBtn.innerHTML='👁 <span class="ru-txt">Мой кошелёк</span><span class="en-txt">My wallet</span>';
   }else{
     st('h-wval',lang==='ru'?'Подключить →':'Connect →');
-    const wa=g('w-addr');if(wa)wa.innerHTML='<span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span>';
-    const ws=g('w-st');if(ws)ws.className='wst off';
-    const wbtn=g('w-btn');if(wbtn)wbtn.innerHTML='💎 <span class="ru-txt">Подключить кошелёк</span><span class="en-txt">Connect wallet</span>';
+    if(wAddrEl)wAddrEl.innerHTML='<span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span>';
+    if(wStEl)wStEl.className='wst off';
+    if(wStTxt)wStTxt.innerHTML='<span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span>';
+    if(wBtn)wBtn.innerHTML='💎 <span class="ru-txt">Подключить кошелёк</span><span class="en-txt">Connect wallet</span>';
   }
   applyLang();calcExch();save();
 }
@@ -466,8 +512,7 @@ function goTo(tab){
   const page=g('page-'+tab);if(page)page.classList.add('active');
   const nav=g('nav-'+tab);if(nav)nav.classList.add('active');
   const content=g('content');if(content)content.scrollTop=0;
-  cur=tab;if(tab==='pvp')setTimeout(drawWheel,60);
-  updateUI();
+  cur=tab;if(tab==='pvp')setTimeout(drawWheel,60);updateUI();
 }
 
 function notify(msg){const el=g('notif');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2400);}
@@ -482,7 +527,6 @@ function doCheckin(){
   S.lastCI=today;save();updateUI();
   notify('✅ '+(lang==='ru'?'День ':'Day ')+S.streak+' | ×'+getMulti().toFixed(1));
 }
-
 function activatePromo(){
   const c=g('promoInp').value.trim().toUpperCase();
   if(!c){notify(lang==='ru'?'Введите код!':'Enter code!');return;}
@@ -490,6 +534,7 @@ function activatePromo(){
   if(codes[c]){S.bit+=codes[c];S.totalBit+=codes[c];g('promoInp').value='';save();updateUI();notify('+'+codes[c]+' BIT 🎁');}
   else notify(lang==='ru'?'Неверный код':'Wrong code');
 }
+
 function copyRef(){
   const link='https://t.me/Orbit_tonbot?start='+(tgU?.id||'ref');
   const el=document.createElement('textarea');el.value=link;el.style.position='fixed';el.style.opacity='0';
@@ -501,44 +546,46 @@ function copyRef(){
 
 function openDeposit(){
   if(!S.wallet){notify(lang==='ru'?'Сначала подключи кошелёк!':'Connect wallet first!');return;}
-  openModal(`<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3;margin-bottom:12px">${lang==='ru'?'Депозит TON':'Deposit TON'}</div>
-    <p style="font-size:13px;color:#8b949e;margin-bottom:12px">${lang==='ru'?'Минимум 0.1 TON':'Minimum 0.1 TON'}</p>
+  openModal(`<div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:12px">↓ ${lang==='ru'?'Депозит TON':'Deposit TON'}</div>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:14px">${lang==='ru'?'Минимум 0.1 TON':'Minimum 0.1 TON'}</p>
     <div style="position:relative;margin-bottom:10px">
       <input type="number" class="minp" id="depAmt" placeholder="0.1" min="0.1" step="0.1" oninput="calcDep()">
-      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a4a5a">TON</span>
+      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a4a5a;font-size:13px">TON</span>
     </div>
-    <div style="background:#0d1b3e;border:1px solid #1d3a7a;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;margin-bottom:14px">
-      <span style="font-size:12px;color:#60a5fa;font-weight:700">${lang==='ru'?'Придёт:':'You get:'}</span>
+    <div style="background:#0d1b3e;border:1px solid #1d3a7a;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span style="font-size:12px;color:#60a5fa;font-weight:700">${lang==='ru'?'Зачислится:':'You get:'}</span>
       <span style="font-family:Syne,sans-serif;font-size:20px;color:#60a5fa;font-weight:800" id="depResV">— TON</span>
     </div>
-    <button class="btn" onclick="sendDeposit()">${lang==='ru'?'Открыть кошелёк':'Open wallet'}</button>`);
+    <button class="btn" onclick="sendDeposit()">💎 ${lang==='ru'?'Оплатить':'Pay'}</button>`);
 }
 function calcDep(){const v=parseFloat(g('depAmt')?.value)||0;st('depResV',v>0?v.toFixed(3)+' TON':'— TON');}
 function sendDeposit(){
   const amt=parseFloat(g('depAmt')?.value)||0;
   if(amt<0.1){notify(lang==='ru'?'Минимум 0.1 TON!':'Minimum 0.1 TON!');return;}
-  const link=`https://app.tonkeeper.com/transfer/${OWNER}?amount=${Math.floor(amt*1e9)}&text=orbit_${tgU?.id||0}`;
+  const link=`https://app.tonkeeper.com/transfer/${OWNER}?amount=${Math.floor(amt*1e9)}&text=orbit_dep_${tgU?.id||0}`;
   closeModal();
   if(tg?.openLink)tg.openLink(link);else window.open(link,'_blank');
-  setTimeout(()=>{S.ton+=amt;S.totalTon+=amt;save();updateUI();notify('✅ +'+amt.toFixed(3)+' TON');},4000);
+  setTimeout(()=>{S.ton+=amt;S.totalTon+=amt;save();updateUI();notify('✅ +'+amt.toFixed(3)+' TON');},5000);
 }
 
 function openWithdraw(){
   if(!S.wallet){notify(lang==='ru'?'Сначала подключи кошелёк!':'Connect wallet first!');return;}
-  openModal(`<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3;margin-bottom:12px">${lang==='ru'?'Вывод TON':'Withdraw TON'}</div>
-    <p style="font-size:13px;color:#8b949e;margin-bottom:12px">${lang==='ru'?'Баланс:':'Balance:'} <b style="color:#1d6df5">${S.ton.toFixed(3)} TON</b></p>
+  if(S.ton<0.5){notify(lang==='ru'?'Минимум 0.5 TON!':'Minimum 0.5 TON!');return;}
+  openModal(`<div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:12px">↑ ${lang==='ru'?'Вывод TON':'Withdraw TON'}</div>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:14px">${lang==='ru'?'Баланс:':'Balance:'} <b style="color:#1d6df5">${S.ton.toFixed(3)} TON</b></p>
     <div style="position:relative;margin-bottom:14px">
       <input type="number" class="minp" id="wdAmt" placeholder="0.5" min="0.5" step="0.1">
-      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a4a5a">TON</span>
+      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a4a5a;font-size:13px">TON</span>
     </div>
-    <div class="mnote">📌 ${lang==='ru'?'Минимум 0.5 TON. До 24 часов.':'Minimum 0.5 TON. Up to 24 hours.'}</div>
-    <button class="btn" onclick="confirmWd()">${lang==='ru'?'Подтвердить':'Confirm'}</button>`);
+    <div class="mnote">📌 ${lang==='ru'?'Минимум 0.5 TON. Вывод обрабатывается вручную в течение 24 часов.':'Minimum 0.5 TON. Manual processing within 24 hours.'}</div>
+    <button class="btn" onclick="confirmWd()">${lang==='ru'?'Отправить заявку':'Send request'}</button>`);
 }
 function confirmWd(){
   const amt=parseFloat(g('wdAmt')?.value)||0;
   if(amt<0.5){notify(lang==='ru'?'Минимум 0.5 TON!':'Minimum 0.5 TON!');return;}
   if(amt>S.ton){notify(lang==='ru'?'Недостаточно!':'Not enough!');return;}
-  S.ton-=amt;save();closeModal();updateUI();notify('✅ '+(lang==='ru'?'Заявка принята!':'Request sent!'));
+  S.ton-=amt;save();closeModal();updateUI();
+  notify('✅ '+(lang==='ru'?'Заявка отправлена!':'Request sent!'));
 }
 
 function calcExch(){const v=parseFloat(g('exchInp')?.value)||0;st('exchOut',v>=500?(v*0.0001).toFixed(4)+' TON':'0.0000 TON');}
@@ -646,7 +693,7 @@ function drawWheel(){
     ctx.fillStyle='#484f58';ctx.font='700 12px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(lang==='ru'?'Ставь TON':'Bet TON',cx,cy);return;
   }
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(pvpAngle);ctx.translate(-cx,-cy);
+ctx.save();ctx.translate(cx,cy);ctx.rotate(pvpAngle);ctx.translate(-cx,-cy);
   let ang=-Math.PI/2;
   bets.forEach(b=>{
     const sl=(b.a/ptot)*Math.PI*2;
