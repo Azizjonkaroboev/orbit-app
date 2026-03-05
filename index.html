@@ -10,66 +10,49 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf3;font-family:'Inter',sans-serif}
 ::-webkit-scrollbar{width:0}
-#app{display:flex;flex-direction:column;height:100vh;height:100dvh;position:fixed;width:100%;top:0;left:0}
-#content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;min-height:0}
-.page{display:none;padding:14px 14px 24px}
+#app{display:block;height:100vh;height:100dvh}
+#content{position:fixed;top:0;left:0;right:0;bottom:62px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.page{display:none;padding:14px 14px 20px}
 .page.active{display:block}
-
-/* NAV */
-#nav{display:flex!important;align-items:flex-end;justify-content:space-around;background:#161b22;border-top:1px solid #30363d;padding:6px 0 max(12px,env(safe-area-inset-bottom));flex-shrink:0;width:100%;z-index:100}
+#nav{position:fixed;bottom:0;left:0;right:0;height:62px;display:flex!important;align-items:flex-end;justify-content:space-around;background:#161b22;border-top:1px solid #30363d;padding:6px 0 max(10px,env(safe-area-inset-bottom));z-index:999}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;padding:4px 2px}
-.ni-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.ni-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center}
 .ni-ico svg{width:20px;height:20px;stroke:#6b7280;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:.15s}
-.ni-lbl{font-size:10px;color:#6b7280;font-weight:600;transition:.15s}
+.ni-lbl{font-size:10px;color:#6b7280;font-weight:600}
 .ni.active .ni-ico{background:rgba(29,109,245,.15)}
 .ni.active .ni-ico svg{stroke:#1d6df5}
 .ni.active .ni-lbl{color:#1d6df5}
 .nc{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1}
-.nc-wrap{width:52px;height:52px;background:#1d6df5;border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(29,109,245,.45);margin-top:-18px;border:3px solid #0d1117;transition:.15s}
+.nc-wrap{width:52px;height:52px;background:#1d6df5;border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(29,109,245,.45);margin-top:-18px;border:3px solid #0d1117}
 .nc-wrap svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nc:active .nc-wrap{transform:scale(.88)}
 .nc-lbl{font-size:10px;color:#1d6df5;font-weight:700}
-
-/* TOPBAR */
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .tl{display:flex;align-items:center;gap:10px}
 .tav{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#1d6df5,#60a5fa);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
 .tname{font-weight:700;font-size:14px;color:#e6edf3}
-.tbal{font-size:11px;color:#6b7280;margin-top:1px;font-weight:500}
-.lbtn{background:#1c2128;border:1px solid #30363d;color:#8b949e;padding:7px 13px;border-radius:20px;font-family:'Inter';font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
-.lbtn:active{background:#1d6df5;color:#fff;border-color:#1d6df5}
-
-/* CARDS */
+.tbal{font-size:11px;color:#6b7280;margin-top:1px}
+.lbtn{background:#1c2128;border:1px solid #30363d;color:#8b949e;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}
 .card{background:#161b22;border:1px solid #30363d;border-radius:18px;padding:16px;margin-bottom:12px}
 .clbl{font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;font-weight:700}
-
-/* HERO */
 .hero{background:linear-gradient(135deg,#0d2d6b,#1558d6,#1d6df5);border-radius:22px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
 .hero-r1{position:absolute;top:-50px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06)}
 .hero-r2{position:absolute;bottom:-40px;left:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.04)}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;position:relative;z-index:1}
 .hero-tag{font-size:10px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
 .hero-title{font-family:'Syne';font-size:30px;color:#fff;font-weight:800;letter-spacing:1px;line-height:1}
-.hero-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px;font-weight:500}
+.hero-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px}
 .hero-wb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:8px 12px;cursor:pointer;text-align:right;min-width:88px}
 .hero-wl{font-size:9px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
-.hero-wv{font-size:12px;color:#fff;font-weight:700;margin-top:1px;max-width:82px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hero-wv{font-size:12px;color:#fff;font-weight:700;margin-top:1px}
 .hero-bals{display:flex;gap:10px;position:relative;z-index:1}
 .hb{flex:1;background:rgba(255,255,255,.1);border-radius:14px;padding:12px 14px}
 .hb-val{font-family:'Syne';font-size:24px;color:#fff;font-weight:800;line-height:1}
-.hb-lbl{font-size:10px;color:rgba(255,255,255,.55);font-weight:700;margin-top:3px;letter-spacing:.5px}
-
-/* BTNS */
-.btn{width:100%;padding:13px;background:#1d6df5;color:#fff;border:none;border-radius:13px;font-family:'Inter';font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 18px rgba(29,109,245,.3);transition:.15s}
-.btn:active{transform:scale(.97);background:#1558d6}
+.hb-lbl{font-size:10px;color:rgba(255,255,255,.55);font-weight:700;margin-top:3px}
+.btn{width:100%;padding:13px;background:#1d6df5;color:#fff;border:none;border-radius:13px;font-family:'Inter';font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 18px rgba(29,109,245,.3)}
 .btn-ghost{background:#1c2128;color:#8b949e;box-shadow:none;border:1px solid #30363d}
-.btn-ghost:active{background:#21262d}
-.btn-off{background:#1c2128;color:#484f58;box-shadow:none;border:1px solid #30363d;cursor:not-allowed;opacity:.6;pointer-events:none}
 .btn-sm{padding:10px 14px;font-size:13px;width:auto;border-radius:11px}
 .brow{display:flex;gap:8px}
 .bhalf{flex:1}
-
-/* ADS */
 .aditem{display:flex;align-items:center;gap:12px;background:#1c2128;border:1px solid #30363d;border-radius:14px;padding:13px;margin-bottom:8px}
 .adico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .ad1c{background:linear-gradient(135deg,#3d2000,#7c4400)}
@@ -78,52 +61,35 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
 .adrew{font-size:12px;color:#1d6df5;font-weight:700;margin-top:2px}
 .adoff{font-size:11px;color:#f85149;font-weight:600;margin-top:2px}
 .adlim{font-size:11px;color:#6b7280;margin-top:1px}
-
-/* CHECKIN */
 .cibox{background:linear-gradient(135deg,#0d2d6b,#1558d6);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden}
-.ciring{position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
-.cibox .clbl{color:rgba(255,255,255,.6);margin-bottom:12px;position:relative;z-index:1}
-.cistats{display:flex;gap:8px;margin-bottom:16px;position:relative;z-index:1}
+.cistats{display:flex;gap:8px;margin-bottom:16px}
 .cistat{text-align:center;background:rgba(255,255,255,.1);border-radius:13px;padding:10px 8px;flex:1}
 .civ{font-family:'Syne';font-size:24px;color:#fff;font-weight:800;line-height:1}
 .cil{font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
-.ci-btn{background:#fff;color:#1d6df5;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:15px;cursor:pointer;transition:.15s;position:relative;z-index:1}
-.ci-btn:active{transform:scale(.97)}
-.ci-btn:disabled{background:rgba(255,255,255,.15);color:rgba(255,255,255,.4);cursor:not-allowed}
-
-/* PROMO */
-.pinp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px 14px;color:#e6edf3;font-family:'Inter';font-size:14px;font-weight:600;margin-top:10px;transition:.15s}
-.pinp::placeholder{color:#484f58;font-weight:400}
-.pinp:focus{outline:none;border-color:#1d6df5;background:#21262d}
-
-/* FRIENDS */
+.ci-btn{background:#fff;color:#1d6df5;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:15px;cursor:pointer}
+.ci-btn:disabled{background:rgba(255,255,255,.2);color:rgba(255,255,255,.4);cursor:not-allowed}
+.pinp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px 14px;color:#e6edf3;font-family:'Inter';font-size:14px;font-weight:600;margin-top:10px}
+.pinp:focus{outline:none;border-color:#1d6df5}
+.pinp::placeholder{color:#484f58}
 .ref-hero{background:linear-gradient(135deg,#0d2d6b,#1558d6);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden}
-.ref-ring{position:absolute;bottom:-30px;right:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06)}
-.rttl{font-family:'Syne';font-size:20px;color:#fff;font-weight:800;margin-bottom:3px;position:relative;z-index:1}
-.rsub{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px;font-weight:500;position:relative;z-index:1}
-.rstats{display:flex;gap:10px;margin-bottom:14px;position:relative;z-index:1}
+.rttl{font-family:'Syne';font-size:20px;color:#fff;font-weight:800;margin-bottom:3px}
+.rsub{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px}
+.rstats{display:flex;gap:10px;margin-bottom:14px}
 .rstat{background:rgba(255,255,255,.1);border-radius:13px;padding:11px;flex:1;text-align:center}
 .rval{font-family:'Syne';font-size:24px;color:#fff;font-weight:800;line-height:1}
 .rlbl{font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
-.ref-btn{background:#fff;color:#1d6df5;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:14px;cursor:pointer;transition:.15s;position:relative;z-index:1}
-.ref-btn:active{background:rgba(255,255,255,.85)}
+.ref-btn{background:#fff;color:#1d6df5;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:14px;cursor:pointer}
 .how-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #21262d}
 .how-row:last-child{border-bottom:none}
-.how-n{width:28px;height:28px;background:#1d6df5;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;font-family:'Syne';flex-shrink:0}
-.how-t{font-size:13px;color:#8b949e;font-weight:500}
-.how-t b{color:#1d6df5}
-
-/* PROFILE */
+.how-n{width:28px;height:28px;background:#1d6df5;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.how-t{font-size:13px;color:#8b949e}
 .prof-hero{background:linear-gradient(135deg,#0d2d6b,#1558d6);border-radius:20px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden}
-.prof-ring{position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
-.prof-ava{width:66px;height:66px;border-radius:20px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:'Syne';font-size:24px;font-weight:800;color:#fff;position:relative;z-index:1}
-.prof-name{font-family:'Syne';font-size:20px;color:#fff;font-weight:800;text-align:center;position:relative;z-index:1}
-.prof-bals{display:flex;gap:8px;margin-top:14px;position:relative;z-index:1}
+.prof-ava{width:66px;height:66px;border-radius:20px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:'Syne';font-size:24px;font-weight:800;color:#fff}
+.prof-name{font-family:'Syne';font-size:20px;color:#fff;font-weight:800;text-align:center}
+.prof-bals{display:flex;gap:8px;margin-top:14px}
 .pb{flex:1;background:rgba(255,255,255,.1);border-radius:13px;padding:11px;text-align:center}
 .pb-val{font-family:'Syne';font-size:22px;color:#fff;font-weight:800;line-height:1}
 .pb-lbl{font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
-
-/* WALLET */
 .wcard{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:14px;margin-bottom:12px}
 .wcard-h{display:flex;align-items:center;gap:11px;margin-bottom:12px}
 .wcard-ico{width:42px;height:42px;background:linear-gradient(135deg,#1d6df5,#60a5fa);border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -134,61 +100,32 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
 .wst.on{background:rgba(16,185,129,.15);color:#10b981}
 .wst.off{background:rgba(248,81,73,.15);color:#f85149}
 .wdot{width:6px;height:6px;border-radius:50%;background:currentColor}
-
-/* EXCHANGE */
-.irow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #21262d;font-size:13px;color:#8b949e;font-weight:500}
+.irow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #21262d;font-size:13px;color:#8b949e}
 .irow:last-of-type{border-bottom:none}
 .ival{color:#1d6df5;font-weight:700}
 .exch-inp-w{position:relative;margin:12px 0 8px}
-.exch-inp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px 55px 13px 14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800;transition:.15s}
+.exch-inp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px 55px 13px 14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800}
 .exch-inp:focus{outline:none;border-color:#1d6df5}
 .exch-inp::placeholder{color:#484f58;font-size:14px;font-family:'Inter';font-weight:400}
 .exch-unit{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#6b7280;font-size:13px}
 .exch-res{background:#0d2347;border:1px solid #1d3a6e;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .exch-rl{font-size:12px;color:#60a5fa;font-weight:700}
 .exch-rv{font-family:'Syne';font-size:22px;color:#60a5fa;font-weight:800}
-
-/* PRROW */
 .prrow{display:flex;justify-content:space-between;align-items:center;background:#161b22;border:1px solid #30363d;border-radius:13px;padding:13px 15px;margin-bottom:8px}
 .prlbl{font-size:13px;color:#8b949e;font-weight:600;display:flex;align-items:center;gap:8px}
 .prlbl svg{width:15px;height:15px;stroke:#1d6df5;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .prval{font-weight:700;font-size:13px;color:#e6edf3}
-
-/* LEADERBOARD */
-.lb-tabs{display:flex;gap:6px;margin-bottom:14px;background:#1c2128;border-radius:12px;padding:4px}
-.lb-tab{flex:1;padding:9px;border-radius:9px;font-family:'Inter';font-size:13px;font-weight:700;border:none;cursor:pointer;transition:.15s;color:#6b7280;background:transparent}
-.lb-tab.active{background:#1d6df5;color:#fff;box-shadow:0 2px 10px rgba(29,109,245,.3)}
-.lb-row{display:flex;align-items:center;gap:12px;padding:11px 13px;background:#1c2128;border-radius:13px;margin-bottom:8px}
-.lb-rank{font-family:'Syne';font-size:18px;font-weight:800;width:28px;text-align:center;flex-shrink:0}
-.lb-rank.gold{color:#f59e0b}
-.lb-rank.silver{color:#9ca3af}
-.lb-rank.bronze{color:#cd7c34}
-.lb-rank.other{color:#484f58}
-.lb-ava{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Syne';font-size:15px;font-weight:800;color:#fff;flex-shrink:0}
-.lb-name{font-weight:700;font-size:14px;color:#e6edf3;flex:1}
-.lb-val{font-family:'Syne';font-size:15px;font-weight:800;color:#1d6df5}
-.lb-me{border:1px solid #1d6df5;background:#0d2347}
-
-/* MODAL */
 #modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:flex-end}
 #modal.open{display:flex}
 .mbox{background:#161b22;border-radius:22px 22px 0 0;width:100%;padding:20px 20px max(28px,env(safe-area-inset-bottom));animation:mup .22s ease;max-height:90vh;overflow-y:auto}
 @keyframes mup{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .mhandle{width:36px;height:4px;background:#30363d;border-radius:99px;margin:0 auto 18px}
-.mtitle{font-family:'Syne';font-size:20px;font-weight:800;color:#e6edf3;margin-bottom:14px}
-.minp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800;transition:.15s;margin-bottom:10px}
+.minp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800;margin-bottom:10px}
 .minp:focus{outline:none;border-color:#1d6df5}
 .minp::placeholder{color:#484f58;font-size:14px;font-family:'Inter';font-weight:400}
-.mres{background:#0d2347;border:1px solid #1d3a6e;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.mres-l{font-size:12px;color:#60a5fa;font-weight:700}
-.mres-v{font-family:'Syne';font-size:22px;color:#60a5fa;font-weight:800}
-.maddr{background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px;font-family:monospace;font-size:12px;color:#e6edf3;word-break:break-all;line-height:1.7;margin-bottom:10px}
 .mnote{background:#0d2347;border:1px solid #1d3a6e;border-radius:11px;padding:11px 13px;font-size:13px;color:#60a5fa;font-weight:600;margin-bottom:14px;line-height:1.6}
-
-/* NOTIF */
-#notif{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:#e6edf3;color:#0d1117;padding:10px 20px;border-radius:100px;font-family:'Inter';font-size:14px;font-weight:700;z-index:2000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+#notif{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:#e6edf3;color:#0d1117;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:700;z-index:2000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.4)}
 #notif.show{transform:translateX(-50%) translateY(0)}
-.muted{color:#484f58;font-size:13px;font-weight:500}
 </style>
 </head>
 <body>
@@ -206,18 +143,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
     <div class="tav" id="av0">O</div>
     <div><div class="tname" id="u0">...</div><div class="tbal" id="b0">0.000 TON · 0 BIT</div></div>
   </div>
-  <button class="lbtn" onclick="toggleLang()" id="lb0">RU</button>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
 </div>
 <div class="hero">
   <div class="hero-r1"></div><div class="hero-r2"></div>
   <div class="hero-top">
     <div>
-      <div class="hero-tag" id="h-tag">TON ПЛАТФОРМА</div>
+      <div class="hero-tag">TON ПЛАТФОРМА</div>
       <div class="hero-title">ORBIT</div>
-      <div class="hero-sub" id="h-sub">Зарабатывай TON каждый день</div>
+      <div class="hero-sub">Зарабатывай TON каждый день</div>
     </div>
     <div class="hero-wb" onclick="goTo('profile')">
-      <div class="hero-wl" id="h-wlbl">КОШЕЛЁК</div>
+      <div class="hero-wl">КОШЕЛЁК</div>
       <div class="hero-wv" id="h-wval">Подключить →</div>
     </div>
   </div>
@@ -227,26 +164,26 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
   </div>
 </div>
 <div class="card">
-  <div class="clbl" id="l-ads">РЕКЛАМА</div>
+  <div class="clbl">РЕКЛАМА</div>
   <div class="aditem">
     <div class="adico ad1c">📺</div>
-    <div class="adinfo" style="flex:1">
-      <div class="adname" id="an1">Реклама #1</div>
+    <div style="flex:1">
+      <div class="adname">Реклама #1</div>
       <div class="adrew" id="ar1">+30 BIT × множитель</div>
-      <div class="adoff" id="as1">Недоступно</div>
+      <div class="adoff">Недоступно</div>
       <div class="adlim" id="al1">0/50 сегодня</div>
     </div>
-    <button class="btn btn-off btn-sm" style="width:52px;padding:11px 0;font-size:16px">▶</button>
+    <button class="btn btn-ghost btn-sm" style="width:52px;padding:11px 0;font-size:16px;pointer-events:none;opacity:.5">▶</button>
   </div>
   <div class="aditem">
     <div class="adico ad2c">📱</div>
-    <div class="adinfo" style="flex:1">
-      <div class="adname" id="an2">Реклама #2</div>
+    <div style="flex:1">
+      <div class="adname">Реклама #2</div>
       <div class="adrew" id="ar2">+10 BIT × множитель</div>
-      <div class="adoff" id="as2">Недоступно</div>
+      <div class="adoff">Недоступно</div>
       <div class="adlim" id="al2">0/50 сегодня</div>
     </div>
-    <button class="btn btn-off btn-sm" style="width:52px;padding:11px 0;font-size:16px">▶</button>
+    <button class="btn btn-ghost btn-sm" style="width:52px;padding:11px 0;font-size:16px;pointer-events:none;opacity:.5">▶</button>
   </div>
 </div>
 </div>
@@ -261,31 +198,72 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
   <button class="lbtn" onclick="toggleLang()">RU</button>
 </div>
 <div class="cibox">
-  <div class="ciring"></div>
-  <div class="clbl" id="l-ci">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
+  <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+  <div class="clbl" style="color:rgba(255,255,255,.6);margin-bottom:12px">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
   <div class="cistats">
-    <div class="cistat"><div class="civ" id="cis">1</div><div class="cil" id="l-str">СЕРИЯ</div></div>
-    <div class="cistat"><div class="civ" id="cim">×1.0</div><div class="cil" id="l-mul">БОНУС</div></div>
-    <div class="cistat"><div class="civ">30→<span id="cir">30</span></div><div class="cil">BIT/РЕКЛ</div></div>
+    <div class="cistat"><div class="civ" id="cis">1</div><div class="cil">СЕРИЯ</div></div>
+    <div class="cistat"><div class="civ" id="cim">×1.0</div><div class="cil">БОНУС</div></div>
+    <div class="cistat"><div class="civ">→<span id="cir">30</span></div><div class="cil">BIT/РЕКЛ</div></div>
   </div>
   <button class="ci-btn" id="cibtn" onclick="doCheckin()">Забрать бонус</button>
 </div>
 <div class="card">
   <div style="background:#0d2347;border:1px solid #1d3a6e;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px;color:#60a5fa;line-height:1.7">
-    💡 Чек-ин даёт <b>множитель</b> на рекламу.<br>
+    💡 Чек-ин даёт множитель на рекламу.<br>
     День 1→×1.0 · День 2→×1.1 · ... · День 6+→×1.5<br>
     Пропустишь день — серия сбросится!
   </div>
-  <div class="clbl" id="l-promo">ПРОМО-КОД</div>
+  <div class="clbl">ПРОМО-КОД</div>
   <input type="text" class="pinp" id="promoInp" placeholder="Введите промо-код">
-  <div style="margin-top:10px"><button class="btn" onclick="activatePromo()" id="btn-promo">Активировать</button></div>
+  <div style="margin-top:10px"><button class="btn" onclick="activatePromo()">Активировать</button></div>
 </div>
 </div>
 
 <!-- PVP -->
-<div class="page" id="page-pvp" style="padding:0;min-height:100%">
-<!-- WIN OVERLAY -->
+<div class="page" id="page-pvp" style="padding:0">
 <div id="pvp-win" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:flex-end;justify-content:center">
   <div style="background:#161b22;border-radius:22px 22px 0 0;width:100%;padding:24px 20px 40px;animation:mup .3s ease;border-top:1px solid #30363d">
     <div style="text-align:center;margin-bottom:18px">
-      <div style="font-size:52px;margin-bottom:8px">🏆</
+      <div style="font-size:52px;margin-bottom:8px">🏆</div>
+      <div style="font-size:11px;color:#6b7280;font-weight:700;letter-spacing:2px;margin-bottom:6px" id="pw-game">ИГРА #1001</div>
+      <div style="font-family:Syne,sans-serif;font-size:26px;color:#e6edf3;font-weight:800" id="pw-name">@winner</div>
+      <div style="font-size:12px;color:#6b7280;margin-top:3px">Победитель</div>
+    </div>
+    <div style="background:#1c2128;border-radius:16px;padding:16px;margin-bottom:16px;display:flex;justify-content:space-around">
+      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#1d6df5;font-weight:800" id="pw-prize">0.000</div><div style="font-size:10px;color:#6b7280;font-weight:700;margin-top:2px">TON ВЫИГРАНО</div></div>
+      <div style="width:1px;background:#30363d"></div>
+      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#10b981;font-weight:800" id="pw-pct">0%</div><div style="font-size:10px;color:#6b7280;font-weight:700;margin-top:2px">ШАНС</div></div>
+      <div style="width:1px;background:#30363d"></div>
+      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#f59e0b;font-weight:800" id="pw-cnt">0</div><div style="font-size:10px;color:#6b7280;font-weight:700;margin-top:2px">ИГРОКОВ</div></div>
+    </div>
+    <button onclick="closePvpWin()" style="width:100%;padding:14px;background:#1d6df5;color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">→ Следующий раунд</button>
+  </div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <span style="font-family:Syne,sans-serif;font-size:22px;color:#e6edf3;font-weight:800">⚔️ PvP</span>
+    <span style="background:#1c2128;border:1px solid #30363d;border-radius:8px;padding:3px 10px;font-size:12px;color:#1d6df5;font-weight:700">ИГРА #<span id="pvp-round">1001</span></span>
+  </div>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
+</div>
+<div style="display:flex;justify-content:space-between;padding:4px 16px 10px">
+  <div>
+    <div style="font-size:10px;color:#6b7280;font-weight:700;letter-spacing:1.5px">БАНК</div>
+    <div style="font-family:Syne,sans-serif;font-size:30px;color:#e6edf3;font-weight:800"><span id="pvptot">0.000</span> <span style="font-size:14px;color:#6b7280">TON</span></div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:10px;color:#6b7280;font-weight:700">МОЙ БАЛАНС</div>
+    <div style="font-family:Syne,sans-serif;font-size:16px;color:#1d6df5;font-weight:800" id="b2">0.000 TON</div>
+  </div>
+</div>
+<div style="position:relative;display:flex;justify-content:center;padding:0 16px 6px">
+  <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:16px solid #e6edf3"></div>
+  <canvas id="pvpC" width="300" height="300" style="border-radius:50%"></canvas>
+</div>
+<div style="text-align:center;min-height:28px;margin-bottom:10px">
+  <div id="pvp-st" style="font-size:13px;color:#6b7280;font-weight:700"></div>
+</div>
+<div style="padding:0 16px 10px">
+  <div style="display:flex;gap:8px;margin-bottom:8px">
+    <div style="position:relative;flex:1">
+      <input type="number" id="pvpinp" placeholder="0.00 TON" step="0.01" min="0.01" style="width:100%;background:#1c2128;border:1px solid #30363d;border-radius:13px;padding:14px 50px 14px 14px;color:#e6edf3;font
