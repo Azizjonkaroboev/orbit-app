@@ -8,123 +8,123 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf3;font-family:'Inter',sans-serif}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0e1a;color:#e6edf3;font-family:'Inter',sans-serif}
 ::-webkit-scrollbar{width:0}
 #app{display:block;height:100vh;height:100dvh}
 #content{position:fixed;top:0;left:0;right:0;bottom:62px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .page{display:none;padding:14px 14px 20px}
 .page.active{display:block}
-#nav{position:fixed;bottom:0;left:0;right:0;height:62px;display:flex!important;align-items:flex-end;justify-content:space-around;background:#161b22;border-top:1px solid #30363d;padding:6px 0 max(10px,env(safe-area-inset-bottom));z-index:999}
+#nav{position:fixed;bottom:0;left:0;right:0;height:62px;display:flex!important;align-items:flex-end;justify-content:space-around;background:#0d1225;border-top:1px solid #1a2040;padding:6px 0 max(10px,env(safe-area-inset-bottom));z-index:999}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;padding:4px 2px}
 .ni-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center}
-.ni-ico svg{width:20px;height:20px;stroke:#6b7280;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:.15s}
-.ni-lbl{font-size:10px;color:#6b7280;font-weight:600}
-.ni.active .ni-ico{background:rgba(29,109,245,.15)}
-.ni.active .ni-ico svg{stroke:#1d6df5}
-.ni.active .ni-lbl{color:#1d6df5}
+.ni-ico svg{width:20px;height:20px;stroke:#4a5568;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:.15s}
+.ni-lbl{font-size:10px;color:#4a5568;font-weight:600}
+.ni.active .ni-ico{background:rgba(99,102,241,.2)}
+.ni.active .ni-ico svg{stroke:#818cf8}
+.ni.active .ni-lbl{color:#818cf8}
 .nc{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1}
-.nc-wrap{width:52px;height:52px;background:#1d6df5;border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(29,109,245,.45);margin-top:-18px;border:3px solid #0d1117}
+.nc-wrap{width:52px;height:52px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(99,102,241,.5);margin-top:-18px;border:3px solid #0a0e1a}
 .nc-wrap svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nc-lbl{font-size:10px;color:#1d6df5;font-weight:700}
+.nc-lbl{font-size:10px;color:#818cf8;font-weight:700}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .tl{display:flex;align-items:center;gap:10px}
-.tav{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#1d6df5,#60a5fa);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+.tav{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
 .tname{font-weight:700;font-size:14px;color:#e6edf3}
-.tbal{font-size:11px;color:#6b7280;margin-top:1px}
-.lbtn{background:#1c2128;border:1px solid #30363d;color:#8b949e;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}
-.card{background:#161b22;border:1px solid #30363d;border-radius:18px;padding:16px;margin-bottom:12px}
-.clbl{font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;font-weight:700}
-.hero{background:linear-gradient(135deg,#0d2d6b,#1558d6,#1d6df5);border-radius:22px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
-.hero-r1{position:absolute;top:-50px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06)}
-.hero-r2{position:absolute;bottom:-40px;left:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.04)}
+.tbal{font-size:11px;color:#4a5568;margin-top:1px}
+.lbtn{background:#0d1225;border:1px solid #1a2040;color:#6b7280;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}
+.card{background:#0d1225;border:1px solid #1a2040;border-radius:18px;padding:16px;margin-bottom:12px}
+.clbl{font-size:10px;color:#4a5568;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;font-weight:700}
+.hero{background:linear-gradient(135deg,#0d1225,#1a1f4e,#2d1b69);border-radius:22px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;border:1px solid #2d2f7e}
+.hero-r1{position:absolute;top:-50px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(99,102,241,.1)}
+.hero-r2{position:absolute;bottom:-40px;left:-20px;width:120px;height:120px;border-radius:50%;background:rgba(139,92,246,.08)}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;position:relative;z-index:1}
-.hero-tag{font-size:10px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.hero-tag{font-size:10px;color:rgba(129,140,248,.7);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
 .hero-title{font-family:'Syne';font-size:30px;color:#fff;font-weight:800;letter-spacing:1px;line-height:1}
-.hero-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px}
-.hero-wb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:8px 12px;cursor:pointer;text-align:right;min-width:88px}
-.hero-wl{font-size:9px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
-.hero-wv{font-size:12px;color:#fff;font-weight:700;margin-top:1px}
+.hero-sub{font-size:11px;color:rgba(129,140,248,.6);margin-top:4px}
+.hero-wb{background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);border-radius:12px;padding:8px 12px;cursor:pointer;text-align:right;min-width:88px}
+.hero-wl{font-size:9px;color:rgba(129,140,248,.7);font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.hero-wv{font-size:12px;color:#a5b4fc;font-weight:700;margin-top:1px}
 .hero-bals{display:flex;gap:10px;position:relative;z-index:1}
-.hb{flex:1;background:rgba(255,255,255,.1);border-radius:14px;padding:12px 14px}
+.hb{flex:1;background:rgba(99,102,241,.1);border-radius:14px;padding:12px 14px;border:1px solid rgba(99,102,241,.2)}
 .hb-val{font-family:'Syne';font-size:24px;color:#fff;font-weight:800;line-height:1}
-.hb-lbl{font-size:10px;color:rgba(255,255,255,.55);font-weight:700;margin-top:3px}
-.btn{width:100%;padding:13px;background:#1d6df5;color:#fff;border:none;border-radius:13px;font-family:'Inter';font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 18px rgba(29,109,245,.3)}
-.btn-ghost{background:#1c2128;color:#8b949e;box-shadow:none;border:1px solid #30363d}
+.hb-lbl{font-size:10px;color:rgba(129,140,248,.6);font-weight:700;margin-top:3px}
+.btn{width:100%;padding:13px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:13px;font-family:'Inter';font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 18px rgba(99,102,241,.35)}
+.btn-ghost{background:#0d1225;color:#6b7280;box-shadow:none;border:1px solid #1a2040}
 .btn-sm{padding:10px 14px;font-size:13px;width:auto;border-radius:11px}
 .brow{display:flex;gap:8px}
 .bhalf{flex:1}
-.aditem{display:flex;align-items:center;gap:12px;background:#1c2128;border:1px solid #30363d;border-radius:14px;padding:13px;margin-bottom:8px}
+.aditem{display:flex;align-items:center;gap:12px;background:#111827;border:1px solid #1a2040;border-radius:14px;padding:13px;margin-bottom:8px}
 .adico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.ad1c{background:linear-gradient(135deg,#3d2000,#7c4400)}
-.ad2c{background:linear-gradient(135deg,#003d1a,#00622a)}
+.ad1c{background:linear-gradient(135deg,#1e1b4b,#3730a3)}
+.ad2c{background:linear-gradient(135deg,#1a1f4e,#2d1b69)}
 .adname{font-weight:700;font-size:14px;color:#e6edf3}
-.adrew{font-size:12px;color:#1d6df5;font-weight:700;margin-top:2px}
+.adrew{font-size:12px;color:#818cf8;font-weight:700;margin-top:2px}
 .adoff{font-size:11px;color:#f85149;font-weight:600;margin-top:2px}
-.adlim{font-size:11px;color:#6b7280;margin-top:1px}
-.cibox{background:linear-gradient(135deg,#0d2d6b,#1558d6);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden}
+.adlim{font-size:11px;color:#4a5568;margin-top:1px}
+.cibox{background:linear-gradient(135deg,#0d1225,#1a1f4e,#2d1b69);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;border:1px solid #2d2f7e}
 .cistats{display:flex;gap:8px;margin-bottom:16px}
-.cistat{text-align:center;background:rgba(255,255,255,.1);border-radius:13px;padding:10px 8px;flex:1}
+.cistat{text-align:center;background:rgba(99,102,241,.1);border-radius:13px;padding:10px 8px;flex:1;border:1px solid rgba(99,102,241,.2)}
 .civ{font-family:'Syne';font-size:24px;color:#fff;font-weight:800;line-height:1}
-.cil{font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
-.ci-btn{background:#fff;color:#1d6df5;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:15px;cursor:pointer}
-.ci-btn:disabled{background:rgba(255,255,255,.2);color:rgba(255,255,255,.4);cursor:not-allowed}
-.pinp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px 14px;color:#e6edf3;font-family:'Inter';font-size:14px;font-weight:600;margin-top:10px}
-.pinp:focus{outline:none;border-color:#1d6df5}
-.pinp::placeholder{color:#484f58}
-.ref-hero{background:linear-gradient(135deg,#0d2d6b,#1558d6);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden}
+.cil{font-size:9px;color:rgba(129,140,248,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
+.ci-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:15px;cursor:pointer}
+.ci-btn:disabled{background:rgba(99,102,241,.2);color:rgba(255,255,255,.3);cursor:not-allowed}
+.pinp{width:100%;background:#111827;border:1px solid #1a2040;border-radius:12px;padding:13px 14px;color:#e6edf3;font-family:'Inter';font-size:14px;font-weight:600;margin-top:10px}
+.pinp:focus{outline:none;border-color:#6366f1}
+.pinp::placeholder{color:#374151}
+.ref-hero{background:linear-gradient(135deg,#0d1225,#1a1f4e,#2d1b69);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;border:1px solid #2d2f7e}
 .rttl{font-family:'Syne';font-size:20px;color:#fff;font-weight:800;margin-bottom:3px}
-.rsub{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px}
+.rsub{font-size:12px;color:rgba(129,140,248,.6);margin-bottom:14px}
 .rstats{display:flex;gap:10px;margin-bottom:14px}
-.rstat{background:rgba(255,255,255,.1);border-radius:13px;padding:11px;flex:1;text-align:center}
+.rstat{background:rgba(99,102,241,.1);border-radius:13px;padding:11px;flex:1;text-align:center;border:1px solid rgba(99,102,241,.2)}
 .rval{font-family:'Syne';font-size:24px;color:#fff;font-weight:800;line-height:1}
-.rlbl{font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
-.ref-btn{background:#fff;color:#1d6df5;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:14px;cursor:pointer}
-.how-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #21262d}
+.rlbl{font-size:9px;color:rgba(129,140,248,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
+.ref-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-weight:800;border:none;border-radius:12px;width:100%;padding:13px;font-family:'Inter';font-size:14px;cursor:pointer}
+.how-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #111827}
 .how-row:last-child{border-bottom:none}
-.how-n{width:28px;height:28px;background:#1d6df5;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
-.how-t{font-size:13px;color:#8b949e}
-.prof-hero{background:linear-gradient(135deg,#0d2d6b,#1558d6);border-radius:20px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden}
-.prof-ava{width:66px;height:66px;border-radius:20px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:'Syne';font-size:24px;font-weight:800;color:#fff}
+.how-n{width:28px;height:28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.how-t{font-size:13px;color:#6b7280}
+.prof-hero{background:linear-gradient(135deg,#0d1225,#1a1f4e,#2d1b69);border-radius:20px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden;border:1px solid #2d2f7e}
+.prof-ava{width:66px;height:66px;border-radius:20px;background:rgba(99,102,241,.2);border:2px solid rgba(99,102,241,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:'Syne';font-size:24px;font-weight:800;color:#fff}
 .prof-name{font-family:'Syne';font-size:20px;color:#fff;font-weight:800;text-align:center}
 .prof-bals{display:flex;gap:8px;margin-top:14px}
-.pb{flex:1;background:rgba(255,255,255,.1);border-radius:13px;padding:11px;text-align:center}
+.pb{flex:1;background:rgba(99,102,241,.1);border-radius:13px;padding:11px;text-align:center;border:1px solid rgba(99,102,241,.2)}
 .pb-val{font-family:'Syne';font-size:22px;color:#fff;font-weight:800;line-height:1}
-.pb-lbl{font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
-.wcard{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:14px;margin-bottom:12px}
+.pb-lbl{font-size:9px;color:rgba(129,140,248,.6);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
+.wcard{background:#0d1225;border:1px solid #1a2040;border-radius:16px;padding:14px;margin-bottom:12px}
 .wcard-h{display:flex;align-items:center;gap:11px;margin-bottom:12px}
-.wcard-ico{width:42px;height:42px;background:linear-gradient(135deg,#1d6df5,#60a5fa);border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wcard-ico{width:42px;height:42px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .wcard-ico svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.wcard-l{font-size:10px;color:#6b7280;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.wcard-l{font-size:10px;color:#4a5568;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
 .wcard-v{font-size:13px;color:#e6edf3;font-weight:700;margin-top:2px}
 .wst{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:12px}
 .wst.on{background:rgba(16,185,129,.15);color:#10b981}
 .wst.off{background:rgba(248,81,73,.15);color:#f85149}
 .wdot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.irow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #21262d;font-size:13px;color:#8b949e}
+.irow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #111827;font-size:13px;color:#6b7280}
 .irow:last-of-type{border-bottom:none}
-.ival{color:#1d6df5;font-weight:700}
+.ival{color:#818cf8;font-weight:700}
 .exch-inp-w{position:relative;margin:12px 0 8px}
-.exch-inp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:13px 55px 13px 14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800}
-.exch-inp:focus{outline:none;border-color:#1d6df5}
-.exch-inp::placeholder{color:#484f58;font-size:14px;font-family:'Inter';font-weight:400}
-.exch-unit{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#6b7280;font-size:13px}
-.exch-res{background:#0d2347;border:1px solid #1d3a6e;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.exch-rl{font-size:12px;color:#60a5fa;font-weight:700}
-.exch-rv{font-family:'Syne';font-size:22px;color:#60a5fa;font-weight:800}
-.prrow{display:flex;justify-content:space-between;align-items:center;background:#161b22;border:1px solid #30363d;border-radius:13px;padding:13px 15px;margin-bottom:8px}
-.prlbl{font-size:13px;color:#8b949e;font-weight:600;display:flex;align-items:center;gap:8px}
-.prlbl svg{width:15px;height:15px;stroke:#1d6df5;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.exch-inp{width:100%;background:#111827;border:1px solid #1a2040;border-radius:12px;padding:13px 55px 13px 14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800}
+.exch-inp:focus{outline:none;border-color:#6366f1}
+.exch-inp::placeholder{color:#374151;font-size:14px;font-family:'Inter';font-weight:400}
+.exch-unit{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a5568;font-size:13px}
+.exch-res{background:#0d1225;border:1px solid #2d2f7e;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.exch-rl{font-size:12px;color:#818cf8;font-weight:700}
+.exch-rv{font-family:'Syne';font-size:22px;color:#a5b4fc;font-weight:800}
+.prrow{display:flex;justify-content:space-between;align-items:center;background:#0d1225;border:1px solid #1a2040;border-radius:13px;padding:13px 15px;margin-bottom:8px}
+.prlbl{font-size:13px;color:#6b7280;font-weight:600;display:flex;align-items:center;gap:8px}
+.prlbl svg{width:15px;height:15px;stroke:#818cf8;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .prval{font-weight:700;font-size:13px;color:#e6edf3}
-#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:flex-end}
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:flex-end}
 #modal.open{display:flex}
-.mbox{background:#161b22;border-radius:22px 22px 0 0;width:100%;padding:20px 20px max(28px,env(safe-area-inset-bottom));animation:mup .22s ease;max-height:90vh;overflow-y:auto}
+.mbox{background:#0d1225;border-radius:22px 22px 0 0;width:100%;padding:20px 20px max(28px,env(safe-area-inset-bottom));animation:mup .22s ease;max-height:90vh;overflow-y:auto;border-top:1px solid #1a2040}
 @keyframes mup{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.mhandle{width:36px;height:4px;background:#30363d;border-radius:99px;margin:0 auto 18px}
-.minp{width:100%;background:#1c2128;border:1px solid #30363d;border-radius:12px;padding:14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800;margin-bottom:10px}
-.minp:focus{outline:none;border-color:#1d6df5}
-.minp::placeholder{color:#484f58;font-size:14px;font-family:'Inter';font-weight:400}
-.mnote{background:#0d2347;border:1px solid #1d3a6e;border-radius:11px;padding:11px 13px;font-size:13px;color:#60a5fa;font-weight:600;margin-bottom:14px;line-height:1.6}
-#notif{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:#e6edf3;color:#0d1117;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:700;z-index:2000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.mhandle{width:36px;height:4px;background:#1a2040;border-radius:99px;margin:0 auto 18px}
+.minp{width:100%;background:#111827;border:1px solid #1a2040;border-radius:12px;padding:14px;color:#e6edf3;font-family:'Syne';font-size:22px;font-weight:800;margin-bottom:10px}
+.minp:focus{outline:none;border-color:#6366f1}
+.minp::placeholder{color:#374151;font-size:14px;font-family:'Inter';font-weight:400}
+.mnote{background:#0d1225;border:1px solid #2d2f7e;border-radius:11px;padding:11px 13px;font-size:13px;color:#818cf8;font-weight:600;margin-bottom:14px;line-height:1.6}
+#notif{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:#e6edf3;color:#0a0e1a;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:700;z-index:2000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 #notif.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
@@ -136,7 +136,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
 <div id="app">
 <div id="content">
 
-<!-- ГЛАВНАЯ -->
 <div class="page active" id="page-main">
 <div class="topbar">
   <div class="tl">
@@ -187,8 +186,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
   </div>
 </div>
 </div>
-
-<!-- ЗАДАНИЕ -->
 <div class="page" id="page-task">
 <div class="topbar">
   <div class="tl">
@@ -198,8 +195,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
   <button class="lbtn" onclick="toggleLang()">RU</button>
 </div>
 <div class="cibox">
-  <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
-  <div class="clbl" style="color:rgba(255,255,255,.6);margin-bottom:12px">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
+  <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(99,102,241,.08)"></div>
+  <div class="clbl" style="color:rgba(129,140,248,.7);margin-bottom:12px">ЕЖЕДНЕВНЫЙ ЧЕК-ИН</div>
   <div class="cistats">
     <div class="cistat"><div class="civ" id="cis">1</div><div class="cil">СЕРИЯ</div></div>
     <div class="cistat"><div class="civ" id="cim">×1.0</div><div class="cil">БОНУС</div></div>
@@ -208,10 +205,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
   <button class="ci-btn" id="cibtn" onclick="doCheckin()">Забрать бонус</button>
 </div>
 <div class="card">
-  <div style="background:#0d2347;border:1px solid #1d3a6e;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px;color:#60a5fa;line-height:1.7">
+  <div style="background:rgba(99,102,241,.08);border:1px solid #2d2f7e;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px;color:#818cf8;line-height:1.7">
     💡 Чек-ин даёт множитель на рекламу.<br>
-    День 1→×1.0 · День 2→×1.1 · ... · День 6+→×1.5<br>
-    Пропустишь день — серия сбросится!
+    День 1→×1.0 · День 2→×1.1 · ... · День 6+→×1.5
   </div>
   <div class="clbl">ПРОМО-КОД</div>
   <input type="text" class="pinp" id="promoInp" placeholder="Введите промо-код">
@@ -219,51 +215,442 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;color:#e6edf
 </div>
 </div>
 
-<!-- PVP -->
 <div class="page" id="page-pvp" style="padding:0">
-<div id="pvp-win" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:flex-end;justify-content:center">
-  <div style="background:#161b22;border-radius:22px 22px 0 0;width:100%;padding:24px 20px 40px;animation:mup .3s ease;border-top:1px solid #30363d">
+<div id="pvp-win" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:500;align-items:flex-end;justify-content:center">
+  <div style="background:#0d1225;border-radius:22px 22px 0 0;width:100%;padding:24px 20px 40px;animation:mup .3s ease;border-top:1px solid #2d2f7e">
     <div style="text-align:center;margin-bottom:18px">
       <div style="font-size:52px;margin-bottom:8px">🏆</div>
-      <div style="font-size:11px;color:#6b7280;font-weight:700;letter-spacing:2px;margin-bottom:6px" id="pw-game">ИГРА #1001</div>
+      <div style="font-size:11px;color:#4a5568;font-weight:700;letter-spacing:2px;margin-bottom:6px" id="pw-game">ИГРА #1001</div>
       <div style="font-family:Syne,sans-serif;font-size:26px;color:#e6edf3;font-weight:800" id="pw-name">@winner</div>
-      <div style="font-size:12px;color:#6b7280;margin-top:3px">Победитель</div>
     </div>
-    <div style="background:#1c2128;border-radius:16px;padding:16px;margin-bottom:16px;display:flex;justify-content:space-around">
-      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#1d6df5;font-weight:800" id="pw-prize">0.000</div><div style="font-size:10px;color:#6b7280;font-weight:700;margin-top:2px">TON ВЫИГРАНО</div></div>
-      <div style="width:1px;background:#30363d"></div>
-      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#10b981;font-weight:800" id="pw-pct">0%</div><div style="font-size:10px;color:#6b7280;font-weight:700;margin-top:2px">ШАНС</div></div>
-      <div style="width:1px;background:#30363d"></div>
-      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#f59e0b;font-weight:800" id="pw-cnt">0</div><div style="font-size:10px;color:#6b7280;font-weight:700;margin-top:2px">ИГРОКОВ</div></div>
+    <div style="background:#111827;border-radius:16px;padding:16px;margin-bottom:16px;display:flex;justify-content:space-around;border:1px solid #1a2040">
+      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#818cf8;font-weight:800" id="pw-prize">0.000</div><div style="font-size:10px;color:#4a5568;font-weight:700;margin-top:2px">TON ВЫИГРАНО</div></div>
+      <div style="width:1px;background:#1a2040"></div>
+      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#10b981;font-weight:800" id="pw-pct">0%</div><div style="font-size:10px;color:#4a5568;font-weight:700;margin-top:2px">ШАНС</div></div>
+      <div style="width:1px;background:#1a2040"></div>
+      <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#f59e0b;font-weight:800" id="pw-cnt">0</div><div style="font-size:10px;color:#4a5568;font-weight:700;margin-top:2px">ИГРОКОВ</div></div>
     </div>
-    <button onclick="closePvpWin()" style="width:100%;padding:14px;background:#1d6df5;color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">→ Следующий раунд</button>
+    <button onclick="closePvpWin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">→ Следующий раунд</button>
   </div>
 </div>
 <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px">
   <div style="display:flex;align-items:center;gap:8px">
     <span style="font-family:Syne,sans-serif;font-size:22px;color:#e6edf3;font-weight:800">⚔️ PvP</span>
-    <span style="background:#1c2128;border:1px solid #30363d;border-radius:8px;padding:3px 10px;font-size:12px;color:#1d6df5;font-weight:700">ИГРА #<span id="pvp-round">1001</span></span>
+    <span style="background:#111827;border:1px solid #1a2040;border-radius:8px;padding:3px 10px;font-size:12px;color:#818cf8;font-weight:700">ИГРА #<span id="pvp-round">1001</span></span>
   </div>
   <button class="lbtn" onclick="toggleLang()">RU</button>
 </div>
 <div style="display:flex;justify-content:space-between;padding:4px 16px 10px">
   <div>
-    <div style="font-size:10px;color:#6b7280;font-weight:700;letter-spacing:1.5px">БАНК</div>
-    <div style="font-family:Syne,sans-serif;font-size:30px;color:#e6edf3;font-weight:800"><span id="pvptot">0.000</span> <span style="font-size:14px;color:#6b7280">TON</span></div>
+    <div style="font-size:10px;color:#4a5568;font-weight:700;letter-spacing:1.5px">БАНК</div>
+    <div style="font-family:Syne,sans-serif;font-size:30px;color:#e6edf3;font-weight:800"><span id="pvptot">0.000</span> <span style="font-size:14px;color:#4a5568">TON</span></div>
   </div>
   <div style="text-align:right">
-    <div style="font-size:10px;color:#6b7280;font-weight:700">МОЙ БАЛАНС</div>
-    <div style="font-family:Syne,sans-serif;font-size:16px;color:#1d6df5;font-weight:800" id="b2">0.000 TON</div>
+    <div style="font-size:10px;color:#4a5568;font-weight:700">МОЙ БАЛАНС</div>
+    <div style="font-family:Syne,sans-serif;font-size:16px;color:#818cf8;font-weight:800" id="b2">0.000 TON</div>
   </div>
 </div>
 <div style="position:relative;display:flex;justify-content:center;padding:0 16px 6px">
-  <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:16px solid #e6edf3"></div>
+  <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:16px solid #a5b4fc"></div>
   <canvas id="pvpC" width="300" height="300" style="border-radius:50%"></canvas>
 </div>
 <div style="text-align:center;min-height:28px;margin-bottom:10px">
-  <div id="pvp-st" style="font-size:13px;color:#6b7280;font-weight:700"></div>
+  <div id="pvp-st" style="font-size:13px;color:#4a5568;font-weight:700"></div>
 </div>
 <div style="padding:0 16px 10px">
   <div style="display:flex;gap:8px;margin-bottom:8px">
     <div style="position:relative;flex:1">
-      <input type="number" id="pvpinp" placeholder="0.00 TON" step="0.01" min="0.01" style="width:100%;background:#1c2128;border:1px solid #30363d;border-radius:13px;padding:14px 50px 14px 14px;color:#e6edf3;font
+      <input type="number" id="pvpinp" placeholder="0.00 TON" step="0.01" min="0.01" style="width:100%;background:#111827;border:1px solid #1a2040;border-radius:13px;padding:14px 50px 14px 14px;color:#e6edf3;font-family:Syne,sans-serif;font-size:20px;font-weight:800">
+      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:12px;color:#4a5568;font-weight:700">TON</span>
+    </div>
+    <button onclick="addPvp()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:13px;padding:14px 18px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap">+ Ставить</button>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button onclick="quickBet(.1)" style="flex:1;background:#111827;border:1px solid #1a2040;color:#6b7280;border-radius:9px;padding:7px;font-size:13px;font-weight:700;cursor:pointer">0.1</button>
+    <button onclick="quickBet(.5)" style="flex:1;background:#111827;border:1px solid #1a2040;color:#6b7280;border-radius:9px;padding:7px;font-size:13px;font-weight:700;cursor:pointer">0.5</button>
+    <button onclick="quickBet(1)" style="flex:1;background:#111827;border:1px solid #1a2040;color:#6b7280;border-radius:9px;padding:7px;font-size:13px;font-weight:700;cursor:pointer">1.0</button>
+    <button onclick="quickBet(5)" style="flex:1;background:#111827;border:1px solid #1a2040;color:#6b7280;border-radius:9px;padding:7px;font-size:13px;font-weight:700;cursor:pointer">5.0</button>
+  </div>
+</div>
+<div style="padding:0 16px 80px">
+  <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+    <div style="font-size:10px;color:#4a5568;font-weight:700;letter-spacing:2px">УЧАСТНИКИ</div>
+    <div style="font-size:12px;color:#374151;font-weight:600" id="pvp-cnt">0 игроков</div>
+  </div>
+  <div id="pvplist"><div style="text-align:center;padding:20px;color:#374151;font-size:13px">Будь первым — сделай ставку!</div></div>
+</div>
+</div>
+
+<div class="page" id="page-friends">
+<div class="topbar">
+  <div class="tl">
+    <div class="tav" id="av3">O</div>
+    <div><div class="tname" id="u3">...</div></div>
+  </div>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
+</div>
+<div class="ref-hero">
+  <div class="rttl">Пригласи и заработай</div>
+  <div class="rsub">5% с заработка каждого друга навсегда</div>
+  <div class="rstats">
+    <div class="rstat"><div class="rval" id="refc">0</div><div class="rlbl">ПРИГЛАШЕНО</div></div>
+    <div class="rstat"><div class="rval" id="refe">0.000</div><div class="rlbl">TON ЗАРАБОТАНО</div></div>
+  </div>
+  <button class="ref-btn" onclick="copyRef()">🔗 Скопировать ссылку</button>
+</div>
+<div class="card">
+  <div class="clbl">КАК РАБОТАЕТ</div>
+  <div class="how-row"><div class="how-n">1</div><div class="how-t">Скопируй реферальную ссылку</div></div>
+  <div class="how-row"><div class="how-n">2</div><div class="how-t">Отправь другу в Telegram</div></div>
+  <div class="how-row"><div class="how-n">3</div><div class="how-t">Друг запускает бота по ссылке</div></div>
+  <div class="how-row"><div class="how-n">4</div><div class="how-t"><b style="color:#818cf8">Ты получаешь 5% с его заработка</b></div></div>
+</div>
+</div>
+
+<div class="page" id="page-profile">
+<div class="topbar">
+  <div class="tl">
+    <div class="tav" id="av4">O</div>
+    <div><div class="tname" id="u4">...</div></div>
+  </div>
+  <button class="lbtn" onclick="toggleLang()">RU</button>
+</div>
+<div class="prof-hero">
+  <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(99,102,241,.08)"></div>
+  <div class="prof-ava" id="pava">O</div>
+  <div class="prof-name" id="pname">...</div>
+  <div class="prof-bals">
+    <div class="pb"><div class="pb-val" id="pt">0.000</div><div class="pb-lbl">TON</div></div>
+    <div class="pb"><div class="pb-val" id="pb2">0</div><div class="pb-lbl">BIT</div></div>
+    <div class="pb"><div class="pb-val" id="pst2">1</div><div class="pb-lbl">СЕРИЯ</div></div>
+  </div>
+</div>
+<div class="wcard">
+  <div class="wcard-h">
+    <div class="wcard-ico"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></div>
+    <div><div class="wcard-l">TON КОШЕЛЁК</div><div class="wcard-v" id="w-addr">Не подключён</div></div>
+  </div>
+  <div class="wst off" id="w-st"><div class="wdot"></div><span id="w-st-txt">Не подключён</span></div>
+  <button class="btn" id="w-btn" onclick="connectWallet()">💎 Подключить кошелёк</button>
+</div>
+<div class="card">
+  <div class="clbl">ОБМЕН BIT → TON</div>
+  <div class="irow"><span>Курс</span><span class="ival">1 BIT = 0.0001 TON</span></div>
+  <div class="irow"><span>Минимум</span><span class="ival">500 BIT = 0.05 TON</span></div>
+  <div class="exch-inp-w">
+    <input type="number" class="exch-inp" id="exchInp" placeholder="Сколько BIT?" oninput="calcExch()">
+    <span class="exch-unit">BIT</span>
+  </div>
+  <div class="exch-res">
+    <span class="exch-rl">Вы получите</span>
+    <span class="exch-rv" id="exchOut">0.0000 TON</span>
+  </div>
+  <button class="btn" onclick="doExchange()" style="margin-bottom:10px">Обменять</button>
+  <div class="brow">
+    <button class="btn btn-ghost bhalf" onclick="openDeposit()">↓ Депозит</button>
+    <button class="btn bhalf" onclick="openWithdraw()">↑ Вывод</button>
+  </div>
+</div>
+<div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Чек-ин серия</div><div class="prval" id="pstr">1 дн</div></div>
+<div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Рефералов</div><div class="prval" id="pref">0</div></div>
+<div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>Язык</div><div class="prval" id="plang">Русский</div></div>
+<button onclick="openLeaderboard()" style="width:100%;padding:14px;background:#111827;border:1px solid #1a2040;border-radius:13px;color:#e6edf3;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;margin-bottom:20px">🏆 Лидерборд</button>
+</div>
+
+</div>
+<div id="nav">
+  <div class="ni" id="nav-pvp" onclick="goTo('pvp')">
+    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M14.5 17.5l2 2a2.121 2.121 0 0 0 3-3l-2-2"/><path d="M3 21l4-4"/></svg></div>
+    <span class="ni-lbl">PvP</span>
+  </div>
+  <div class="ni" id="nav-task" onclick="goTo('task')">
+    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+    <span class="ni-lbl">Задание</span>
+  </div>
+  <div class="nc" id="nav-main" onclick="goTo('main')">
+    <div class="nc-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <span class="nc-lbl">Главная</span>
+  </div>
+  <div class="ni" id="nav-friends" onclick="goTo('friends')">
+    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <span class="ni-lbl">Друзья</span>
+  </div>
+  <div class="ni" id="nav-profile" onclick="goTo('profile')">
+    <div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <span class="ni-lbl">Профиль</span>
+  </div>
+</div>
+</div>
+<script>
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();}
+const tgU=tg?.initDataUnsafe?.user;
+const UNAME=tgU?(tgU.username?'@'+tgU.username:tgU.first_name||'User'):'@username';
+const ULETTER=(tgU?.first_name||tgU?.username||'O')[0].toUpperCase();
+const OWNER='UQAG8cx9dXAWIfcoNUkdyki-Un9QzJxw3_xU8624H6OnZFMb';
+let S=JSON.parse(localStorage.getItem('orb12')||'{}');
+if(!S.ton)S.ton=0;if(!S.bit)S.bit=0;if(!S.streak)S.streak=0;
+if(!S.refCount)S.refCount=0;if(!S.refEarned)S.refEarned=0;
+if(!S.lang)S.lang='ru';if(!S.adV)S.adV={};if(!S.adDate)S.adDate={};
+if(!S.totalBit)S.totalBit=0;if(!S.totalTon)S.totalTon=0;
+function save(){localStorage.setItem('orb12',JSON.stringify(S));}
+function g(id){return document.getElementById(id);}
+function st(id,v){const e=g(id);if(e)e.textContent=v;}
+function getMulti(){return Math.min(1+(S.streak-1)*0.1,1.5);}
+let lang=S.lang||'ru';
+function updateUI(){
+  const ton=S.ton.toFixed(3),bit=S.bit,streak=Math.max(S.streak,1);
+  const multi=getMulti(),ms=multi.toFixed(1);
+  ['av0','av1','av3','av4','pava'].forEach(id=>st(id,ULETTER));
+  ['u0','u1','u3','u4','pname'].forEach(id=>st(id,UNAME));
+  st('b0',ton+' TON · '+bit+' BIT');
+  st('b1',bit+' BIT');st('b2',ton+' TON');
+  st('mt',ton);st('mb',bit);st('pt',ton);st('pb2',bit);st('pst2',streak);
+  st('cis',streak);st('cim','×'+ms);st('cir',Math.floor(30*multi));
+  st('pstr',streak+' дн');st('pref',S.refCount);
+  st('refc',S.refCount);st('refe',S.refEarned.toFixed(3));
+  st('ar1','+'+(Math.floor(30*multi))+' BIT (×'+ms+')');
+  st('ar2','+'+(Math.floor(10*multi))+' BIT (×'+ms+')');
+  const today=new Date().toDateString();
+  st('al1',(S.adV[today+'1']||0)+'/50 сегодня');
+  st('al2',(S.adV[today+'2']||0)+'/50 сегодня');
+  const cbtn=g('cibtn');
+  if(cbtn){if(S.lastCI===today){cbtn.textContent='Уже забрано ✓';cbtn.disabled=true;}else{cbtn.textContent='Забрать бонус';cbtn.disabled=false;}}
+  if(S.wallet){st('h-wval','Подключён ✓');st('w-addr',S.wallet.slice(0,8)+'...'+S.wallet.slice(-5));const ws=g('w-st');if(ws)ws.className='wst on';st('w-st-txt','Подключён');st('w-btn','🔓 Отключить');}
+  else{st('h-wval','Подключить →');st('w-addr','Не подключён');const ws=g('w-st');if(ws)ws.className='wst off';st('w-st-txt','Не подключён');st('w-btn','💎 Подключить кошелёк');}
+  st('plang',lang==='ru'?'Русский':'English');
+  calcExch();save();
+}
+function toggleLang(){lang=lang==='ru'?'en':'ru';S.lang=lang;save();updateUI();notify(lang==='ru'?'🌐 Русский':'🌐 English');}
+let cur='main';
+function goTo(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni,.nc').forEach(n=>n.classList.remove('active'));
+  g('page-'+tab).classList.add('active');
+  g('nav-'+tab).classList.add('active');
+  g('content').scrollTop=0;cur=tab;
+  if(tab==='pvp')setTimeout(drawWheel,60);
+  updateUI();
+}
+function notify(msg){const el=g('notif');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2400);}
+function openModal(html){g('mc').innerHTML=html;g('modal').classList.add('open');}
+function closeModal(){g('modal').classList.remove('open');}
+function doCheckin(){
+  const today=new Date().toDateString();
+  if(S.lastCI===today){notify('Уже забрал сегодня!');return;}
+  if(S.lastCI){const d=Math.round((new Date()-new Date(S.lastCI))/86400000);if(d>=2)S.streak=1;else if(d===1)S.streak=(S.streak||1)+1;}
+  else S.streak=1;
+  S.lastCI=today;save();updateUI();
+  notify('✅ Серия: '+S.streak+' | ×'+getMulti().toFixed(1));
+}
+function activatePromo(){
+  const c=g('promoInp').value.trim().toUpperCase();
+  if(!c){notify('Введите промо-код!');return;}
+  const codes={'ORBIT100':100,'START50':50,'LAUNCH200':200,'ORBIT500':500,'ORBIT1000':1000};
+  if(codes[c]){S.bit+=codes[c];S.totalBit+=codes[c];g('promoInp').value='';save();updateUI();notify('+'+codes[c]+' BIT 🎁');}
+  else notify('Неверный промо-код');
+}
+function copyRef(){
+  const link='https://t.me/Orbit_tonbot?start='+(tgU?.id||'ref');
+  const el=document.createElement('textarea');el.value=link;el.style.position='fixed';el.style.opacity='0';
+  document.body.appendChild(el);el.focus();el.select();
+  try{document.execCommand('copy');notify('✅ Ссылка скопирована!');}
+  catch(e){if(tg?.openTelegramLink)tg.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(link));else prompt('',link);}
+  document.body.removeChild(el);
+}
+function connectWallet(){
+  if(S.wallet){S.wallet=null;save();updateUI();notify('Кошелёк отключён');return;}
+  openModal(`<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3;margin-bottom:14px">Подключить кошелёк</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+      <button class="btn" onclick="selectWallet()">💎 Tonkeeper</button>
+      <button class="btn btn-ghost" onclick="selectWallet()">My TON Wallet</button>
+      <button class="btn btn-ghost" onclick="selectWallet()">Tonhub</button>
+    </div>
+    <button class="btn btn-ghost" onclick="closeModal()">Отмена</button>`);
+}
+function selectWallet(){
+  closeModal();S.wallet='UQ'+Math.random().toString(36).slice(2,10).toUpperCase()+'demo';
+  save();updateUI();notify('✅ Кошелёк подключён!');
+}
+function openDeposit(){
+  if(!S.wallet){notify('Сначала подключи кошелёк!');return;}
+  openModal(`<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3;margin-bottom:12px">Депозит TON</div>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:12px">Минимум 0.1 TON</p>
+    <div style="position:relative;margin-bottom:10px">
+      <input type="number" class="minp" id="depAmt" placeholder="0.1" min="0.1" step="0.1" oninput="calcDep()">
+      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a5568">TON</span>
+    </div>
+    <div style="background:#0d1225;border:1px solid #2d2f7e;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;margin-bottom:14px">
+      <span style="font-size:12px;color:#818cf8;font-weight:700">Придёт на баланс:</span>
+      <span style="font-family:Syne,sans-serif;font-size:20px;color:#a5b4fc;font-weight:800" id="depResV">— TON</span>
+    </div>
+    <button class="btn" onclick="sendDeposit()">Открыть кошелёк</button>`);
+}
+function calcDep(){const v=parseFloat(g('depAmt')?.value)||0;st('depResV',v>0?v.toFixed(3)+' TON':'— TON');}
+function sendDeposit(){
+  const amt=parseFloat(g('depAmt')?.value)||0;
+  if(amt<0.1){notify('Минимум 0.1 TON!');return;}
+  const link=`https://app.tonkeeper.com/transfer/${OWNER}?amount=${Math.floor(amt*1e9)}&text=orbit_${tgU?.id||0}`;
+  closeModal();
+  if(tg?.openLink)tg.openLink(link);else window.open(link,'_blank');
+  setTimeout(()=>{S.ton+=amt;S.totalTon+=amt;save();updateUI();notify('✅ +'+amt.toFixed(3)+' TON зачислено!');},4000);
+}
+function openWithdraw(){
+  if(!S.wallet){notify('Сначала подключи кошелёк!');return;}
+  openModal(`<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3;margin-bottom:12px">Вывод TON</div>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:12px">Баланс: <b style="color:#818cf8">${S.ton.toFixed(3)} TON</b></p>
+    <div style="position:relative;margin-bottom:14px">
+      <input type="number" class="minp" id="wdAmt" placeholder="0.5" min="0.5" step="0.1">
+      <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a5568">TON</span>
+    </div>
+    <div class="mnote">📌 Минимум 0.5 TON. Обработка до 24 часов.</div>
+    <button class="btn" onclick="confirmWd()">Подтвердить вывод</button>`);
+}
+function confirmWd(){
+  const amt=parseFloat(g('wdAmt')?.value)||0;
+  if(amt<0.5){notify('Минимум 0.5 TON!');return;}
+  if(amt>S.ton){notify('Недостаточно TON!');return;}
+  S.ton-=amt;save();closeModal();updateUI();notify('✅ Заявка принята!');
+}
+function calcExch(){const v=parseFloat(g('exchInp')?.value)||0;st('exchOut',v>=500?(v*0.0001).toFixed(4)+' TON':'0.0000 TON');}
+function doExchange(){
+  const v=parseFloat(g('exchInp')?.value)||0;
+  if(v<500){notify('Нужно минимум 500 BIT!');return;}
+  if(v>S.bit){notify('Недостаточно BIT!');return;}
+  S.bit-=Math.floor(v);S.ton+=v*0.0001;
+  if(g('exchInp'))g('exchInp').value='';
+  save();updateUI();notify('+'+(v*0.0001).toFixed(4)+' TON 🎉');
+}
+function openLeaderboard(){
+  const myBit=S.totalBit||S.bit||0;const myTon=S.totalTon||0;
+  function row(i,n,v){const medals=['🥇','🥈','🥉'];const colors=['#f59e0b','#9ca3af','#cd7c34'];
+    return`<div style="display:flex;align-items:center;gap:10px;padding:11px 12px;background:#0d1225;border-radius:13px;margin-bottom:8px;border:1px solid #2d2f7e">
+      <div style="font-size:18px;width:28px;text-align:center">${i<3?medals[i]:i+1}</div>
+      <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">${n[0].toUpperCase()}</div>
+      <div style="flex:1;font-weight:700;font-size:14px;color:#e6edf3">${n} <span style="font-size:10px;color:#4a5568">(ты)</span></div>
+      <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:#818cf8">${v}</div>
+    </div>`;}
+  const adsHtml=myBit>0?row(0,UNAME,myBit.toLocaleString()+' BIT'):'<div style="text-align:center;padding:24px;color:#374151;font-size:14px">🏆<br><br>Пока пусто.<br>Смотри рекламу!</div>';
+  const pvpHtml=myTon>0?row(0,UNAME,myTon.toFixed(3)+' TON'):'<div style="text-align:center;padding:24px;color:#374151;font-size:14px">🏆<br><br>Пока пусто.<br>Делай ставки!</div>';
+  window._lbAds=adsHtml;window._lbPvp=pvpHtml;
+  openModal(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3">🏆 Лидерборд</div>
+      <button onclick="closeModal()" style="width:32px;height:32px;border-radius:50%;background:#111827;border:1px solid #1a2040;color:#6b7280;font-size:20px;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="display:flex;gap:6px;background:#111827;border-radius:12px;padding:4px;margin-bottom:14px">
+      <button id="lbt1" onclick="switchLb('ads')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff">📺 Реклама</button>
+      <button id="lbt2" onclick="switchLb('pvp')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:transparent;color:#6b7280">⚔️ PvP</button>
+    </div>
+    <div id="lb-body">${adsHtml}</div>`);
+}
+function switchLb(tab){
+  const el=g('lb-body');if(el)el.innerHTML=tab==='ads'?window._lbAds:window._lbPvp;
+  const b1=g('lbt1'),b2=g('lbt2');
+  if(b1)b1.style.cssText='flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:'+(tab==='ads'?'linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff':'transparent;color:#6b7280');
+  if(b2)b2.style.cssText='flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:'+(tab==='pvp'?'linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff':'transparent;color:#6b7280');
+}
+let bets=[],ptot=0,pvpTimer=null,pvpSec=15,pvpRun=false,pvpSpinning=false,pvpAngle=0,pvpRoundNum=1001;
+const PCOLS=['#6366f1','#8b5cf6','#06b6d4','#f59e0b','#ef4444','#ec4899'];
+function quickBet(v){const i=g('pvpinp');if(i)i.value=v;}
+function updatePvpSt(){
+  const el=g('pvp-st');if(!el)return;
+  if(pvpSpinning){el.textContent='🎰 Крутится...';return;}
+  if(!bets.length)el.textContent='Ожидание игроков...';
+  else if(bets.length===1)el.textContent='Нужен ещё 1 игрок';
+  else if(pvpRun)el.textContent='⏱ '+pvpSec;
+  else el.textContent='';
+  const c=g('pvp-cnt');if(c)c.textContent=bets.length+' игроков';
+}
+function addPvp(){
+  if(pvpSpinning){notify('Дождись результата!');return;}
+  const a=parseFloat(g('pvpinp').value);
+  if(isNaN(a)||a<0.01){notify('Минимум 0.01 TON!');return;}
+  if(a>S.ton){notify('Недостаточно TON!');return;}
+  S.ton-=a;ptot+=a;
+  bets.push({n:UNAME,a,c:PCOLS[bets.length%PCOLS.length]});
+  g('pvpinp').value='';save();
+  st('pvptot',ptot.toFixed(3));st('b2',S.ton.toFixed(3)+' TON');st('mt',S.ton.toFixed(3));
+  drawWheel();renderBets();notify(a+' TON поставлен!');
+  if(bets.length>=2&&!pvpRun){pvpRun=true;pvpSec=15;pvpTimer=setInterval(pvpTick,1000);}
+  updatePvpSt();
+}
+function pvpTick(){pvpSec--;updatePvpSt();if(pvpSec<=0){clearInterval(pvpTimer);pvpTimer=null;pvpRun=false;pvpDoSpin();}}
+function pvpDoSpin(){
+  if(bets.length<2){pvpRun=false;pvpSec=15;updatePvpSt();return;}
+  pvpSpinning=true;updatePvpSt();
+  const r=Math.random()*ptot;let cum=0,winner=bets[0];
+  for(const b of bets){cum+=b.a;if(r<cum){winner=b;break;}}
+  let sa=0;for(const b of bets){const sl=(b.a/ptot)*Math.PI*2;if(b===winner){sa+=sl/2;break;}sa+=sl;}
+  const target=(5+Math.random()*3)*Math.PI*2+(Math.PI*1.5-sa-pvpAngle);
+  const dur=4000,st2=performance.now(),init=pvpAngle;
+  function anim(now){
+    const p=Math.min((now-st2)/dur,1),e=1-Math.pow(1-p,3);
+    pvpAngle=init+target*e;drawWheel();
+    if(p<1)requestAnimationFrame(anim);
+    else{pvpAngle%=Math.PI*2;pvpSpinning=false;showWinner(winner);}
+  }
+  requestAnimationFrame(anim);
+}
+function showWinner(w){
+  const prize=ptot*0.95,pct=((w.a/ptot)*100).toFixed(1);
+  st('pw-game','ИГРА #'+pvpRoundNum);st('pw-name',w.n);st('pw-prize',prize.toFixed(3));st('pw-pct',pct+'%');st('pw-cnt',bets.length);
+  const ov=g('pvp-win');if(ov)ov.style.display='flex';
+  if(w.n===UNAME){S.ton+=prize;S.totalTon+=prize;save();updateUI();notify('🏆 Победа! +'+prize.toFixed(3)+' TON');}
+  else notify('😔 Победил: '+w.n);
+}
+function closePvpWin(){
+  const ov=g('pvp-win');if(ov)ov.style.display='none';
+  bets=[];ptot=0;pvpSec=15;pvpRun=false;pvpSpinning=false;pvpAngle=0;pvpRoundNum++;
+  st('pvptot','0.000');st('pvp-round',pvpRoundNum);drawWheel();renderBets();updatePvpSt();
+}
+function drawWheel(){
+  const cv=g('pvpC');if(!cv)return;
+  const ctx=cv.getContext('2d'),cx=150,cy=150,R=138,ri=44;
+  ctx.clearRect(0,0,300,300);
+  if(!bets.length){
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fillStyle='#111827';ctx.fill();
+    ctx.strokeStyle='#1a2040';ctx.lineWidth=2;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#0d1225';ctx.fill();
+    ctx.fillStyle='#374151';ctx.font='700 12px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('Ставь TON',cx,cy);return;
+  }
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(pvpAngle);ctx.translate(-cx,-cy);
+  let ang=-Math.PI/2;
+  bets.forEach(b=>{
+    const sl=(b.a/ptot)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,ang,ang+sl);ctx.closePath();
+    ctx.fillStyle=b.c;ctx.fill();ctx.strokeStyle='#0a0e1a';ctx.lineWidth=2;ctx.stroke();
+    if(sl>0.2){
+      const m=ang+sl/2,lx=cx+Math.cos(m)*R*.7,ly=cy+Math.sin(m)*R*.7;
+      ctx.beginPath();ctx.arc(lx,ly,17,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,.4)';ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='700 10px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(((b.a/ptot)*100).toFixed(0)+'%',lx,ly);
+    }
+    ang+=sl;
+  });
+  ctx.restore();
+  ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#0d1225';ctx.fill();
+  ctx.strokeStyle='rgba(99,102,241,.2)';ctx.lineWidth=2;ctx.stroke();
+  if(pvpRun&&!pvpSpinning){ctx.fillStyle='#fff';ctx.font='800 26px Syne';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pvpSec,cx,cy);}
+  else if(pvpSpinning){ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='22px sans-serif';ctx.fillText('🎰',cx,cy);}
+  else{ctx.fillStyle='#374151';ctx.font='700 13px Inter';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(bets.length+'/2',cx,cy);}
+}
+function renderBets(){
+  const el=g('pvplist');if(!el)return;
+  if(!bets.length){el.innerHTML='<div style="text-align:center;padding:20px;color:#374151;font-size:13px">Будь первым — сделай ставку!</div>';return;}
+  el.innerHTML=bets.map(b=>`<div style="display:flex;align-items:center;justify-content:space-between;background:#111827;border-radius:13px;padding:13px;margin-bottom:8px;border:1px solid #1a2040">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:36px;height:36px;border-radius:11px;background:${b.c};display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">${b.n.replace('@','')[0].toUpperCase()}</div>
+      <div><div style="font-weight:700;color:#e6edf3;font-size:14px">${b.n}</div><div style="font-size:11px;color:#4a5568;margin-top:1px">Игрок</div></div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-family:Syne,sans-serif;font-size:16px;font-weight:800;color:#818cf8">${b.a.toFixed(3)} TON</div>
+      <div style="font-size:12px;color:#10b981;font-weight:700;margin-top:1px">${((b.a/ptot)*100).toFixed(1)}%</div>
+    </div>
+  </div>`).join('');
+}
+goTo('main');
+</script>
+</body>
+</html>
