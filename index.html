@@ -12,9 +12,9 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf3;font-family:'Inter',sans-serif}
 ::-webkit-scrollbar{width:0}
 #app{display:block;height:100vh;height:100dvh}
-#content{position:fixed;top:0;left:0;right:0;bottom:62px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.page{display:none;padding:14px 14px 20px}
-.page.active{display:block}
+#content{position:fixed;top:0;left:0;right:0;bottom:62px;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#111214}
+.page{display:none;padding:14px 14px 20px;width:100%;min-height:100%}
+.page.active{display:block!important}
 #nav{position:fixed;bottom:0;left:0;right:0;height:62px;display:flex!important;align-items:flex-end;justify-content:space-around;background:#1a1a1e;border-top:1px solid #2a2a2e;padding:6px 0 max(10px,env(safe-area-inset-bottom));z-index:999}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;padding:4px 2px}
 .ni-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center}
@@ -138,8 +138,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 </div>
 <div id="app">
 <div id="content">
-
-<!-- ГЛАВНАЯ -->
 <div class="page active" id="page-main">
 <div class="topbar">
   <div class="tl">
@@ -161,12 +159,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
       <div class="hero-wv" id="h-wval">→</div>
     </div>
   </div>
+  <div class="hero-bals">
+    <div class="hb"><div class="hb-val" id="mt">0.000</div><div class="hb-lbl">TON</div></div>
+    <div class="hb"><div class="hb-val" id="mb">0</div><div class="hb-lbl">BIT</div></div>
+  </div>
+</div>
 <div class="card">
   <div class="clbl"><span class="ru-txt">РЕКЛАМА</span><span class="en-txt">ADS</span></div>
   <div class="aditem">
     <div class="adico ad1c">📺</div>
     <div style="flex:1">
-      <div class="adname"><span class="ru-txt">Реклама #1</span><span class="en-txt">Ad #1</span></div>
+      <div class="adname">Ad #1</div>
       <div class="adrew" id="ar1">+30 BIT ×1.0</div>
       <div class="adoff"><span class="ru-txt">Недоступно</span><span class="en-txt">Unavailable</span></div>
       <div class="adlim" id="al1">0/50</div>
@@ -176,7 +179,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div class="aditem">
     <div class="adico ad2c">📱</div>
     <div style="flex:1">
-      <div class="adname"><span class="ru-txt">Реклама #2</span><span class="en-txt">Ad #2</span></div>
+      <div class="adname">Ad #2</div>
       <div class="adrew" id="ar2">+10 BIT ×1.0</div>
       <div class="adoff"><span class="ru-txt">Недоступно</span><span class="en-txt">Unavailable</span></div>
       <div class="adlim" id="al2">0/50</div>
@@ -186,7 +189,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 </div>
 </div>
 
-<!-- ЗАДАНИЕ -->
 <div class="page" id="page-task">
 <div class="topbar">
   <div class="tl">
@@ -214,8 +216,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div style="margin-top:10px"><button class="btn" onclick="activatePromo()"><span class="ru-txt">Активировать</span><span class="en-txt">Activate</span></button></div>
 </div>
 </div>
-
-<!-- PVP -->
 <div class="page" id="page-pvp" style="padding:0">
 <div id="pvp-win" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:flex-end;justify-content:center">
   <div style="background:#1a1a1e;border-radius:22px 22px 0 0;width:100%;padding:24px 20px 40px;animation:mup .3s ease;border-top:1px solid #2a2a2e">
@@ -223,7 +223,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
       <div style="font-size:52px;margin-bottom:8px">🏆</div>
       <div style="font-size:11px;color:#4a4a5a;font-weight:700;letter-spacing:2px;margin-bottom:6px" id="pw-game">ROUND #1</div>
       <div style="font-family:Syne,sans-serif;font-size:26px;color:#e6edf3;font-weight:800" id="pw-name">@winner</div>
-      <div style="font-size:12px;color:#4a4a5a;margin-top:3px"><span class="ru-txt">Победитель</span><span class="en-txt">Winner</span></div>
     </div>
     <div style="background:#222228;border-radius:16px;padding:16px;margin-bottom:16px;display:flex;justify-content:space-around;border:1px solid #2a2a2e">
       <div style="text-align:center"><div style="font-family:Syne,sans-serif;font-size:26px;color:#1d6df5;font-weight:800" id="pw-prize">0.000</div><div style="font-size:10px;color:#4a4a5a;font-weight:700;margin-top:2px">TON</div></div>
@@ -282,7 +281,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div id="pvplist"><div style="text-align:center;padding:20px;color:#484f58;font-size:13px"><span class="ru-txt">Будь первым — сделай ставку!</span><span class="en-txt">Be first — place a bet!</span></div></div>
 </div>
 </div>
-<!-- ДРУЗЬЯ -->
+
 <div class="page" id="page-friends">
 <div class="topbar">
   <div class="tl">
@@ -294,7 +293,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 <div class="ref-hero">
   <div style="position:absolute;bottom:-30px;right:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
   <div class="rttl"><span class="ru-txt">Пригласи и заработай</span><span class="en-txt">Invite and earn</span></div>
-  <div class="rsub"><span class="ru-txt">5% с заработка каждого друга навсегда</span><span class="en-txt">5% from every friend's earnings forever</span></div>
+  <div class="rsub"><span class="ru-txt">5% с заработка каждого друга навсегда</span><span class="en-txt">5% from every friend forever</span></div>
   <div class="rstats">
     <div class="rstat"><div class="rval" id="refc">0</div><div class="rlbl"><span class="ru-txt">ПРИГЛАШЕНО</span><span class="en-txt">INVITED</span></div></div>
     <div class="rstat"><div class="rval" id="refe">0.000</div><div class="rlbl">TON</div></div>
@@ -309,8 +308,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div class="how-row"><div class="how-n">4</div><div class="how-t"><b style="color:#1d6df5"><span class="ru-txt">Ты получаешь 5% с его заработка</span><span class="en-txt">You get 5% of his earnings</span></b></div></div>
 </div>
 </div>
-
-<!-- ПРОФИЛЬ -->
 <div class="page" id="page-profile">
 <div class="topbar">
   <div class="tl">
@@ -355,7 +352,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
     <button class="btn bhalf" onclick="openWithdraw()">↑ <span class="ru-txt">Вывод</span><span class="en-txt">Withdraw</span></button>
   </div>
 </div>
-<div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="ru-txt">Чек-ин серия</span><span class="en-txt">Check-in streak</span></div><div class="prval" id="pstr">1</div></div>
+<div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="ru-txt">Чек-ин серия</span><span class="en-txt">Streak</span></div><div class="prval" id="pstr">1</div></div>
 <div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="ru-txt">Рефералов</span><span class="en-txt">Referrals</span></div><div class="prval" id="pref">0</div></div>
 <div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg><span class="ru-txt">Язык</span><span class="en-txt">Language</span></div><div class="prval" id="plang">Русский</div></div>
 <button onclick="openLeaderboard()" style="width:100%;padding:14px;background:#222228;border:1px solid #2a2a2e;border-radius:13px;color:#e6edf3;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;margin-bottom:20px">🏆 <span class="ru-txt">Лидерборд</span><span class="en-txt">Leaderboard</span></button>
@@ -392,18 +389,18 @@ const tgU=tg?.initDataUnsafe?.user;
 const UNAME=tgU?(tgU.username?'@'+tgU.username:tgU.first_name||'User'):'@username';
 const ULETTER=(tgU?.first_name||tgU?.username||'O')[0].toUpperCase();
 const OWNER='UQAG8cx9dXAWIfcoNUkdyki-Un9QzJxw3_xU8624H6OnZFMb';
-let S=JSON.parse(localStorage.getItem('orb13')||'{}');
+let S=JSON.parse(localStorage.getItem('orb14')||'{}');
 if(!S.ton)S.ton=0;if(!S.bit)S.bit=0;if(!S.streak)S.streak=0;
 if(!S.refCount)S.refCount=0;if(!S.refEarned)S.refEarned=0;
 if(!S.lang)S.lang='ru';if(!S.adV)S.adV={};
 if(!S.totalBit)S.totalBit=0;if(!S.totalTon)S.totalTon=0;
 if(!S.pvpRound)S.pvpRound=1;
-function save(){localStorage.setItem('orb13',JSON.stringify(S));}
+function save(){localStorage.setItem('orb14',JSON.stringify(S));}
 function g(id){return document.getElementById(id);}
 function st(id,v){const e=g(id);if(e)e.textContent=v;}
 function getMulti(){return Math.min(1+(S.streak-1)*0.1,1.5);}
 let lang=S.lang||'ru';
-// TON Connect
+
 let tonConnectUI=null;
 try{
   tonConnectUI=new TONConnectUI({
@@ -411,36 +408,22 @@ try{
     buttonRootId:null
   });
   tonConnectUI.onStatusChange(wallet=>{
-    if(wallet){
-      S.wallet=wallet.account.address;
-      save();updateUI();
-      notify('✅ '+(lang==='ru'?'Кошелёк подключён!':'Wallet connected!'));
-    } else {
-      S.wallet=null;save();updateUI();
-    }
+    if(wallet){S.wallet=wallet.account.address;save();updateUI();notify('✅ '+(lang==='ru'?'Кошелёк подключён!':'Wallet connected!'));}
+    else{S.wallet=null;save();updateUI();}
   });
-}catch(e){console.log('TON Connect init:',e);}
+}catch(e){console.log('TON:',e);}
 
 async function connectWallet(){
-  if(!tonConnectUI){notify('TON Connect loading...');return;}
-  if(S.wallet){
-    await tonConnectUI.disconnect();
-    S.wallet=null;save();updateUI();
-    notify(lang==='ru'?'Кошелёк отключён':'Wallet disconnected');
-    return;
-  }
-  try{await tonConnectUI.openModal();}
-  catch(e){notify('Error: '+e.message);}
+  if(!tonConnectUI){notify('Loading...');return;}
+  if(S.wallet){await tonConnectUI.disconnect();S.wallet=null;save();updateUI();notify(lang==='ru'?'Кошелёк отключён':'Disconnected');return;}
+  try{await tonConnectUI.openModal();}catch(e){notify('Error');}
 }
 
 function applyLang(){
   document.body.className=lang==='ru'?'lang-ru':'lang-en';
-  ['langBtn','langBtn1','langBtn2','langBtn3','langBtn4'].forEach(id=>{
-    const el=g(id);if(el)el.textContent=lang==='ru'?'RU':'EN';
-  });
+  ['langBtn','langBtn1','langBtn2','langBtn3','langBtn4'].forEach(id=>{const el=g(id);if(el)el.textContent=lang==='ru'?'RU':'EN';});
   st('plang',lang==='ru'?'Русский':'English');
 }
-
 function updateUI(){
   const ton=S.ton.toFixed(3),bit=S.bit,streak=Math.max(S.streak,1);
   const multi=getMulti(),ms=multi.toFixed(1);
@@ -458,46 +441,32 @@ function updateUI(){
   st('al1',(S.adV[today+'1']||0)+'/50');
   st('al2',(S.adV[today+'2']||0)+'/50');
   const cbtn=g('cibtn');
-  if(cbtn){
-    if(S.lastCI===today){
-      cbtn.innerHTML='<span class="ru-txt">Уже забрано ✓</span><span class="en-txt">Already claimed ✓</span>';
-      cbtn.disabled=true;
-    } else {
-      cbtn.innerHTML='<span class="ru-txt">Забрать бонус</span><span class="en-txt">Claim bonus</span>';
-      cbtn.disabled=false;
-    }
-  }
-  const wAddrEl=g('w-addr');
+  if(cbtn){if(S.lastCI===today){cbtn.innerHTML='<span class="ru-txt">Уже забрано ✓</span><span class="en-txt">Claimed ✓</span>';cbtn.disabled=true;}
+  else{cbtn.innerHTML='<span class="ru-txt">Забрать бонус</span><span class="en-txt">Claim bonus</span>';cbtn.disabled=false;}}
   if(S.wallet){
     st('h-wval',S.wallet.slice(0,6)+'...'+S.wallet.slice(-4));
-    if(wAddrEl)wAddrEl.textContent=S.wallet.slice(0,8)+'...'+S.wallet.slice(-5);
+    const wa=g('w-addr');if(wa)wa.textContent=S.wallet.slice(0,8)+'...'+S.wallet.slice(-5);
     const ws=g('w-st');if(ws)ws.className='wst on';
-    const wst=g('w-st-txt');if(wst)wst.innerHTML='<span class="ru-txt">Подключён</span><span class="en-txt">Connected</span>';
     const wbtn=g('w-btn');if(wbtn)wbtn.innerHTML='🔓 <span class="ru-txt">Отключить</span><span class="en-txt">Disconnect</span>';
-  } else {
+  }else{
     st('h-wval',lang==='ru'?'Подключить →':'Connect →');
-    if(wAddrEl)wAddrEl.innerHTML='<span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span>';
+    const wa=g('w-addr');if(wa)wa.innerHTML='<span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span>';
     const ws=g('w-st');if(ws)ws.className='wst off';
-    const wst=g('w-st-txt');if(wst)wst.innerHTML='<span class="ru-txt">Не подключён</span><span class="en-txt">Not connected</span>';
     const wbtn=g('w-btn');if(wbtn)wbtn.innerHTML='💎 <span class="ru-txt">Подключить кошелёк</span><span class="en-txt">Connect wallet</span>';
   }
-  applyLang();
-  calcExch();save();
+  applyLang();calcExch();save();
 }
 
-function toggleLang(){
-  lang=lang==='ru'?'en':'ru';
-  S.lang=lang;save();updateUI();
-  notify(lang==='ru'?'🌐 Русский':'🌐 English');
-}
+function toggleLang(){lang=lang==='ru'?'en':'ru';S.lang=lang;save();updateUI();notify(lang==='ru'?'🌐 Русский':'🌐 English');}
+
 let cur='main';
 function goTo(tab){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ni,.nc').forEach(n=>n.classList.remove('active'));
-  g('page-'+tab).classList.add('active');
-  g('nav-'+tab).classList.add('active');
-  g('content').scrollTop=0;cur=tab;
-  if(tab==='pvp')setTimeout(drawWheel,60);
+  const page=g('page-'+tab);if(page)page.classList.add('active');
+  const nav=g('nav-'+tab);if(nav)nav.classList.add('active');
+  const content=g('content');if(content)content.scrollTop=0;
+  cur=tab;if(tab==='pvp')setTimeout(drawWheel,60);
   updateUI();
 }
 
@@ -521,7 +490,6 @@ function activatePromo(){
   if(codes[c]){S.bit+=codes[c];S.totalBit+=codes[c];g('promoInp').value='';save();updateUI();notify('+'+codes[c]+' BIT 🎁');}
   else notify(lang==='ru'?'Неверный код':'Wrong code');
 }
-
 function copyRef(){
   const link='https://t.me/Orbit_tonbot?start='+(tgU?.id||'ref');
   const el=document.createElement('textarea');el.value=link;el.style.position='fixed';el.style.opacity='0';
@@ -563,20 +531,20 @@ function openWithdraw(){
       <input type="number" class="minp" id="wdAmt" placeholder="0.5" min="0.5" step="0.1">
       <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a4a5a">TON</span>
     </div>
-    <div class="mnote">📌 ${lang==='ru'?'Минимум 0.5 TON. Обработка до 24 часов.':'Minimum 0.5 TON. Processing up to 24 hours.'}</div>
+    <div class="mnote">📌 ${lang==='ru'?'Минимум 0.5 TON. До 24 часов.':'Minimum 0.5 TON. Up to 24 hours.'}</div>
     <button class="btn" onclick="confirmWd()">${lang==='ru'?'Подтвердить':'Confirm'}</button>`);
 }
 function confirmWd(){
   const amt=parseFloat(g('wdAmt')?.value)||0;
   if(amt<0.5){notify(lang==='ru'?'Минимум 0.5 TON!':'Minimum 0.5 TON!');return;}
-  if(amt>S.ton){notify(lang==='ru'?'Недостаточно TON!':'Not enough TON!');return;}
-  S.ton-=amt;save();closeModal();updateUI();notify('✅ '+(lang==='ru'?'Заявка принята!':'Request accepted!'));
+  if(amt>S.ton){notify(lang==='ru'?'Недостаточно!':'Not enough!');return;}
+  S.ton-=amt;save();closeModal();updateUI();notify('✅ '+(lang==='ru'?'Заявка принята!':'Request sent!'));
 }
 
 function calcExch(){const v=parseFloat(g('exchInp')?.value)||0;st('exchOut',v>=500?(v*0.0001).toFixed(4)+' TON':'0.0000 TON');}
 function doExchange(){
   const v=parseFloat(g('exchInp')?.value)||0;
-  if(v<500){notify(lang==='ru'?'Нужно минимум 500 BIT!':'Need minimum 500 BIT!');return;}
+  if(v<500){notify(lang==='ru'?'Минимум 500 BIT!':'Minimum 500 BIT!');return;}
   if(v>S.bit){notify(lang==='ru'?'Недостаточно BIT!':'Not enough BIT!');return;}
   S.bit-=Math.floor(v);S.ton+=v*0.0001;
   if(g('exchInp'))g('exchInp').value='';
@@ -585,28 +553,25 @@ function doExchange(){
 
 function openLeaderboard(){
   const myBit=S.totalBit||S.bit||0;const myTon=S.totalTon||0;
-  function row(i,n,v){
-    const medals=['🥇','🥈','🥉'];
-    return`<div style="display:flex;align-items:center;gap:10px;padding:11px 12px;background:#222228;border-radius:13px;margin-bottom:8px;border:1px solid #2d2f7e">
+  function row(i,n,v){const medals=['🥇','🥈','🥉'];
+    return`<div style="display:flex;align-items:center;gap:10px;padding:11px 12px;background:#222228;border-radius:13px;margin-bottom:8px;border:1px solid #2a2a2e">
       <div style="font-size:18px;width:28px;text-align:center">${i<3?medals[i]:i+1}</div>
       <div style="width:34px;height:34px;border-radius:10px;background:#1d6df5;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">${n[0].toUpperCase()}</div>
       <div style="flex:1;font-weight:700;font-size:14px;color:#e6edf3">${n}</div>
       <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:#1d6df5">${v}</div>
-    </div>`;
-  }
+    </div>`;}
   const adsHtml=myBit>0?row(0,UNAME,myBit.toLocaleString()+' BIT'):`<div style="text-align:center;padding:24px;color:#484f58;font-size:14px">🏆<br><br>${lang==='ru'?'Пока пусто':'Empty yet'}</div>`;
   const pvpHtml=myTon>0?row(0,UNAME,myTon.toFixed(3)+' TON'):`<div style="text-align:center;padding:24px;color:#484f58;font-size:14px">🏆<br><br>${lang==='ru'?'Пока пусто':'Empty yet'}</div>`;
   window._lbAds=adsHtml;window._lbPvp=pvpHtml;
-  openModal(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3">🏆 ${lang==='ru'?'Лидерборд':'Leaderboard'}</div>
-      <button onclick="closeModal()" style="width:32px;height:32px;border-radius:50%;background:#222228;border:1px solid #2a2a2e;color:#8b949e;font-size:20px;cursor:pointer;line-height:1">×</button>
-    </div>
-    <div style="display:flex;gap:6px;background:#222228;border-radius:12px;padding:4px;margin-bottom:14px">
-      <button id="lbt1" onclick="switchLb('ads')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#1d6df5;color:#fff">📺 ${lang==='ru'?'Реклама':'Ads'}</button>
-      <button id="lbt2" onclick="switchLb('pvp')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:transparent;color:#6b7280">⚔️ PvP</button>
-    </div>
-    <div id="lb-body">${adsHtml}</div>`);
+  openModal(`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3">🏆 ${lang==='ru'?'Лидерборд':'Leaderboard'}</div>
+    <button onclick="closeModal()" style="width:32px;height:32px;border-radius:50%;background:#222228;border:1px solid #2a2a2e;color:#8b949e;font-size:20px;cursor:pointer;line-height:1">×</button>
+  </div>
+  <div style="display:flex;gap:6px;background:#222228;border-radius:12px;padding:4px;margin-bottom:14px">
+    <button id="lbt1" onclick="switchLb('ads')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#1d6df5;color:#fff">📺 ${lang==='ru'?'Реклама':'Ads'}</button>
+    <button id="lbt2" onclick="switchLb('pvp')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:transparent;color:#6b7280">⚔️ PvP</button>
+  </div>
+  <div id="lb-body">${adsHtml}</div>`);
 }
 function switchLb(tab){
   const el=g('lb-body');if(el)el.innerHTML=tab==='ads'?window._lbAds:window._lbPvp;
@@ -620,23 +585,23 @@ const PCOLS=['#1d6df5','#7c3aed','#10b981','#f59e0b','#ef4444','#ec4899'];
 function quickBet(v){const i=g('pvpinp');if(i)i.value=v;}
 function updatePvpSt(){
   const el=g('pvp-st');if(!el)return;
-  if(pvpSpinning){el.textContent='🎰 '+(lang==='ru'?'Крутится...':'Spinning...');return;}
-  if(!bets.length)el.textContent=lang==='ru'?'Ожидание игроков...':'Waiting for players...';
-  else if(bets.length===1)el.textContent=lang==='ru'?'Нужен ещё 1 игрок':'Need 1 more player';
+  if(pvpSpinning){el.textContent='🎰';return;}
+  if(!bets.length)el.textContent=lang==='ru'?'Ожидание...':'Waiting...';
+  else if(bets.length===1)el.textContent=lang==='ru'?'Нужен ещё 1':'Need 1 more';
   else if(pvpRun)el.textContent='⏱ '+pvpSec;
   else el.textContent='';
-  const c=g('pvp-cnt');if(c)c.textContent=bets.length+(lang==='ru'?' игроков':' players');
+  const c=g('pvp-cnt');if(c)c.textContent=bets.length;
 }
 function addPvp(){
-  if(pvpSpinning){notify(lang==='ru'?'Дождись результата!':'Wait for result!');return;}
+  if(pvpSpinning){notify(lang==='ru'?'Подожди!':'Wait!');return;}
   const a=parseFloat(g('pvpinp').value);
-  if(isNaN(a)||a<0.01){notify(lang==='ru'?'Минимум 0.01 TON!':'Minimum 0.01 TON!');return;}
+  if(isNaN(a)||a<0.01){notify('Min 0.01 TON!');return;}
   if(a>S.ton){notify(lang==='ru'?'Недостаточно TON!':'Not enough TON!');return;}
   S.ton-=a;ptot+=a;
   bets.push({n:UNAME,a,c:PCOLS[bets.length%PCOLS.length]});
   g('pvpinp').value='';save();
   st('pvptot',ptot.toFixed(3));st('b2',S.ton.toFixed(3)+' TON');st('mt',S.ton.toFixed(3));
-  drawWheel();renderBets();notify(a+' TON '+(lang==='ru'?'поставлен!':'placed!'));
+  drawWheel();renderBets();notify(a+' TON!');
   if(bets.length>=2&&!pvpRun){pvpRun=true;pvpSec=15;pvpTimer=setInterval(pvpTick,1000);}
   updatePvpSt();
 }
@@ -662,7 +627,7 @@ function showWinner(w){
   st('pw-game','ROUND #'+pvpRoundNum);st('pw-name',w.n);st('pw-prize',prize.toFixed(3));st('pw-pct',pct+'%');st('pw-cnt',bets.length);
   const ov=g('pvp-win');if(ov)ov.style.display='flex';
   if(w.n===UNAME){S.ton+=prize;S.totalTon+=prize;save();updateUI();notify('🏆 +'+prize.toFixed(3)+' TON');}
-  else notify('😔 '+(lang==='ru'?'Победил: ':'Winner: ')+w.n);
+  else notify('😔 '+w.n);
 }
 function closePvpWin(){
   const ov=g('pvp-win');if(ov)ov.style.display='none';
@@ -699,20 +664,20 @@ function drawWheel(){
   ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#1a1a1e';ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=2;ctx.stroke();
   if(pvpRun&&!pvpSpinning){ctx.fillStyle='#fff';ctx.font='800 26px Syne';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pvpSec,cx,cy);}
-  else if(pvpSpinning){ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='22px sans-serif';ctx.fillText('🎰',cx,cy);}
+  else if(pvpSpinning){ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='22px sans-serif';ctx.fillText('🎰',cx,cy);}
   else{ctx.fillStyle='#484f58';ctx.font='700 13px Inter';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(bets.length+'/2',cx,cy);}
 }
 function renderBets(){
   const el=g('pvplist');if(!el)return;
-  if(!bets.length){el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58;font-size:13px">${lang==='ru'?'Будь первым — сделай ставку!':'Be first — place a bet!'}</div>`;return;}
+  if(!bets.length){el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58;font-size:13px">${lang==='ru'?'Будь первым!':'Be first!'}</div>`;return;}
   el.innerHTML=bets.map(b=>`<div style="display:flex;align-items:center;justify-content:space-between;background:#222228;border-radius:13px;padding:13px;margin-bottom:8px;border:1px solid #2a2a2e">
     <div style="display:flex;align-items:center;gap:10px">
       <div style="width:36px;height:36px;border-radius:11px;background:${b.c};display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">${b.n.replace('@','')[0].toUpperCase()}</div>
-      <div><div style="font-weight:700;color:#e6edf3;font-size:14px">${b.n}</div></div>
+      <div style="font-weight:700;color:#e6edf3;font-size:14px">${b.n}</div>
     </div>
     <div style="text-align:right">
       <div style="font-family:Syne,sans-serif;font-size:16px;font-weight:800;color:#1d6df5">${b.a.toFixed(3)} TON</div>
-      <div style="font-size:12px;color:#10b981;font-weight:700;margin-top:1px">${((b.a/ptot)*100).toFixed(1)}%</div>
+      <div style="font-size:12px;color:#10b981;font-weight:700">${((b.a/ptot)*100).toFixed(1)}%</div>
     </div>
   </div>`).join('');
 }
