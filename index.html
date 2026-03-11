@@ -161,7 +161,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 </div>
 <div id="app">
 <div id="content">
-
 <div class="page active" id="page-main">
 <div class="topbar">
   <div class="tl">
@@ -250,7 +249,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div style="margin-top:10px"><button class="btn" onclick="activatePromo()"><span class="ru-txt">Активировать</span><span class="en-txt">Activate</span></button></div>
 </div>
 </div>
-
 <div class="page" id="page-pvp" style="padding:0">
 <div id="pvp-win" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:flex-end;justify-content:center">
   <div style="background:#1a1a1e;border-radius:22px 22px 0 0;width:100%;padding:24px 20px 40px;animation:mup .3s ease;border-top:1px solid #2a2a2e">
@@ -348,7 +346,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
   <div class="how-row"><div class="how-n">4</div><div class="how-t"><b style="color:#1d6df5"><span class="ru-txt">Ты получаешь 5% от его BIT автоматически!</span><span class="en-txt">You get 5% of his BIT automatically!</span></b></div></div>
 </div>
 </div>
-
 <div class="page" id="page-profile">
 <div class="topbar">
   <div class="tl">
@@ -398,7 +395,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111214;color:#e6edf
 <div class="prrow"><div class="prlbl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg><span class="ru-txt">Язык</span><span class="en-txt">Language</span></div><div class="prval" id="plang">Русский</div></div>
 <button onclick="openLeaderboard()" style="width:100%;padding:14px;background:#222228;border:1px solid #2a2a2e;border-radius:13px;color:#e6edf3;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;margin-bottom:20px">🏆 <span class="ru-txt">Лидерборд</span><span class="en-txt">Leaderboard</span></button>
 </div>
-
 </div>
 <div id="nav">
   <div class="ni" id="nav-pvp" onclick="goTo('pvp')"><div class="ni-ico"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M14.5 17.5l2 2a2.121 2.121 0 0 0 3-3l-2-2"/><path d="M3 21l4-4"/></svg></div><span class="ni-lbl">PvP</span></div>
@@ -418,94 +414,91 @@ const tgU=tg?.initDataUnsafe?.user;
 const UNAME=tgU?(tgU.username?'@'+tgU.username:tgU.first_name||'User'):'@username';
 const ULETTER=(tgU?.first_name||tgU?.username||'O')[0].toUpperCase();
 const UID=tgU?.id||0;
-let S=JSON.parse(localStorage.getItem('orb18')||'{}');
+let S=JSON.parse(localStorage.getItem('orb19')||'{}');
 if(!S.ton)S.ton=0;if(!S.bit)S.bit=0;if(!S.streak)S.streak=0;
 if(!S.refCount)S.refCount=0;if(!S.refEarned)S.refEarned=0;
 if(!S.lang)S.lang='ru';if(!S.adV)S.adV={};
 if(!S.totalBit)S.totalBit=0;if(!S.totalTon)S.totalTon=0;
 if(!S.pvpRound)S.pvpRound=1;if(!S.usedPromos)S.usedPromos={};
-function save(){localStorage.setItem('orb18',JSON.stringify(S));}
+function save(){localStorage.setItem('orb19',JSON.stringify(S));}
 function g(id){return document.getElementById(id);}
 function st(id,v){const e=g(id);if(e)e.textContent=v;}
 function getMulti(){const s=Math.max(S.streak,1);return Math.min(1+(s-1)*0.1,1.5);}
 let lang=S.lang||'ru';
 
-// Промокоды — 5 штук по 5 активаций каждый
-const PROMOS={
-  'ORBIT100':{bit:100,max:5},
-  'ORBIT200':{bit:200,max:5},
-  'ORBIT300':{bit:300,max:5},
-  'ORBIT400':{bit:400,max:5},
-  'ORBIT500':{bit:500,max:5}
-};
+const PROMOS={'ORBIT100':{bit:100,max:5},'ORBIT200':{bit:200,max:5},'ORBIT300':{bit:300,max:5},'ORBIT400':{bit:400,max:5},'ORBIT500':{bit:500,max:5}};
 
-// TonConnect
+// Конвертация raw TON адреса в UQ... формат
+function rawToFriendly(raw){
+  try{
+    // Пробуем через TonConnectUI
+    if(TON_CONNECT_UI&&TON_CONNECT_UI.toUserFriendlyAddress){
+      return TON_CONNECT_UI.toUserFriendlyAddress(raw);
+    }
+  }catch(e){}
+  return raw;
+}
+
 let tonConnectUI=null;
 async function initTonConnect(){
   try{
     tonConnectUI=new TON_CONNECT_UI.TonConnectUI({manifestUrl:MANIFEST_URL,buttonRootId:null});
     tonConnectUI.onStatusChange(wallet=>{
       if(wallet){
-        // Берём адрес правильно
-        let addr=wallet.account.address;
-        // Сохраняем raw адрес
-        S.wallet=addr;
-        // Для отображения форматируем
-        S.walletDisplay=addr.length>20?addr.slice(0,8)+'...'+addr.slice(-6):addr;
+        const raw=wallet.account.address;
+        // Конвертируем в UQ... формат
+        let friendly=raw;
+        try{
+          friendly=TON_CONNECT_UI.toUserFriendlyAddress(raw,false);
+        }catch(e){
+          try{friendly=TON_CONNECT_UI.toUserFriendlyAddress(raw);}catch(e2){friendly=raw;}
+        }
+        S.wallet=raw;
+        S.walletFriendly=friendly;
         save();updateUI();closeTcModal();
         notify('✅ '+(lang==='ru'?'Кошелёк подключён!':'Wallet connected!'));
-        if(UID)fetch(API+'/api/wallet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:UID,wallet:addr})}).catch(()=>{});
+        if(UID)fetch(API+'/api/wallet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:UID,wallet:raw})}).catch(()=>{});
       }else{
-        S.wallet=null;S.walletDisplay=null;save();updateUI();
+        S.wallet=null;S.walletFriendly=null;save();updateUI();
       }
     });
-  }catch(e){console.log('TC init error',e);}
+  }catch(e){}
 }
+
 async function loadWallets(){
   const list=g('wlt-list');
   try{
     const wallets=await tonConnectUI.getWallets();
     if(!wallets||!wallets.length){list.innerHTML=defaultWalletsHtml();return;}
-    list.innerHTML=wallets.map(w=>`<button class="wlt-btn" onclick="connectWithWallet('${w.appName}')">
-      <img class="wlt-ico" src="${w.imageUrl||''}" onerror="this.style.background='#1d6df5';this.src=''">
-      <div><div class="wlt-name">${w.name}</div><div class="wlt-sub">${w.aboutUrl||''}</div></div>
-    </button>`).join('');
+    list.innerHTML=wallets.map(w=>`<button class="wlt-btn" onclick="connectWithWallet('${w.appName}')"><img class="wlt-ico" src="${w.imageUrl||''}" onerror="this.style.background='#1d6df5';this.src=''"><div><div class="wlt-name">${w.name}</div><div class="wlt-sub">${w.aboutUrl||''}</div></div></button>`).join('');
   }catch(e){list.innerHTML=defaultWalletsHtml();}
 }
 function defaultWalletsHtml(){
-  return [
-    {name:'Tonkeeper',sub:'tonkeeper.com',appName:'tonkeeper',img:'https://tonkeeper.com/assets/tonconnect-icon.png'},
+  return [{name:'Tonkeeper',sub:'tonkeeper.com',appName:'tonkeeper',img:'https://tonkeeper.com/assets/tonconnect-icon.png'},
     {name:'MyTonWallet',sub:'mytonwallet.io',appName:'mytonwallet',img:'https://mytonwallet.io/icon-256.png'},
     {name:'Tonhub',sub:'tonhub.com',appName:'tonhub',img:'https://tonhub.com/img/icon.png'},
     {name:'OpenMask',sub:'openmask.app',appName:'openmask',img:'https://openmask.app/img/logo.png'},
-    {name:'DeWallet',sub:'delabswallet.com',appName:'dewallet',img:'https://delabswallet.com/icon.png'},
-  ].map(w=>`<button class="wlt-btn" onclick="connectWithWallet('${w.appName}')">
-    <img class="wlt-ico" src="${w.img}" onerror="this.style.background='#1d6df5';this.src=''">
-    <div><div class="wlt-name">${w.name}</div><div class="wlt-sub">${w.sub}</div></div>
-  </button>`).join('');
+    {name:'DeWallet',sub:'delabswallet.com',appName:'dewallet',img:'https://delabswallet.com/icon.png'}]
+    .map(w=>`<button class="wlt-btn" onclick="connectWithWallet('${w.appName}')"><img class="wlt-ico" src="${w.img}" onerror="this.style.background='#1d6df5';this.src=''"><div><div class="wlt-name">${w.name}</div><div class="wlt-sub">${w.sub}</div></div></button>`).join('');
 }
 async function connectWithWallet(appName){
-  try{
-    if(!tonConnectUI)return;
-    try{await tonConnectUI.openSingleWalletModal(appName);}
-    catch(e){await tonConnectUI.openModal();}
-  }catch(e){}
+  try{if(!tonConnectUI)return;try{await tonConnectUI.openSingleWalletModal(appName);}catch(e){await tonConnectUI.openModal();}}catch(e){}
 }
 function connectWallet(){
   if(S.wallet){
+    const disp=S.walletFriendly||S.wallet;
     openModal(`<div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:12px">💎 ${lang==='ru'?'Мой кошелёк':'My wallet'}</div>
-    <div style="background:#222228;border-radius:12px;padding:14px;margin-bottom:14px;font-size:12px;color:#60a5fa;word-break:break-all;line-height:1.7;border:1px solid #1d3a7a">${S.wallet}</div>
+    <div style="background:#222228;border-radius:12px;padding:14px;margin-bottom:14px;font-size:12px;color:#60a5fa;word-break:break-all;line-height:1.7;border:1px solid #1d3a7a">${disp}</div>
     <button class="btn" style="margin-bottom:8px" onclick="closeModal()">${lang==='ru'?'Закрыть':'Close'}</button>
     <button class="btn btn-ghost" onclick="disconnectWallet()">${lang==='ru'?'Отключить кошелёк':'Disconnect wallet'}</button>`);
     return;
   }
-  g('tc-modal').classList.add('open');
-  loadWallets();
+  g('tc-modal').classList.add('open');loadWallets();
 }
 function closeTcModal(){g('tc-modal').classList.remove('open');}
 async function disconnectWallet(){
   try{if(tonConnectUI)await tonConnectUI.disconnect();}catch(e){}
-  S.wallet=null;S.walletDisplay=null;save();closeModal();updateUI();
+  S.wallet=null;S.walletFriendly=null;save();closeModal();updateUI();
   notify(lang==='ru'?'Кошелёк отключён':'Disconnected');
 }
 
@@ -522,16 +515,15 @@ async function initServer(){
       if(d.streak!==undefined)S.streak=d.streak;
       if(d.ref_count!==undefined)S.refCount=d.ref_count;
       if(d.ref_earned!==undefined)S.refEarned=d.ref_earned;
-      if(d.wallet&&!S.wallet)S.wallet=d.wallet;
+      if(d.wallet&&!S.wallet){S.wallet=d.wallet;S.walletFriendly=rawToFriendly(d.wallet);}
       save();updateUI();
     }
   }catch(e){}
 }
+
 function applyLang(){
   document.body.className=lang==='ru'?'lang-ru':'lang-en';
-  ['langBtn','langBtn1','langBtn2','langBtn3','langBtn4'].forEach(id=>{
-    const el=g(id);if(el)el.textContent=lang==='ru'?'RU':'EN';
-  });
+  ['langBtn','langBtn1','langBtn2','langBtn3','langBtn4'].forEach(id=>{const el=g(id);if(el)el.textContent=lang==='ru'?'RU':'EN';});
   st('plang',lang==='ru'?'Русский':'English');
 }
 
@@ -541,10 +533,9 @@ function updateStreakDays(){
     const el=g('sd'+i);if(!el)continue;
     el.className='sd';
     if(i<s)el.classList.add('done');
-    else if(i===s||( i===6&&s>=6))el.classList.add('active');
+    else if(i===s||(i===6&&s>=6))el.classList.add('active');
   }
 }
-
 function updateUI(){
   const ton=S.ton.toFixed(3),bit=S.bit,streak=Math.max(S.streak,1);
   const multi=getMulti(),ms=multi.toFixed(1);
@@ -559,30 +550,23 @@ function updateUI(){
   st('pstr','День '+streak+' · ×'+ms);
   st('pref',S.refCount);
   st('refc',S.refCount);st('refe',S.refEarned||0);
-  const ad1total=Math.floor(30*multi);
-  const ad2total=Math.floor(10*multi);
-  st('ar1-multi',ms);st('ar1-total',ad1total);
-  st('ar2-multi',ms);st('ar2-total',ad2total);
+  st('ar1-multi',ms);st('ar1-total',Math.floor(30*multi));
+  st('ar2-multi',ms);st('ar2-total',Math.floor(10*multi));
   const today=new Date().toDateString();
   st('al1',(S.adV[today+'1']||0)+'/50');
   st('al2',(S.adV[today+'2']||0)+'/50');
   const cbtn=g('cibtn');
   if(cbtn){
-    if(S.lastCI===today){
-      cbtn.innerHTML='<span class="ru-txt">Множитель получен ✓</span><span class="en-txt">Multiplier claimed ✓</span>';
-      cbtn.disabled=true;
-    }else{
-      cbtn.innerHTML='<span class="ru-txt">Получить множитель</span><span class="en-txt">Get multiplier</span>';
-      cbtn.disabled=false;
-    }
+    if(S.lastCI===today){cbtn.innerHTML='<span class="ru-txt">Множитель получен ✓</span><span class="en-txt">Multiplier claimed ✓</span>';cbtn.disabled=true;}
+    else{cbtn.innerHTML='<span class="ru-txt">Получить множитель</span><span class="en-txt">Get multiplier</span>';cbtn.disabled=false;}
   }
   updateStreakDays();
-  // Кошелёк
   const wAddrEl=g('w-addr'),wStEl=g('w-st'),wStTxt=g('w-st-txt'),wBtn=g('w-btn');
   if(S.wallet){
-    const disp=S.wallet.slice(0,8)+'...'+S.wallet.slice(-6);
-    st('h-wval',S.wallet.slice(0,6)+'...'+S.wallet.slice(-4));
-    if(wAddrEl)wAddrEl.textContent=disp;
+    const disp=S.walletFriendly||S.wallet;
+    const short=disp.slice(0,8)+'...'+disp.slice(-5);
+    st('h-wval',disp.slice(0,6)+'...'+disp.slice(-4));
+    if(wAddrEl)wAddrEl.textContent=short;
     if(wStEl)wStEl.className='wst on';
     if(wStTxt)wStTxt.innerHTML='<span class="ru-txt">Подключён ✓</span><span class="en-txt">Connected ✓</span>';
     if(wBtn)wBtn.innerHTML='👁 <span class="ru-txt">Мой кошелёк</span><span class="en-txt">My wallet</span>';
@@ -630,11 +614,8 @@ async function doCheckin(){
       if(d.error==='already_claimed'){S.lastCI=today;save();updateUI();notify(lang==='ru'?'Уже получен!':'Already claimed!');return;}
     }catch(e){}
   }
-  if(S.lastCI){
-    const diff=Math.round((new Date()-new Date(S.lastCI))/86400000);
-    if(diff>=2)S.streak=1;
-    else if(diff===1)S.streak=(S.streak||0)+1;
-  }else S.streak=1;
+  if(S.lastCI){const diff=Math.round((new Date()-new Date(S.lastCI))/86400000);if(diff>=2)S.streak=1;else if(diff===1)S.streak=(S.streak||0)+1;}
+  else S.streak=1;
   S.lastCI=today;save();updateUI();
   notify('✅ День '+S.streak+' | Множитель ×'+getMulti().toFixed(1));
 }
@@ -645,26 +626,21 @@ async function activatePromo(){
   if(S.usedPromos[c]){notify(lang==='ru'?'Ты уже использовал этот код!':'Already used!');return;}
   const promo=PROMOS[c];
   if(!promo){notify(lang==='ru'?'Неверный код!':'Wrong code!');return;}
-  // Проверяем глобальный счётчик
   const key='promo_uses_'+c;
   const uses=parseInt(localStorage.getItem(key)||'0');
-  if(uses>=promo.max){notify(lang==='ru'?'Код исчерпан ('+promo.max+'/'+promo.max+')':'Code expired ('+promo.max+'/'+promo.max+')');return;}
+  if(uses>=promo.max){notify(lang==='ru'?'Код исчерпан!':'Code expired!');return;}
   localStorage.setItem(key,uses+1);
   S.bit+=promo.bit;S.totalBit+=promo.bit;S.usedPromos[c]=true;
   g('promoInp').value='';save();updateUI();
   notify('+'+promo.bit+' BIT 🎁');
 }
-
 async function loadFriends(){
   const el=g('friends-list');if(!el)return;
-  if(!UID){
-    el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58;font-size:13px">${lang==='ru'?'Войди через Telegram':'Login via Telegram'}</div>`;
-    return;
-  }
+  if(!UID){el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58;font-size:13px">${lang==='ru'?'Войди через Telegram':'Login via Telegram'}</div>`;return;}
   el.innerHTML='<div style="text-align:center;padding:20px;color:#484f58">⏳</div>';
   try{
     const res=await fetch(API+'/api/friends/'+UID);
-    if(!res.ok)throw new Error('not ok');
+    if(!res.ok)throw new Error();
     const data=await res.json();
     if(!Array.isArray(data)||!data.length){
       el.innerHTML=`<div style="text-align:center;padding:24px;color:#484f58;font-size:13px">👥<br><br>${lang==='ru'?'Пока нет друзей.<br>Пригласи первого!':'No friends yet.<br>Invite someone!'}</div>`;
@@ -686,6 +662,7 @@ async function loadFriends(){
     el.innerHTML=`<div style="text-align:center;padding:24px;color:#484f58;font-size:13px">👥<br><br>${lang==='ru'?'Пока нет друзей.<br>Пригласи первого!':'No friends yet.<br>Invite someone!'}</div>`;
   }
 }
+
 function copyRef(){
   const link='https://t.me/Orbit_tonbot?start='+(UID||'ref');
   const el=document.createElement('textarea');el.value=link;el.style.position='fixed';el.style.opacity='0';
@@ -713,7 +690,7 @@ function openDeposit(){
       <span style="font-size:12px;color:#60a5fa;font-weight:700">${lang==='ru'?'Зачислится:':'You get:'}</span>
       <span style="font-family:Syne,sans-serif;font-size:20px;color:#60a5fa;font-weight:800" id="depResV">— TON</span>
     </div>
-    <div class="mnote">⚠️ ${lang==='ru'?'Если не оплатишь — TON НЕ зачислится! Сервер проверяет только реальные транзакции.':'If you do not pay — TON will NOT be credited! Server checks only real transactions.'}</div>
+    <div class="mnote">⚠️ ${lang==='ru'?'Если не оплатишь — TON НЕ зачислится! Сервер проверяет только реальные транзакции.':'If you do not pay — TON will NOT be credited!'}</div>
     <button class="btn" onclick="sendDeposit()">💎 ${lang==='ru'?'Оплатить через Tonkeeper':'Pay via Tonkeeper'}</button>`);
 }
 function calcDep(){const v=parseFloat(g('depAmt')?.value)||0;st('depResV',v>0?v.toFixed(3)+' TON':'— TON');}
@@ -762,6 +739,7 @@ function doExchange(){
   if(g('exchInp'))g('exchInp').value='';
   save();updateUI();notify('+'+(v*0.0001).toFixed(4)+' TON 🎉');
 }
+
 async function openLeaderboard(){
   openModal(`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
     <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3">🏆 ${lang==='ru'?'Лидерборд':'Leaderboard'}</div>
@@ -780,10 +758,7 @@ async function loadLbData(type){
     const res=await fetch(API+'/api/leaderboard/'+type);
     if(!res.ok)throw new Error();
     const data=await res.json();
-    if(!Array.isArray(data)||!data.length){
-      el.innerHTML=`<div style="text-align:center;padding:24px;color:#484f58">🏆<br><br>${lang==='ru'?'Пока пусто':'Empty yet'}</div>`;
-      return;
-    }
+    if(!Array.isArray(data)||!data.length){el.innerHTML=`<div style="text-align:center;padding:24px;color:#484f58">🏆<br><br>${lang==='ru'?'Пока пусто':'Empty yet'}</div>`;return;}
     const medals=['🥇','🥈','🥉'];
     el.innerHTML=data.map((r,i)=>`
       <div style="display:flex;align-items:center;gap:10px;padding:11px 12px;background:#222228;border-radius:13px;margin-bottom:8px;border:1px solid #2a2a2e">
@@ -792,9 +767,7 @@ async function loadLbData(type){
         <div style="flex:1;font-weight:700;font-size:14px;color:#e6edf3">@${r.username||'User'}</div>
         <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:#1d6df5">${type==='bit'?(r.total_bit+' BIT'):(Number(r.total_ton).toFixed(3)+' TON')}</div>
       </div>`).join('');
-  }catch(e){
-    el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58">❌ ${lang==='ru'?'Ошибка загрузки':'Load error'}</div>`;
-  }
+  }catch(e){el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58">❌ ${lang==='ru'?'Ошибка загрузки':'Load error'}</div>`;}
 }
 function switchLb(tab){
   const b1=g('lbt1'),b2=g('lbt2');
@@ -802,8 +775,6 @@ function switchLb(tab){
   if(b2)b2.style.cssText='flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:'+(tab==='ton'?'#1d6df5;color:#fff':'transparent;color:#6b7280');
   loadLbData(tab);
 }
-
-// PvP
 let bets=[],ptot=0,pvpSpinning=false,pvpAngle=0,pvpRoundNum=S.pvpRound||1;
 let pvpTimer=null,pvpSec=15,pvpRun=false,pvpErrCount=0;
 const PCOLS=['#1d6df5','#7c3aed','#10b981','#f59e0b','#ef4444','#ec4899'];
@@ -818,27 +789,19 @@ function updatePvpSt(){
   const c=g('pvp-cnt');if(c)c.textContent=bets.length;
 }
 async function addPvp(){
-  if(pvpSpinning){notify(lang==='ru'?'Подожди окончания раунда!':'Wait for round to end!');return;}
+  if(pvpSpinning){notify(lang==='ru'?'Подожди окончания раунда!':'Wait for round end!');return;}
   const a=parseFloat(g('pvpinp').value);
   if(isNaN(a)||a<0.01){notify('Min 0.01 TON!');return;}
   if(a>S.ton){notify(lang==='ru'?'Недостаточно TON!':'Not enough TON!');return;}
   try{
-    const res=await fetch(API+'/api/pvp/bet',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({user_id:UID,amount:a})
-    });
+    const res=await fetch(API+'/api/pvp/bet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:UID,amount:a})});
     const d=await res.json();
     if(!d.success){notify('❌ '+(d.error||'Error'));return;}
-    S.ton-=a;save();updateUI();
-    g('pvpinp').value='';
+    S.ton-=a;save();updateUI();g('pvpinp').value='';
     showPvpErr(false);
     notify(a.toFixed(3)+' TON '+(lang==='ru'?'поставлено! ⚔️':'placed! ⚔️'));
     fetchPvpState();
-  }catch(e){
-    showPvpErr(true);
-    notify('❌ '+(lang==='ru'?'Сервер недоступен':'Server unavailable'));
-  }
+  }catch(e){showPvpErr(true);notify('❌ '+(lang==='ru'?'Сервер недоступен':'Server unavailable'));}
 }
 async function fetchPvpState(){
   try{
@@ -848,38 +811,20 @@ async function fetchPvpState(){
     pvpErrCount=0;showPvpErr(false);
     bets=(data.players||[]).map((p,i)=>({n:'@'+(p.username||'Player'),a:Number(p.amount),c:PCOLS[i%PCOLS.length]}));
     ptot=Number(data.total)||0;
-    st('pvptot',ptot.toFixed(3));
-    st('pvp-round',pvpRoundNum);
+    st('pvptot',ptot.toFixed(3));st('pvp-round',pvpRoundNum);
     drawWheel();renderBets();updatePvpSt();
     if(data.running&&!pvpSpinning){pvpSpinning=true;pvpDoSpin();}
-    else if(bets.length>=2&&!pvpRun&&!pvpSpinning){
-      pvpRun=true;pvpSec=15;
-      clearInterval(pvpTimer);
-      pvpTimer=setInterval(pvpTick,1000);
-    }else if(bets.length<2){
-      pvpRun=false;pvpSec=15;
-      clearInterval(pvpTimer);
-    }
-  }catch(e){
-    pvpErrCount++;
-    if(pvpErrCount>=3)showPvpErr(true);
-  }
+    else if(bets.length>=2&&!pvpRun&&!pvpSpinning){pvpRun=true;pvpSec=15;clearInterval(pvpTimer);pvpTimer=setInterval(pvpTick,1000);}
+    else if(bets.length<2){pvpRun=false;pvpSec=15;clearInterval(pvpTimer);}
+  }catch(e){pvpErrCount++;if(pvpErrCount>=3)showPvpErr(true);}
 }
-function pvpTick(){
-  pvpSec--;updatePvpSt();
-  if(pvpSec<=0){clearInterval(pvpTimer);pvpTimer=null;pvpRun=false;pvpDoSpin();}
-}
+function pvpTick(){pvpSec--;updatePvpSt();if(pvpSec<=0){clearInterval(pvpTimer);pvpTimer=null;pvpRun=false;pvpDoSpin();}}
 function pvpDoSpin(){
   if(bets.length<2){pvpRun=false;pvpSec=15;pvpSpinning=false;updatePvpSt();return;}
   pvpSpinning=true;updatePvpSt();
   const r=Math.random()*ptot;let cum=0,winner=bets[0];
   for(const b of bets){cum+=b.a;if(r<=cum){winner=b;break;}}
-  let sa=0;
-  for(const b of bets){
-    const sl=(b.a/ptot)*Math.PI*2;
-    if(b===winner){sa+=sl/2;break;}
-    sa+=sl;
-  }
+  let sa=0;for(const b of bets){const sl=(b.a/ptot)*Math.PI*2;if(b===winner){sa+=sl/2;break;}sa+=sl;}
   const target=(5+Math.random()*3)*Math.PI*2+(Math.PI*1.5-sa-pvpAngle);
   const dur=4000,t0=performance.now(),init=pvpAngle;
   function anim(now){
@@ -892,27 +837,18 @@ function pvpDoSpin(){
 }
 function showPvpWinner(w){
   const prize=ptot*0.95,pct=((w.a/ptot)*100).toFixed(1);
-  st('pw-game','ROUND #'+pvpRoundNum);
-  st('pw-name',w.n);
-  st('pw-prize',prize.toFixed(3));
-  st('pw-pct',pct+'%');
-  st('pw-cnt',bets.length);
+  st('pw-game','ROUND #'+pvpRoundNum);st('pw-name',w.n);
+  st('pw-prize',prize.toFixed(3));st('pw-pct',pct+'%');st('pw-cnt',bets.length);
   const ov=g('pvp-win');if(ov)ov.style.display='flex';
-  if(w.n===UNAME){
-    S.ton+=prize;S.totalTon+=prize;save();updateUI();
-    notify('🏆 ТЫ ПОБЕДИЛ! +'+prize.toFixed(3)+' TON');
-  }else{
-    notify('😔 '+(lang==='ru'?w.n+' победил!':w.n+' won!'));
-  }
+  if(w.n===UNAME){S.ton+=prize;S.totalTon+=prize;save();updateUI();notify('🏆 ТЫ ПОБЕДИЛ! +'+prize.toFixed(3)+' TON');}
+  else notify('😔 '+(lang==='ru'?w.n+' победил!':w.n+' won!'));
 }
 function closePvpWin(){
   const ov=g('pvp-win');if(ov)ov.style.display='none';
   bets=[];ptot=0;pvpSec=15;pvpRun=false;pvpSpinning=false;pvpAngle=0;
-  clearInterval(pvpTimer);
-  pvpRoundNum++;S.pvpRound=pvpRoundNum;save();
+  clearInterval(pvpTimer);pvpRoundNum++;S.pvpRound=pvpRoundNum;save();
   st('pvptot','0.000');st('pvp-round',pvpRoundNum);
-  drawWheel();renderBets();updatePvpSt();
-  setTimeout(fetchPvpState,500);
+  drawWheel();renderBets();updatePvpSt();setTimeout(fetchPvpState,500);
 }
 function drawWheel(){
   const cv=g('pvpC');if(!cv)return;
@@ -927,20 +863,17 @@ function drawWheel(){
     }
     ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#111214';ctx.fill();
     ctx.fillStyle='#484f58';ctx.font='700 12px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(lang==='ru'?'Ставь TON':'Bet TON',cx,cy);
-    return;
+    ctx.fillText(lang==='ru'?'Ставь TON':'Bet TON',cx,cy);return;
   }
   ctx.save();ctx.translate(cx,cy);ctx.rotate(pvpAngle);ctx.translate(-cx,-cy);
   let ang=-Math.PI/2;
   bets.forEach(b=>{
     const sl=(b.a/ptot)*Math.PI*2;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,ang,ang+sl);ctx.closePath();
-    ctx.fillStyle=b.c;ctx.fill();
-    ctx.strokeStyle='#111214';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle=b.c;ctx.fill();ctx.strokeStyle='#111214';ctx.lineWidth=2;ctx.stroke();
     if(sl>0.18){
       const m=ang+sl/2,lx=cx+Math.cos(m)*R*.68,ly=cy+Math.sin(m)*R*.68;
-      ctx.beginPath();ctx.arc(lx,ly,16,0,Math.PI*2);
-      ctx.fillStyle='rgba(0,0,0,.4)';ctx.fill();
+      ctx.beginPath();ctx.arc(lx,ly,16,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,.4)';ctx.fill();
       ctx.fillStyle='#fff';ctx.font='700 10px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(((b.a/ptot)*100).toFixed(0)+'%',lx,ly);
     }
@@ -949,23 +882,13 @@ function drawWheel(){
   ctx.restore();
   ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#1a1a1e';ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=2;ctx.stroke();
-  if(pvpRun&&!pvpSpinning){
-    ctx.fillStyle='#fff';ctx.font='800 26px Syne';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(pvpSec,cx,cy);
-  }else if(pvpSpinning){
-    ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='22px sans-serif';
-    ctx.fillText('🎰',cx,cy);
-  }else{
-    ctx.fillStyle='#484f58';ctx.font='700 13px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(bets.length+'/2+',cx,cy);
-  }
+  if(pvpRun&&!pvpSpinning){ctx.fillStyle='#fff';ctx.font='800 26px Syne';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pvpSec,cx,cy);}
+  else if(pvpSpinning){ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='22px sans-serif';ctx.fillText('🎰',cx,cy);}
+  else{ctx.fillStyle='#484f58';ctx.font='700 13px Inter';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(bets.length+'/2+',cx,cy);}
 }
 function renderBets(){
   const el=g('pvplist');if(!el)return;
-  if(!bets.length){
-    el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58;font-size:13px">${lang==='ru'?'Будь первым — сделай ставку! ⚔️':'Be first — place a bet! ⚔️'}</div>`;
-    return;
-  }
+  if(!bets.length){el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58;font-size:13px">${lang==='ru'?'Будь первым — сделай ставку! ⚔️':'Be first — place a bet! ⚔️'}</div>`;return;}
   el.innerHTML=bets.map(b=>`
     <div style="display:flex;align-items:center;justify-content:space-between;background:#222228;border-radius:13px;padding:13px;margin-bottom:8px;border:1px solid #2a2a2e">
       <div style="display:flex;align-items:center;gap:10px">
