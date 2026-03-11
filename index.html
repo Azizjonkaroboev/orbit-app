@@ -907,6 +907,23 @@ initTonConnect();
 initServer();
 fetchPvpState();
 setInterval(fetchPvpState,3000);
+
+async function syncBalance(){
+  if(!UID)return;
+  try{
+    const res=await fetch(API+'/api/user/'+UID);
+    const d=await res.json();
+    if(!d.error){
+      if(d.ton!==undefined)S.ton=d.ton;
+      if(d.bit!==undefined)S.bit=d.bit;
+      if(d.streak!==undefined)S.streak=d.streak;
+      if(d.ref_count!==undefined)S.refCount=d.ref_count;
+      save();updateUI();
+    }
+  }catch(e){}
+}
+syncBalance();
+setInterval(syncBalance,10000);
 </script>
 </body>
 </html>
