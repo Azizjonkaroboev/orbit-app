@@ -913,13 +913,12 @@ async function syncBalance(){
   try{
     const res=await fetch(API+'/api/user/'+UID);
     const d=await res.json();
-    if(!d.error){
-      if(d.ton!==undefined)S.ton=d.ton;
-      if(d.bit!==undefined)S.bit=d.bit;
-      if(d.streak!==undefined)S.streak=d.streak;
-      if(d.ref_count!==undefined)S.refCount=d.ref_count;
-      save();updateUI();
-    }
+    if(d.ton!==undefined)S.ton=parseFloat(d.ton)||0;
+    if(d.bit!==undefined)S.bit=parseInt(d.bit)||0;
+    if(d.streak!==undefined)S.streak=parseInt(d.streak)||0;
+    if(d.ref_count!==undefined)S.refCount=parseInt(d.ref_count)||0;
+    if(d.ref_earned!==undefined)S.refEarned=parseInt(d.ref_earned)||0;
+    save();updateUI();
   }catch(e){}
 }
 syncBalance();
