@@ -414,31 +414,22 @@ const tgU=tg?.initDataUnsafe?.user;
 const UNAME=tgU?(tgU.username?'@'+tgU.username:tgU.first_name||'User'):'@username';
 const ULETTER=(tgU?.first_name||tgU?.username||'O')[0].toUpperCase();
 const UID=tgU?.id||0;
-let S=JSON.parse(localStorage.getItem('orb19')||'{}');
+let S=JSON.parse(localStorage.getItem('orb20')||'{}');
 if(!S.ton)S.ton=0;if(!S.bit)S.bit=0;if(!S.streak)S.streak=0;
 if(!S.refCount)S.refCount=0;if(!S.refEarned)S.refEarned=0;
 if(!S.lang)S.lang='ru';if(!S.adV)S.adV={};
 if(!S.totalBit)S.totalBit=0;if(!S.totalTon)S.totalTon=0;
 if(!S.pvpRound)S.pvpRound=1;if(!S.usedPromos)S.usedPromos={};
-function save(){localStorage.setItem('orb19',JSON.stringify(S));}
+function save(){localStorage.setItem('orb20',JSON.stringify(S));}
 function g(id){return document.getElementById(id);}
 function st(id,v){const e=g(id);if(e)e.textContent=v;}
 function getMulti(){const s=Math.max(S.streak,1);return Math.min(1+(s-1)*0.1,1.5);}
 let lang=S.lang||'ru';
-
 const PROMOS={'ORBIT100':{bit:100,max:5},'ORBIT200':{bit:200,max:5},'ORBIT300':{bit:300,max:5},'ORBIT400':{bit:400,max:5},'ORBIT500':{bit:500,max:5}};
-
-// Конвертация raw TON адреса в UQ... формат
 function rawToFriendly(raw){
-  try{
-    // Пробуем через TonConnectUI
-    if(TON_CONNECT_UI&&TON_CONNECT_UI.toUserFriendlyAddress){
-      return TON_CONNECT_UI.toUserFriendlyAddress(raw);
-    }
-  }catch(e){}
+  try{if(TON_CONNECT_UI&&TON_CONNECT_UI.toUserFriendlyAddress)return TON_CONNECT_UI.toUserFriendlyAddress(raw);}catch(e){}
   return raw;
 }
-
 let tonConnectUI=null;
 async function initTonConnect(){
   try{
@@ -446,25 +437,16 @@ async function initTonConnect(){
     tonConnectUI.onStatusChange(wallet=>{
       if(wallet){
         const raw=wallet.account.address;
-        // Конвертируем в UQ... формат
         let friendly=raw;
-        try{
-          friendly=TON_CONNECT_UI.toUserFriendlyAddress(raw,false);
-        }catch(e){
-          try{friendly=TON_CONNECT_UI.toUserFriendlyAddress(raw);}catch(e2){friendly=raw;}
-        }
-        S.wallet=raw;
-        S.walletFriendly=friendly;
+        try{friendly=TON_CONNECT_UI.toUserFriendlyAddress(raw,false);}catch(e){try{friendly=TON_CONNECT_UI.toUserFriendlyAddress(raw);}catch(e2){}}
+        S.wallet=raw;S.walletFriendly=friendly;
         save();updateUI();closeTcModal();
         notify('✅ '+(lang==='ru'?'Кошелёк подключён!':'Wallet connected!'));
         if(UID)fetch(API+'/api/wallet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:UID,wallet:raw})}).catch(()=>{});
-      }else{
-        S.wallet=null;S.walletFriendly=null;save();updateUI();
-      }
+      }else{S.wallet=null;S.walletFriendly=null;save();updateUI();}
     });
   }catch(e){}
 }
-
 async function loadWallets(){
   const list=g('wlt-list');
   try{
@@ -501,32 +483,30 @@ async function disconnectWallet(){
   S.wallet=null;S.walletFriendly=null;save();closeModal();updateUI();
   notify(lang==='ru'?'Кошелёк отключён':'Disconnected');
 }
-
-async function initServer(){
+// ГЛАВНАЯ ФУНКЦИЯ — синхронизация с сервером через /api/register
+async function syncBalance(){
   if(!UID)return;
-  const refId=tg?.initDataUnsafe?.start_param?parseInt(tg.initDataUnsafe.start_param):0;
   try{
-    const res=await fetch(API+'/api/register',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({user_id:UID,username:UNAME.replace('@',''),ref_id:refId})});
+    const res=await fetch(API+'/api/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({user_id:UID,username:UNAME.replace('@',''),ref_id:0})
+    });
     const d=await res.json();
-    if(!d.error){
-      if(d.ton!==undefined)S.ton=d.ton;
-      if(d.bit!==undefined)S.bit=d.bit;
-      if(d.streak!==undefined)S.streak=d.streak;
-      if(d.ref_count!==undefined)S.refCount=d.ref_count;
-      if(d.ref_earned!==undefined)S.refEarned=d.ref_earned;
-      if(d.wallet&&!S.wallet){S.wallet=d.wallet;S.walletFriendly=rawToFriendly(d.wallet);}
-      save();updateUI();
-    }
+    if(d.ton!==undefined)S.ton=parseFloat(d.ton)||0;
+    if(d.bit!==undefined)S.bit=parseInt(d.bit)||0;
+    if(d.streak!==undefined)S.streak=parseInt(d.streak)||0;
+    if(d.ref_count!==undefined)S.refCount=parseInt(d.ref_count)||0;
+    if(d.ref_earned!==undefined)S.refEarned=parseInt(d.ref_earned)||0;
+    if(d.wallet&&!S.wallet){S.wallet=d.wallet;S.walletFriendly=rawToFriendly(d.wallet);}
+    save();updateUI();
   }catch(e){}
 }
-
 function applyLang(){
   document.body.className=lang==='ru'?'lang-ru':'lang-en';
   ['langBtn','langBtn1','langBtn2','langBtn3','langBtn4'].forEach(id=>{const el=g(id);if(el)el.textContent=lang==='ru'?'RU':'EN';});
   st('plang',lang==='ru'?'Русский':'English');
 }
-
 function updateStreakDays(){
   const s=Math.max(S.streak,0);
   for(let i=1;i<=6;i++){
@@ -564,9 +544,8 @@ function updateUI(){
   const wAddrEl=g('w-addr'),wStEl=g('w-st'),wStTxt=g('w-st-txt'),wBtn=g('w-btn');
   if(S.wallet){
     const disp=S.walletFriendly||S.wallet;
-    const short=disp.slice(0,8)+'...'+disp.slice(-5);
     st('h-wval',disp.slice(0,6)+'...'+disp.slice(-4));
-    if(wAddrEl)wAddrEl.textContent=short;
+    if(wAddrEl)wAddrEl.textContent=disp.slice(0,8)+'...'+disp.slice(-5);
     if(wStEl)wStEl.className='wst on';
     if(wStTxt)wStTxt.innerHTML='<span class="ru-txt">Подключён ✓</span><span class="en-txt">Connected ✓</span>';
     if(wBtn)wBtn.innerHTML='👁 <span class="ru-txt">Мой кошелёк</span><span class="en-txt">My wallet</span>';
@@ -579,9 +558,7 @@ function updateUI(){
   }
   applyLang();calcExch();save();
 }
-
 function toggleLang(){lang=lang==='ru'?'en':'ru';S.lang=lang;save();updateUI();notify(lang==='ru'?'🌐 Русский':'🌐 English');}
-
 let cur='main';
 function goTo(tab){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -597,7 +574,6 @@ function goTo(tab){
 function notify(msg){const el=g('notif');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2400);}
 function openModal(html){g('mc').innerHTML=html;g('modal').classList.add('open');}
 function closeModal(){g('modal').classList.remove('open');}
-
 async function doCheckin(){
   const today=new Date().toDateString();
   if(S.lastCI===today){notify(lang==='ru'?'Множитель уже получен!':'Already claimed!');return;}
@@ -607,8 +583,7 @@ async function doCheckin(){
       const d=await res.json();
       if(d.streak!==undefined){
         S.streak=d.streak;S.lastCI=today;save();updateUI();
-        const m=Math.min(1+(d.streak-1)*0.1,1.5).toFixed(1);
-        notify('✅ День '+d.streak+' | Множитель ×'+m);
+        notify('✅ День '+d.streak+' | Множитель ×'+Math.min(1+(d.streak-1)*0.1,1.5).toFixed(1));
         return;
       }
       if(d.error==='already_claimed'){S.lastCI=today;save();updateUI();notify(lang==='ru'?'Уже получен!':'Already claimed!');return;}
@@ -619,7 +594,6 @@ async function doCheckin(){
   S.lastCI=today;save();updateUI();
   notify('✅ День '+S.streak+' | Множитель ×'+getMulti().toFixed(1));
 }
-
 async function activatePromo(){
   const c=g('promoInp').value.trim().toUpperCase();
   if(!c){notify(lang==='ru'?'Введите код!':'Enter code!');return;}
@@ -662,7 +636,6 @@ async function loadFriends(){
     el.innerHTML=`<div style="text-align:center;padding:24px;color:#484f58;font-size:13px">👥<br><br>${lang==='ru'?'Пока нет друзей.<br>Пригласи первого!':'No friends yet.<br>Invite someone!'}</div>`;
   }
 }
-
 function copyRef(){
   const link='https://t.me/Orbit_tonbot?start='+(UID||'ref');
   const el=document.createElement('textarea');el.value=link;el.style.position='fixed';el.style.opacity='0';
@@ -677,11 +650,10 @@ function shareRef(){
   if(tg)tg.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text));
   else copyRef();
 }
-
 function openDeposit(){
   if(!S.wallet){notify(lang==='ru'?'Сначала подключи кошелёк!':'Connect wallet first!');return;}
   openModal(`<div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:12px">↓ ${lang==='ru'?'Депозит TON':'Deposit TON'}</div>
-    <p style="font-size:13px;color:#8b949e;margin-bottom:14px">${lang==='ru'?'Минимум 0.1 TON. После оплаты зачислится автоматически (~30 сек)':'Min 0.1 TON. Auto credited after payment (~30 sec)'}</p>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:14px">${lang==='ru'?'Минимум 0.1 TON. После оплаты зачислится автоматически (~30 сек)':'Min 0.1 TON. Auto credited (~30 sec)'}</p>
     <div style="position:relative;margin-bottom:10px">
       <input type="number" class="minp" id="depAmt" placeholder="0.1" min="0.1" step="0.1" oninput="calcDep()">
       <span style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#4a4a5a;font-size:13px">TON</span>
@@ -690,7 +662,7 @@ function openDeposit(){
       <span style="font-size:12px;color:#60a5fa;font-weight:700">${lang==='ru'?'Зачислится:':'You get:'}</span>
       <span style="font-family:Syne,sans-serif;font-size:20px;color:#60a5fa;font-weight:800" id="depResV">— TON</span>
     </div>
-    <div class="mnote">⚠️ ${lang==='ru'?'Если не оплатишь — TON НЕ зачислится! Сервер проверяет только реальные транзакции.':'If you do not pay — TON will NOT be credited!'}</div>
+    <div class="mnote">⚠️ ${lang==='ru'?'Если не оплатишь — TON НЕ зачислится!':'If you do not pay — TON will NOT be credited!'}</div>
     <button class="btn" onclick="sendDeposit()">💎 ${lang==='ru'?'Оплатить через Tonkeeper':'Pay via Tonkeeper'}</button>`);
 }
 function calcDep(){const v=parseFloat(g('depAmt')?.value)||0;st('depResV',v>0?v.toFixed(3)+' TON':'— TON');}
@@ -701,8 +673,13 @@ function sendDeposit(){
   closeModal();
   if(tg?.openLink)tg.openLink(link);else window.open(link,'_blank');
   notify(lang==='ru'?'⏳ Жди ~30 сек после оплаты':'⏳ Wait ~30 sec after payment');
+  // Проверяем баланс каждые 5 сек после депозита
+  let checks=0;
+  const checkDep=setInterval(()=>{
+    checks++;syncBalance();
+    if(checks>=12)clearInterval(checkDep);
+  },5000);
 }
-
 function openWithdraw(){
   if(!S.wallet){notify(lang==='ru'?'Сначала подключи кошелёк!':'Connect wallet first!');return;}
   if(S.ton<0.5){notify(lang==='ru'?'Минимум 0.5 TON!':'Minimum 0.5 TON!');return;}
@@ -729,7 +706,6 @@ async function confirmWd(){
   S.ton-=amt;save();closeModal();updateUI();
   notify('✅ '+(lang==='ru'?'Заявка отправлена!':'Request sent!'));
 }
-
 function calcExch(){const v=parseFloat(g('exchInp')?.value)||0;st('exchOut',v>=500?(v*0.0001).toFixed(4)+' TON':'0.0000 TON');}
 function doExchange(){
   const v=parseFloat(g('exchInp')?.value)||0;
@@ -739,14 +715,13 @@ function doExchange(){
   if(g('exchInp'))g('exchInp').value='';
   save();updateUI();notify('+'+(v*0.0001).toFixed(4)+' TON 🎉');
 }
-
 async function openLeaderboard(){
   openModal(`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
     <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#e6edf3">🏆 ${lang==='ru'?'Лидерборд':'Leaderboard'}</div>
     <button onclick="closeModal()" style="width:32px;height:32px;border-radius:50%;background:#222228;border:1px solid #2a2a2e;color:#8b949e;font-size:20px;cursor:pointer;line-height:1">×</button>
   </div>
   <div style="display:flex;gap:6px;background:#222228;border-radius:12px;padding:4px;margin-bottom:14px">
-    <button id="lbt1" onclick="switchLb('bit')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#1d6df5;color:#fff">📺 BIT Top</button>
+    <button id="lbt1" onclick="switchLb('bit')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#1d6df5;color:#fff">📺 Ads Top</button>
     <button id="lbt2" onclick="switchLb('ton')" style="flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:transparent;color:#6b7280">⚔️ PvP Top</button>
   </div>
   <div id="lb-body"><div style="text-align:center;padding:24px;color:#484f58">⏳</div></div>`);
@@ -765,7 +740,10 @@ async function loadLbData(type){
         <div style="font-size:18px;width:28px;text-align:center">${i<3?medals[i]:i+1}</div>
         <div style="width:34px;height:34px;border-radius:10px;background:#1d6df5;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px">${(r.username||'U')[0].toUpperCase()}</div>
         <div style="flex:1;font-weight:700;font-size:14px;color:#e6edf3">@${r.username||'User'}</div>
-        <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:#1d6df5">${type==='bit'?(r.total_bit+' BIT'):(Number(r.total_ton).toFixed(3)+' TON')}</div>
+        <div style="text-align:right">
+          <div style="font-family:Syne,sans-serif;font-size:14px;font-weight:800;color:#1d6df5">${type==='bit'?(r.monthly_ads||0)+' ads':(Number(r.monthly_pvp_bet||0).toFixed(2)+' TON')}</div>
+          ${type==='bit'?`<div style="font-size:11px;color:#4a4a5a">${r.bit||0} BIT</div>`:''}
+        </div>
       </div>`).join('');
   }catch(e){el.innerHTML=`<div style="text-align:center;padding:20px;color:#484f58">❌ ${lang==='ru'?'Ошибка загрузки':'Load error'}</div>`;}
 }
@@ -861,7 +839,7 @@ function drawWheel(){
       ctx.fillStyle=i%2===0?'#1a1a1e':'#222228';ctx.fill();
       ctx.strokeStyle='#111214';ctx.lineWidth=2;ctx.stroke();
     }
-    ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#111214';ctx.fill();
+ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#111214';ctx.fill();
     ctx.fillStyle='#484f58';ctx.font='700 12px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(lang==='ru'?'Ставь TON':'Bet TON',cx,cy);return;
   }
@@ -901,28 +879,12 @@ function renderBets(){
       </div>
     </div>`).join('');
 }
-
 goTo('main');
 initTonConnect();
-initServer();
+syncBalance();
+setInterval(syncBalance,8000);
 fetchPvpState();
 setInterval(fetchPvpState,3000);
-
-async function syncBalance(){
-  if(!UID)return;
-  try{
-    const res=await fetch(API+'/api/user/'+UID);
-    const d=await res.json();
-    if(d.ton!==undefined)S.ton=parseFloat(d.ton)||0;
-    if(d.bit!==undefined)S.bit=parseInt(d.bit)||0;
-    if(d.streak!==undefined)S.streak=parseInt(d.streak)||0;
-    if(d.ref_count!==undefined)S.refCount=parseInt(d.ref_count)||0;
-    if(d.ref_earned!==undefined)S.refEarned=parseInt(d.ref_earned)||0;
-    save();updateUI();
-  }catch(e){}
-}
-syncBalance();
-setInterval(syncBalance,10000);
 </script>
 </body>
 </html>
